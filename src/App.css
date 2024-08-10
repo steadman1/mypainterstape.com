@@ -1,0 +1,227 @@
+@font-face {
+  font-family: 'integral';
+  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic.woff2') format('woff2'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic.woff') format('woff'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'asterisk';
+  src: url('fonts/Glyphter.woff2') format('woff2'),
+      url('fonts/Glyphter.woff') format('woff'),
+      url('fonts/Glyphter.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'integral';
+  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular.woff2') format('woff2'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular.woff') format('woff'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'times-new-roman-condensed';
+  src: url('fonts/TimesNewRomanMTStd-CondIt.woff2') format('woff2'),
+      url('fonts/TimesNewRomanMTStd-CondIt.woff') format('woff'),
+      url('fonts/TimesNewRomanMTStd-CondIt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cabazon';
+  src: url('fonts/CabazonW01-Regular.woff2') format('woff2'),
+      url('fonts/CabazonW01-Regular.woff') format('woff'),
+      url('fonts/CabazonW01-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'integral';
+  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic_1.woff2') format('woff2'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic_1.woff') format('woff'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic_1.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'cabazon';
+  src: url('fonts/CabazonW01-Regular_1.woff2') format('woff2'),
+      url('fonts/CabazonW01-Regular_1.woff') format('woff'),
+      url('fonts/CabazonW01-Regular_1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'asterisk';
+  src: url('fonts/Glyphter_1.woff2') format('woff2'),
+      url('fonts/Glyphter_1.woff') format('woff'),
+      url('fonts/Glyphter_1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'times-new-roman-condensed';
+  src: url('fonts/TimesNewRomanMTStd-CondIt_1.woff2') format('woff2'),
+      url('fonts/TimesNewRomanMTStd-CondIt_1.woff') format('woff'),
+      url('fonts/TimesNewRomanMTStd-CondIt_1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'integral';
+  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular_1.woff2') format('woff2'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular_1.woff') format('woff'),
+      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular_1.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'YoungSerif';
+  src: url('fonts/YoungSerif-Regular.woff2') format('woff2'),
+      url('fonts/YoungSerif-Regular.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Apple Garamond';
+  src: url('fonts/AppleGaramond-Bold.woff2') format('woff2'),
+      url('fonts/AppleGaramond-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Apple Garamond';
+  src: url('fonts/AppleGaramond-Bold.woff2') format('woff2'),
+      url('fonts/AppleGaramond-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+#root {
+  margin: 0 auto 0 auto;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.entrance-screen {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Change this to your preferred background color */
+}
+
+.vstack {
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hstack {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.stroked {
+  -webkit-text-stroke: 0.8px #333;
+}
+
+.title {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 10px;
+  font-style: italic;
+}
+
+#our-work {
+  padding: 0 20px 0 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#our-work h2 {
+  font-family: "asterisk";
+  font-size: 1.8rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.our-work-text {
+  margin: auto;
+  color: #333;
+}
+
+.one {
+  font-family: "YoungSerif";
+  font-size: 2.5rem;
+}
+.two {
+  font-family: "Cabazon";
+  font-size: 2.5rem;
+}
+.three {
+  font-family: "Apple Garamond";
+  font-size: 2.5rem;
+}
+
+h1 {
+  font-family: "integral";
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+h1 span {
+  font-family: "asterisk";
+  font-size: 1.8rem;
+  color: #333;
+  text-decoration: none;
+}
+
+h3 {
+  font-family: "times-new-roman-condensed";
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
