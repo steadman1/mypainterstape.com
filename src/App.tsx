@@ -1,6 +1,6 @@
 import './App.css'
 import MainEntrance from './components/MainEntrance'
-import OurWorkBar from './components/OurWorkBar'
+import OurWork from './components/OurWork'
 
 function App() {
 
@@ -8,7 +8,10 @@ function App() {
     <>
       <div className="vstack">
         <MainEntrance />
-        <OurWorkBar />
+        <OurWork />
+        <div style={{ height: "30vh" }}>
+          <h1>Footer</h1>
+        </div>
       </div>
     </>
   )

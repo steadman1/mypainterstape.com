@@ -127,15 +127,17 @@
 
 #root {
   margin: 0 auto 0 auto;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 
 }
 
 .entrance-screen {
   height: 100vh;
   width: 100vw;
+  max-width:100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,11 +153,36 @@
   align-items: center;
 }
 
+.vstack.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .hstack {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.hstack.space-between {
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.hstack.space-between > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hstack.space-between > :first-child {
+  margin-left: 0;
+}
+
+.hstack.space-between > :last-child {
+  margin-right: 0;
 }
 
 .stroked {
@@ -172,35 +199,58 @@
 }
 
 #our-work {
-  padding: 0 20px 0 20px;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  max-width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #efefef;
+}
+
+#our-work-bar {
+  position: fixed;
+  top: 0;
+  width: calc(100vw - 40px);
+  max-width: calc(100% - 40px);
+  padding: 20px;
   display: flex;
   justify-content: space-between;
 }
 
-#our-work h2 {
-  font-family: "asterisk";
-  font-size: 1.8rem;
-  color: #333;
-  text-decoration: none;
+#our-work-entrance {
+  
 }
 
 .our-work-text {
-  margin: auto;
+  margin: 0 auto 0 auto;
   color: #333;
+  font-size: 3vw;
+}
+h2.our-work-text {
+  font-family: "asterisk";
+  color: #333;
+  text-decoration: none;
+  font-size: 2vw;
+}
+
+.our-work-text:first-child {
+  margin-left: 0;
+  margin-right: auto;
+}
+.our-work-text:last-child {
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .one {
   font-family: "YoungSerif";
-  font-size: 2.5rem;
 }
 .two {
   font-family: "Cabazon";
-  font-size: 2.5rem;
 }
 .three {
   font-family: "Apple Garamond";
-  font-size: 2.5rem;
 }
 
 h1 {

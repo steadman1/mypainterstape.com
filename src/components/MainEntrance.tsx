@@ -1,12 +1,23 @@
+import useWindowDimensions from '../hooks/useWindowDimensions';
+import Title from './MainEntranceTitle';
+import SmallTitle from './MainEntranceSmallTitle';
 
 
 function MainEntrance() {
+    const { width } = useWindowDimensions();
 
+    let title;
+    if (width < 450) {
+        title = <Title />;
+    } else {
+        title = <SmallTitle />;
+    }
+    
     return (
         <>
             <div className="entrance-screen">
                 <div className="vstack">
-                    <h1 className="title">painter<span className="asterisk">*</span>s tape</h1>
+                    { title }
                     <h3 className="subtitle stroked">software & design studio</h3>
                 </div>
             </div>
