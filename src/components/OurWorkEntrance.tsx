@@ -1,4 +1,4 @@
-import { Work } from '../objects/Work';
+import { Work, WorkDetail, WorkType, WorkDetailType, IOSAPP, WEBAPP, DESIGN } from '../objects/Work';
 
 function OurWorkEntrance({ work, index, setIndex }: { work: Work, index: number, setIndex: React.Dispatch<React.SetStateAction<number>> }) {
     const handleNextWork = () => {
@@ -7,8 +7,7 @@ function OurWorkEntrance({ work, index, setIndex }: { work: Work, index: number,
     
     return (
         <div id="our-work-entrance">
-            <h1>Our Work</h1>
-            <p>Check out some of our recent projects</p>
+
         </div>
     );
 }

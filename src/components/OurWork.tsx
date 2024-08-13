@@ -7,10 +7,10 @@ import { Work, WorkType, WorkDetail, WorkDetailType } from "../objects/Work";
 function OurWork() {
     const { height } = useWindowDimensions();
     const [scrollPosition, setScrollPosition] = useState(0);
-    const newScrollPosition = scrollPosition - height / 1.1;
+    const newScrollPosition = scrollPosition - height / 1.5;
 
     const handleClipPath = () => {
-        const round = Math.min(24, newScrollPosition / -18);
+        const round = Math.min(30, (newScrollPosition + height / 8) / -12);
         return `inset(0 round ${round}px)`
     };
 
@@ -125,9 +125,9 @@ function OurWork() {
 
     return (
         <>
-            <div className="vstack" id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale() }}>
-                <OurWorkBar />
-                <OurWorkEntrance work={works[workIndex]} index={workIndex} />
+            <div className="vstack expanding" id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor }}>
+                <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor}/>
+                <OurWorkEntrance work={works[workIndex]} index={workIndex} setIndex={setWorkIndex} />
             </div>
         </>
     );

@@ -15,7 +15,7 @@ function MainEntrance() {
     
     return (
         <>
-            <div className="entrance-screen">
+            <div className="expanding entrance-screen">
                 <div className="vstack">
                     { title }
                     <h3 className="subtitle stroked">software & design studio</h3>
