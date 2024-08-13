@@ -2,9 +2,12 @@ import Color from "../objects/Color";
 import Arrow from "./Arrow";
 import { Work } from "../objects/Work";
 import CheckMark from "./Checkmark";
+import { useState } from "react";
 
 function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const handleClick = () => {
+    const [secondaryHover , setSecondaryHover] = useState(false);
+
+    const handleForward = () => {
         if ((workIndex + 1) >= works.length) {
             setLockScroll(false);
 
@@ -19,21 +22,48 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
             return;
         }
     }
+    const handleBackward = () => {
+        setLockScroll(true);
+        if (detailIndex - 1 < 0) {
+            if (workIndex - 1 < 0) {
+                return;
+            } else {
+                setWorkIndex(workIndex - 1);
+                setDetailIndex(works[workIndex - 1].details.length - 1);
+                return;
+            }
+        } else {
+            setDetailIndex(detailIndex - 1);
+            return;
+        }
+    }
+    const handleClick = (forward: boolean) => {
+        if (forward) {
+            handleForward();
+        } else {
+            handleBackward();
+        }
+    }
 
     const url = works[workIndex].details[detailIndex].URL;
     const primaryColor = works[workIndex].lightAccentColor;
     const secondaryColor = works[workIndex].darkAccentColor;
 
-    const border = `2px solid ${primaryColor.toString()}`;
+    const border = `2px solid ${primaryColor.toRgbString()}`;
   
     const isFinal = (workIndex + 1) >= works.length && (detailIndex + 1) >= works[workIndex].details.length; 
 
     return (
-    <div>
-        <button className="call-to-action-primary animated" onClick={handleClick} style={{ backgroundColor: secondaryColor.toString(), border: works[workIndex].usesStroke ? border : "none" }}>
+    <div className="vstack">
+        <button className="call-to-action-primary animated" onClick={() => handleClick(true)} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
             <div className="hstack bottom-alignment">
-                { isFinal ? <CheckMark color={primaryColor.toString()} /> : <Arrow color={primaryColor.toString()} /> }
-                <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
+                { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} /> }
+                <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
+            </div>
+        </button>
+        <button className="call-to-action-secondary" onMouseEnter={() => setSecondaryHover(true)} onMouseLeave={() => setSecondaryHover(false)} onClick={() => handleClick(false)} style={{ textDecorationColor: primaryColor.transparentize(secondaryHover ? 1 : 0).toRgbaString() }}>
+            <div className="hstack bottom-alignment">
+                <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>Back</h3>
             </div>
         </button>
     </div>

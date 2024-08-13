@@ -30,9 +30,9 @@ function OurWorkBar({ work, color }: { work: Work, color: string }) {
         <h2 className="our-work-text" style={{ color: color }}>*</h2>
       </div>
       <div className="hstack space-between-row">
-        <h3 className="text-width subtitle stroked" style={{ color: work.primaryTextColor, WebkitTextStrokeColor: work.primaryTextColor }}>{ work.name }</h3>
-        <Divider color={work.primaryTextColor} />
-        <h3 className="text-width subtitle stroked" style={{ color: work.primaryTextColor, WebkitTextStrokeColor: work.primaryTextColor }}>{ workTypeText }</h3>
+        <h3 className="text-width subtitle stroked" style={{ color: work.primaryTextColor.toRgbString(), WebkitTextStrokeColor: work.primaryTextColor.toRgbString() }}>{ work.name }</h3>
+        <Divider color={work.primaryTextColor.toRgbString()} />
+        <h3 className="text-width subtitle stroked" style={{ color: work.primaryTextColor.toRgbString(), WebkitTextStrokeColor: work.primaryTextColor.toRgbString() }}>{ workTypeText }</h3>
       </div>
     </div>
   );

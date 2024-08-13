@@ -4,6 +4,7 @@ import OurWorkCallToAction from "./OurWorkCallToAction";
 import { useState, useEffect } from 'react';
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../objects/Work";
+import { Color } from "../objects/Color";
 
 function OurWork() {
     const { height } = useWindowDimensions();
@@ -38,17 +39,17 @@ function OurWork() {
         WorkType.IOSAPP,
         
         // Ground Colors
-        "#69709D",
-        "#434660",
-        "#22223B",
+        new Color("#69709D"),
+        new Color("#434660"),
+        new Color("#22223B"),
 
         // Accent Colors
-        "#B47DF2",
-        "#504177",
+        new Color("#B47DF2"),
+        new Color("#504177"),
 
         // Text Colors
-        "#FFFFFF",
-        "#A9A9A9",
+        new Color("#FFFFFF"),
+        new Color("#A9A9A9"),
 
         // UI Stroke
         false,
@@ -73,17 +74,17 @@ function OurWork() {
         WorkType.IOSAPP,
         
         // Ground Colors
-        "#FFFFFF",
-        "#000000",
-        "#FFFFFF",
+        new Color("#FFFFFF"),
+        new Color("#000000"),
+        new Color("#FFFFFF"),
 
         // Accent Colors
-        "#000000",
-        "#FFFFFF",
+        new Color("#000000"),
+        new Color("#FFFFFF"),
 
         // Text Colors
-        "#000000",
-        "#FFFFFF",
+        new Color("#000000"),
+        new Color("#FFFFFF"),
 
         // UI Stroke
         true,
@@ -138,8 +139,8 @@ function OurWork() {
 
     return (
         <>
-            <div className={ `vstack expanding ${lockScroll ? "animated-background-color-only" : "animated"}` } id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor, border: works[workIndex].usesStroke ? border : "none", borderRadius: `${round}px` }}>
-                <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toString()}/>
+            <div className={ `vstack expanding ${lockScroll ? "animated-background-color-only" : "animated"}` } id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${round}px` }}>
+                <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll} />
             </div>
