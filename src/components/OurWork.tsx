@@ -9,21 +9,27 @@ function OurWork() {
     const { height } = useWindowDimensions();
     const [lockScroll, setLockScroll] = useState(true);
     const [scrollPosition, setScrollPosition] = useState(0);
-    const newScrollPosition = scrollPosition - height / 1.5;
+    const newScrollPosition = scrollPosition - height / 1.4;
 
+    const maxRound = 30;
+
+    const round = lockScroll ? Math.min(maxRound, (newScrollPosition + height / 8) / -12) : maxRound;
     const handleClipPath = () => {
-        const round = Math.min(30, (newScrollPosition + height / 8) / -12);
         return `inset(0 round ${round}px)`
     };
 
     const handleScale = () => {
         const rect = document.getElementById("our-work")?.getBoundingClientRect();
 
+        if (!lockScroll) {
+            return `scale(0.9)`;
+        }
+
         if (!rect || (newScrollPosition - rect.top) > 0) {
             return "scale(1)";
         }
 
-        const scale = Math.max(0.8, Math.pow(newScrollPosition / rect.top, 3) / 4 + 1);
+        const scale = Math.max(0.7, Math.pow(newScrollPosition / rect.top, 3) / 4 + 1);
         return `scale(${Math.min(1, scale)})`;
     };
 
@@ -72,8 +78,8 @@ function OurWork() {
         "#FFFFFF",
 
         // Accent Colors
-        "#FF0000",
-        "#0000FF",
+        "#000000",
+        "#FFFFFF",
 
         // Text Colors
         "#000000",
@@ -121,18 +127,18 @@ function OurWork() {
     };
 
     useEffect(() => {
-        if (lockScroll) {
-            window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll);
 
-            return () => {
-                window.removeEventListener('scroll', handleScroll);
-            };
-        }        
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };      
     }, [lockScroll]);
+
+    const border = `2px solid ${works[workIndex].lightAccentColor}`;
 
     return (
         <>
-            <div className="vstack expanding" id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor }}>
+            <div className={ `vstack expanding ${lockScroll ? "animated-background-color-only" : "animated"}` } id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor, border: works[workIndex].usesStroke ? border : "none", borderRadius: `${round}px` }}>
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll} />

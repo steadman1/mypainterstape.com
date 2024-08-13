@@ -1,21 +1,14 @@
-
-function ArrowSVG({ color }: { color: string }) {
+function Arrow({ color }: { color: string }) {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill={color}
-            className="arrow-svg"
-            width="54px" height="54px"
-            viewBox="0 0 54 54"
-        >
-            <path
-            fillRule="evenodd"
-            d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
-            />
+        <svg className="icon" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.6 54.03" width="17px" height="17px">
+        <defs>
+            <style>
+            {`.cls-1 { fill: ${ color }; stroke: ${ color }; stroke-linecap: square; stroke-width: 12px;}`}
+            </style>
+        </defs>
+        <path className="cls-1" d="m44.11,27.73l-17.81,17.81m0,0L8.49,27.73m17.81,12.11V6"/>
         </svg>
     );
 }
 
-    
-
-export default ArrowSVG;
+export default Arrow;
