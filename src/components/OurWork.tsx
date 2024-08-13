@@ -1,11 +1,13 @@
 import OurWorkBar from "./OurWorkBar";
 import OurWorkEntrance from "./OurWorkEntrance";
+import OurWorkCallToAction from "./OurWorkCallToAction";
 import { useState, useEffect } from 'react';
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { Work, WorkType, WorkDetail, WorkDetailType } from "../objects/Work";
+import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../objects/Work";
 
 function OurWork() {
     const { height } = useWindowDimensions();
+    const [lockScroll, setLockScroll] = useState(true);
     const [scrollPosition, setScrollPosition] = useState(0);
     const newScrollPosition = scrollPosition - height / 1.5;
 
@@ -55,6 +57,7 @@ function OurWork() {
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_LOGO,
                 ["ponder-full-cloud.png"],
+                CallToActionType.CONTINUE,
                 "Introducing Ponder, your new Lucid Dreaming Journal.",
             ),
         ]
@@ -89,6 +92,7 @@ function OurWork() {
             new WorkDetail(
                 WorkDetailType.DESCRIPTION,
                 [],
+                CallToActionType.CONTINUE,
                 "Introducing Lotus, your new Spotify Companion.",
             )
         ]
@@ -100,6 +104,7 @@ function OurWork() {
     ]
 
     const [workIndex, setWorkIndex] = useState(0);
+    const [detailIndex, setDetailIndex] = useState(0);
 
     const handleScroll = () => {
         const rect = document.getElementById("our-work")?.getBoundingClientRect();
@@ -109,7 +114,7 @@ function OurWork() {
         if (rect && rect.top <= 0) {
             const scrollTo = position + rect.top;
 
-            if (workIndex < works.length) {
+            if (lockScroll) {
                 window.scrollTo({ left: 0, top: scrollTo, behavior: "instant" });
             }
         }
@@ -126,8 +131,9 @@ function OurWork() {
     return (
         <>
             <div className="vstack expanding" id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor }}>
-                <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor}/>
-                <OurWorkEntrance work={works[workIndex]} index={workIndex} setIndex={setWorkIndex} />
+                <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toString()}/>
+                <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
+                <OurWorkCallToAction ctaType={works[workIndex].details[detailIndex].ctaType} url={works[workIndex].details[detailIndex].URL} primaryColor={works[workIndex].lightAccentColor} secondaryColor={works[workIndex].darkAccentColor} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} />
             </div>
         </>
     );

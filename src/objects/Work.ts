@@ -15,35 +15,41 @@ enum WorkType {
     DESIGN,
 }
 
+enum CallToActionType {
+    CONTINUE,
+    DOWNLOAD_URL_WITH_NEXT,
+}
+
 class WorkDetail {
     type: WorkDetailType;
 
     images: string[];
+
+    ctaType: CallToActionType;
 
     title: string;
     description?: string;
 
     video?: string;
 
-    callToAction?: string;
     URL?: string;
 
     // constructor with named arguments
     constructor(
         type: WorkDetailType,
         images: string[],
+        ctaTye: CallToActionType,
         title: string,
         description?: string,
         video?: string,
-        callToAction?: string,
         URL?: string,
     ) {
         this.type = type;
         this.title = title;
+        this.ctaType = ctaTye;
         this.description = description;
         this.images = images;
         this.video = video;
-        this.callToAction = callToAction;
         this.URL = URL;
     }
 }
@@ -103,4 +109,4 @@ class Work {
     }
 }
 
-export { Work, WorkDetail, WorkType, WorkDetailType };
+export { Work, WorkDetail, WorkType, WorkDetailType, CallToActionType };

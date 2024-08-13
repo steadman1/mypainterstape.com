@@ -1,6 +1,6 @@
 import { Work, WorkDetail, WorkType, WorkDetailType, IOSAPP, WEBAPP, DESIGN } from '../objects/Work';
 
-function OurWorkEntrance({ work, index, setIndex }: { work: Work, index: number, setIndex: React.Dispatch<React.SetStateAction<number>> }) {
+function OurWorkEntrance({ work, detailIndex }: { work: Work, detailIndex: number }) {
     const handleNextWork = () => {
         setIndex(prevIndex => prevIndex + 1);
     };
