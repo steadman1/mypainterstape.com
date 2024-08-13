@@ -121,19 +121,21 @@ function OurWork() {
     };
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        if (lockScroll) {
+            window.addEventListener('scroll', handleScroll);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+            };
+        }        
+    }, [lockScroll]);
 
     return (
         <>
             <div className="vstack expanding" id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor }}>
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
-                <OurWorkCallToAction ctaType={works[workIndex].details[detailIndex].ctaType} url={works[workIndex].details[detailIndex].URL} primaryColor={works[workIndex].lightAccentColor} secondaryColor={works[workIndex].darkAccentColor} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} />
+                <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll} />
             </div>
         </>
     );
