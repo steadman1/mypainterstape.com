@@ -1,6 +1,7 @@
 import { Work } from "../../objects/Work";
 import { useState } from "react";
 import { Arrow, Direction } from "../Icons/Arrow";
+import CheckMark from "../Icons/CheckMark";
 
 function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [secondaryHover , setSecondaryHover] = useState(false);
@@ -60,7 +61,7 @@ function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, s
         <div className="vstack">
             <button className="call-to-action-primary animated" onClick={() => handleURL()} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
                 <div className="hstack bottom-alignment">
-                <Arrow color={primaryColor.toRgbString()} direction={Direction.NORTHEAST} />
+                    <div style={{ marginRight: "5px", marginBottom: "3px" }}><Arrow color={primaryColor.toRgbString()} direction={Direction.NORTHEAST} /></div>
                     <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>Download</h3>
                 </div>
             </button>
@@ -71,10 +72,10 @@ function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, s
                     </div>
                 </button>
                 <div className="hstack" onMouseEnter={() => setTertiaryHover(true)} onMouseLeave={() => setTertiaryHover(false)} onClick={() => handleClick(true)} style={{ cursor: "pointer" }}>
-                    <Arrow color={primaryColor.toRgbaString()} direction={Direction.EAST} />
+                    { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.EAST} /> }
                     <button className="call-to-action-secondary" style={{ textDecorationColor: primaryColor.transparentize(tertiaryHover ? 1 : 0).toRgbaString() }}>
                         <div className="hstack bottom-alignment">
-                            <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>Next</h3>
+                            <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>{isFinal ? "Done" : "Next"}</h3>
                         </div>
                     </button>
                 </div>

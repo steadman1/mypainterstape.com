@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Work } from '../../objects/Work';
+import { Work } from '../../../objects/Work';
 import replaceSpecialCharacters from '../../../replaceSpecialCharacters';
 
 function DescriptionWithLogoWorkDetail({ work, detailIndex }: { work: Work, detailIndex: number }) {
@@ -7,7 +7,7 @@ function DescriptionWithLogoWorkDetail({ work, detailIndex }: { work: Work, deta
     const workDetail = work.details[detailIndex];
 
     return (
-        <div className="changing-stack">
+        <div className="changing-stack work-detail">
             <div>
                 <img className="logo animated" src={"../../../../public/" + workDetail.images[0]} alt={workDetail.title} onLoad={() => setLogoLoaded(true)} style={{ opacity: logoLoaded ? 1 : 0 }} />
             </div>

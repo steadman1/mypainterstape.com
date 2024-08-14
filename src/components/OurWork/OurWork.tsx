@@ -78,7 +78,12 @@ function OurWork() {
             ),
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
-                ["ponder/ponder-full-cloud.png"],
+                [
+                    "ponder/Hold_The_Future_(Sony_Radio_Parody).png",
+                    "ponder/Dont_Let_Dreams_Fleet.png",
+                    "ponder/Dreams_Talk_(WSJ_Parody).png",
+                    "ponder/Dreams_Take_Flight_(Corn_Flakes_Parody).png"
+                ],
                 CallToActionType.CONTINUE,
                 "Ponder helps you dream deeper with _advanced dream analysis._",
             ),

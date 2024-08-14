@@ -199,6 +199,14 @@ button:focus {
   background-color: #ffffff; /* Change this to your preferred background color */
 }
 
+.zstack {
+  display: grid;
+}
+.zstack > * {
+  grid-column: 1;
+  grid-row: 1; 
+}
+
 .vstack {
   overflow-y: auto;
   overflow-x: hidden;
@@ -260,6 +268,10 @@ button:focus {
     flex-direction: row; /* Change to hstack on larger screens */
     text-align: left;
   }
+}
+
+.changing-stack > .vstack {
+  max-width: calc(100vw - 40px);
 }
 
 .specialCharacters {
@@ -352,8 +364,6 @@ button:focus {
   display: flex;
   align-items: flex-end;
   height: min-content;
-  margin-right: 10px;
-  margin-bottom: 3px;
 }
 
 .logo {
@@ -362,10 +372,38 @@ button:focus {
   margin-right: 10px;
 }
 
+.image {
+  object-fit: cover;
+}
+
+.image-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
 .call-to-action-text {
   font-size: 1.5rem;
   font-weight: bold;
   font-family: "integral";
+}
+
+.work-detail {
+  animation-name: bottomFadeIn;
+  animation-duration: 0.5s;
+}
+
+@keyframes bottomFadeIn {
+  0% {
+    transform: translate(0, 100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }
 
 
@@ -388,7 +426,8 @@ button:focus {
 }
 
 #our-work-entrance {
-  
+  height: 100vh;
+  overflow: hidden;
 }
 
 .our-work-text {

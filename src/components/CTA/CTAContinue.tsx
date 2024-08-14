@@ -57,7 +57,7 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
     <div className="vstack">
         <button className="call-to-action-primary animated" onClick={() => handleClick(true)} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
             <div className="hstack bottom-alignment">
-                { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }
+                <div style={{ marginRight: "5px", marginBottom: "3px" }}>{ isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }</div>
                 <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
             </div>
         </button>

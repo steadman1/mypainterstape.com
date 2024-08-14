@@ -26,7 +26,7 @@ function Arrow({ color, direction }: { color: string, direction: Direction }) {
             break;
         }
         case Direction.WEST: {
-            angle = 0;
+            angle = 90;
             break;
         }
         default: {
