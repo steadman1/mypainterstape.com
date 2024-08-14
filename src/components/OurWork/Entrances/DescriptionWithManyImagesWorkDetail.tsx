@@ -6,8 +6,9 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions';
 
 function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work, detailIndex: number }) {
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [imageScrollIndex, setImageScrollIndex] = useState(Math.floor(work.details[detailIndex].images.length / 2) - 1);
+    const [imageScrollIndex, setImageScrollIndex] = useState(0);
     const [imageScrollerWidth, setImageScrollerWidth] = useState(0);
+    const [workDetailClasses, setWorkDetailClasses] = useState("vstack work-detail");
     const { width, height } = useWindowDimensions();
 
     const workDetail = work.details[detailIndex];
@@ -29,7 +30,7 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
     const border = `2px solid ${work.lightAccentColor.toRgbString()}`;
 
     const getImageScrollerWidth = () => {
-        const imageScroller = document.getElementById("image-scroller")
+        const imageScroller = document.getElementById("image-scroller");
         
         if (!imageScroller) return Math.max(width, workDetail.images.length * imageWidth);
 
@@ -56,12 +57,40 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
         </div>
     );
 
-    useEffect(() => {
+    const setup = () => {
+        setImageScrollIndex(Math.floor(work.details[detailIndex].images.length / 2) - 1);
         setImageScrollerWidth(getImageScrollerWidth());
+        setWorkDetailClasses(getWorkDetailClasses());
+    }
+
+    useEffect(() => {
+        setup();
     }, []);
 
+    const getWorkDetailClasses = () => {
+        const workDetailElement = document.getElementById("work-detail");
+
+        if (!workDetailElement) return workDetailClasses;
+        // if (workDetailElement.classList.contains("no-scroll")) return `${workDetailClasses} no-scroll`;
+
+        const workBarHeight = 150;
+        const workCallToActionHeight = 148;
+
+        // sum height of all workDetail element children
+        let workDetailChildrenHeight = 0;
+        for (let i = 0; i < workDetailElement.children.length; i++) {
+            workDetailChildrenHeight += workDetailElement.children[i].clientHeight;
+        }
+
+        if (workDetailChildrenHeight < (height - workCallToActionHeight - workBarHeight)) {
+            return `${workDetailClasses.replaceAll("no-scroll", "")} no-scroll`;
+        }
+
+        return workDetailClasses.replaceAll("no-scroll", "");
+    }
+
     return (
-        <div key={ detailIndex } className="vstack work-detail">
+        <div key={ detailIndex } id="work-detail" className={ workDetailClasses }>
             <div className= "hstack" style={{ width: "100vw", margin: "0 0 10px 0" }}>
                 <div className= "hstack" id="image-scroller">
                 {
@@ -71,7 +100,7 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
                         className="image animated"
                         src={image}
                         alt={`Images showcasing the iOS app "Ponder" and ${workDetail.title}`}
-                        onLoad={() => setImageLoaded(true)}
+                        onLoad={() => {setImageLoaded(true); setup();}}
                         style={{
                             opacity: imageLoaded ? 1 : 0,
                             width: `${imageWidth}px`,

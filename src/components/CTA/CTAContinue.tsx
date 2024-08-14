@@ -61,11 +61,14 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
                 <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
             </div>
         </button>
-        <button className="call-to-action-secondary" onMouseEnter={() => setSecondaryHover(true)} onMouseLeave={() => setSecondaryHover(false)} onClick={() => handleClick(false)} style={{ textDecorationColor: primaryColor.transparentize(secondaryHover ? 1 : 0).toRgbaString() }}>
-            <div className="hstack bottom-alignment">
-                <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>Back</h3>
-            </div>
-        </button>
+        { 
+            workIndex > 0 || detailIndex > 0 ? (
+            <button className="call-to-action-secondary" onMouseEnter={() => setSecondaryHover(true)} onMouseLeave={() => setSecondaryHover(false)} onClick={() => handleClick(false)} style={{ textDecorationColor: primaryColor.transparentize(secondaryHover ? 1 : 0).toRgbaString() }}>
+                <div className="hstack bottom-alignment">
+                    <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>Back</h3>
+                </div>
+            </button>) : null
+        }
     </div>
   );
 }

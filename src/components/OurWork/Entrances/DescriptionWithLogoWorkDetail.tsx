@@ -7,7 +7,7 @@ function DescriptionWithLogoWorkDetail({ work, detailIndex }: { work: Work, deta
     const workDetail = work.details[detailIndex];
 
     return (
-        <div className="changing-stack work-detail">
+        <div className="changing-stack work-detail no-scroll">
             <div>
                 <img className="logo animated" src={"../../../../public/" + workDetail.images[0]} alt={workDetail.title} onLoad={() => setLogoLoaded(true)} style={{ opacity: logoLoaded ? 1 : 0 }} />
             </div>
