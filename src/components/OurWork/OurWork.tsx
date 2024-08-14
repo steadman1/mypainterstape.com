@@ -85,13 +85,15 @@ function OurWork() {
                     "ponder/Dreams_Take_Flight_(Corn_Flakes_Parody).png"
                 ],
                 CallToActionType.CONTINUE,
-                "Ponder helps you dream deeper with _advanced dream analysis._",
+                "Dream Analysis",
+                "With Ponder, dream deeper with advanced _dream analysis tools_ and personalized _dream insights._ Get the most out of each dreams and better understand your subsconscious with Ponder.",
             ),
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
                 ["ponder/ponder-full-cloud.png"],
                 CallToActionType.CONTINUE,
-                "With in-depth guides, _learn to Lucid Dream_ and make _the most of every night's sleep._",
+                "Dream Guides & Articles",
+                "With Ponder's in-depth guides and articles, _learn to Lucid Dream_ and make _the most of every night's sleep._ Don't let your dreams fleet.",
             ),
             new WorkDetail(
                 WorkDetailType.CALL_TO_ACTION,

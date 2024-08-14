@@ -222,6 +222,11 @@ button:focus {
   align-items: center;
 }
 
+.vstack.leading {
+  justify-content: flex-start;
+  align-items: flex-start
+}
+
 .hstack {
   display: flex;
   flex-direction: row;
@@ -260,6 +265,36 @@ button:focus {
   align-items: center;
   text-align: center;
   transition: all 0.5s cubic-bezier(0, 0.4, 0.4, 1);
+}
+
+h3.scaling-text {
+  font-size: 2.6vh;
+}
+
+h5.scaling-text {
+  font-size: 1.8vh;
+}
+
+
+@media (min-height: 700px) {
+  h1.scaling-text {
+    font-size: 2em;
+  }
+  h2.scaling-text {
+    font-size: 1.5em;
+  }
+  h3.scaling-text {
+    font-size: 1.17em;
+  }
+  h4.scaling-text {
+    font-size: 1em;
+  }
+  h5.scaling-text {
+    font-size: 0.83em;
+  }
+  h6.scaling-text {
+    font-size: 0.67em;
+  }
 }
 
 /* Media query for screens larger than 500px */
@@ -321,6 +356,25 @@ button:focus {
 }
 .animated-background-color-only {
   transition: background-color 0.5s cubic-bezier(0, 0.4, 0.4, 1);
+}
+
+@keyframes delayed-transition {
+  0% {
+    transition: none;
+  }
+  99% {
+    transition: none;
+  }
+  100% {
+    transition: transform 0.5s cubic-bezier(0, 0.4, 0.4, 1);
+  }
+  
+}
+
+.image.animated {
+  transition: none;
+  animation-name: delayed-transition;
+  animation-duration: 0.5s;
 }
 
 #our-work-bar {
@@ -400,6 +454,12 @@ button:focus {
 .work-detail {
   animation-name: bottomFadeIn;
   animation-duration: 0.5s;
+}
+
+.max-detail-text {
+  text-align: start;
+  max-width: 300px;
+  width: auto;
 }
 
 @keyframes bottomFadeIn {
@@ -492,6 +552,10 @@ h3 {
   flex: 0;
   text-wrap: nowrap;
   margin: 0;
+}
+
+.center-text {
+  text-align: center;
 }
 
 .divider {
