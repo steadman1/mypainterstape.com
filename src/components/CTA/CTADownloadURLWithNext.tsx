@@ -72,7 +72,7 @@ function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, s
                     </div>
                 </button>
                 <div className="hstack" onMouseEnter={() => setTertiaryHover(true)} onMouseLeave={() => setTertiaryHover(false)} onClick={() => handleClick(true)} style={{ cursor: "pointer" }}>
-                    { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.EAST} /> }
+                    { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }
                     <button className="call-to-action-secondary" style={{ textDecorationColor: primaryColor.transparentize(tertiaryHover ? 1 : 0).toRgbaString() }}>
                         <div className="hstack bottom-alignment">
                             <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>{isFinal ? "Done" : "Next"}</h3>

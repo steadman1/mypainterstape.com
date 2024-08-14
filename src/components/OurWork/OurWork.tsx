@@ -86,7 +86,7 @@ function OurWork() {
                 ],
                 CallToActionType.CONTINUE,
                 "Dream Analysis",
-                "With Ponder, dream deeper with advanced _dream analysis tools_ and personalized _dream insights._ Get the most out of each dreams and better understand your subsconscious with Ponder.",
+                "With Ponder, dream deeper with advanced _dream analysis tools_ and personalized _dream insights._ Get the most out of every dream and better understand your subsconscious with Ponder.",
             ),
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
@@ -97,7 +97,7 @@ function OurWork() {
             ),
             new WorkDetail(
                 WorkDetailType.CALL_TO_ACTION,
-                ["ponder/ponder-full-cloud.png"],
+                ["ponder/ponder-app-icon.png"],
                 CallToActionType.DOWNLOAD_URL_WITH_NEXT,
                 "Ponder: Lucid Dream Journal",
                 "Available now on the _iOS App Store._",
@@ -127,9 +127,9 @@ function OurWork() {
         true,
 
         // Fonts
-        "SFProDisplay",
-        "SFProDisplay",
-        "SFProDisplay",
+        "Newake Demo",
+        "times-new-roman-condensed",
+        "times-new-roman-condensed",
 
         // Work Details
         [
@@ -138,6 +138,7 @@ function OurWork() {
                 [],
                 CallToActionType.CONTINUE,
                 "Introducing Lotus, your new Spotify Companion.",
+                "Coming soon to the iOS App Store."
             )
         ]
     )
@@ -190,7 +191,7 @@ function OurWork() {
 
     return (
         <>
-            <div className={ `vstack expanding ${lockScroll ? "animated-background-color-only" : "animated"}` } id="our-work" style={{ clipPath: `inset(0 round ${handleRound()}px)`, transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${handleRound()}px` }}>
+            <div className={ `vstack expanding ${!lockScroll ? "animated" : ""}` } id="our-work" style={{ clipPath: `inset(0 round ${handleRound()}px)`, transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${handleRound()}px` }}>
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll} />
