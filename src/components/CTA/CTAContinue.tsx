@@ -1,7 +1,7 @@
-import Color from "../objects/Color";
-import Arrow from "./Arrow";
-import { Work } from "../objects/Work";
-import CheckMark from "./Checkmark";
+import Color from "../../objects/Color";
+import { Arrow, Direction } from "../Icons/Arrow";
+import { Work } from "../../objects/Work";
+import CheckMark from "../Icons/CheckMark";
 import { useState } from "react";
 
 function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
@@ -57,7 +57,7 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
     <div className="vstack">
         <button className="call-to-action-primary animated" onClick={() => handleClick(true)} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
             <div className="hstack bottom-alignment">
-                { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} /> }
+                { isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }
                 <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
             </div>
         </button>

@@ -125,6 +125,51 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('SFProDisplay-BoldItalic.woff2') format('woff2'),
+      url('SFProDisplay-BoldItalic.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('SFProDisplay-Medium.woff2') format('woff2'),
+      url('SFProDisplay-Medium.woff') format('woff');
+  font-weight: medium;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SFProDisplay';
+  src: url('SFProDisplay-Bold.woff2') format('woff2'),
+      url('SFProDisplay-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('Manrope-ExtraLight.woff2') format('woff2'),
+      url('Manrope-ExtraLight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('Inter-Regular.woff2') format('woff2'),
+      url('Inter-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 #root {
   margin: 0 auto 0 auto;
   background-color: #ffffff;
@@ -199,6 +244,29 @@ button:focus {
   align-items: flex-end;
 }
 
+.changing-stack {
+  width: 500px;
+  display: flex;
+  flex-direction: column; /* Initially, it mimics a vstack */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0, 0.4, 0.4, 1);
+}
+
+/* Media query for screens larger than 500px */
+@media (min-width: 500px) {
+  .changing-stack {
+    flex-direction: row; /* Change to hstack on larger screens */
+    text-align: left;
+  }
+}
+
+.specialCharacters {
+  font-weight: bold;
+  font-style: italic;
+}
+
 .stroked {
   -webkit-text-stroke: 0.8px #333;
 }
@@ -218,8 +286,18 @@ button:focus {
   align-items: center;
 }
 
+#our-work-entrance {
+  display: flex;
+  width: calc(100vw - 20px);
+  justify-content: center;
+  align-items: center;
+}
+
 .animated {
   transition: all 0.5s cubic-bezier(0, 0.4, 0.4, 1);
+}
+.animated-quick {
+  transition: all 0.25s cubic-bezier(0, 0.4, 0.4, 1);
 }
 .animated-background-color-only {
   transition: background-color 0.5s cubic-bezier(0, 0.4, 0.4, 1);
@@ -276,6 +354,12 @@ button:focus {
   height: min-content;
   margin-right: 10px;
   margin-bottom: 3px;
+}
+
+.logo {
+  height: 70px;
+  width: 70px;
+  margin-right: 10px;
 }
 
 .call-to-action-text {

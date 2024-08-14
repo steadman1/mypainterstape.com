@@ -1,6 +1,6 @@
 import './App.css'
 import MainEntrance from './components/MainEntrance'
-import OurWork from './components/OurWork'
+import OurWork from './components/OurWork/OurWork'
 
 function App() {
 

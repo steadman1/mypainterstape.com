@@ -1,7 +1,7 @@
-import { CallToActionType } from "../objects/Work";
-import CTAContinue from "./CTAContinue";
-import CTADownloadURLWithNext from "./CTADownloadURLWithNext";
-import { Work } from "../objects/Work";
+import { CallToActionType } from "../../objects/Work";
+import CTAContinue from "../CTA/CTAContinue";
+import CTADownloadURLWithNext from "../CTA/CTADownloadURLWithNext";
+import { Work } from "../../objects/Work";
 
 function OurWorkCallToAction({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
     let ctaComponent;

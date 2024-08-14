@@ -2,9 +2,9 @@ import OurWorkBar from "./OurWorkBar";
 import OurWorkEntrance from "./OurWorkEntrance";
 import OurWorkCallToAction from "./OurWorkCallToAction";
 import { useState, useEffect } from 'react';
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../objects/Work";
-import { Color } from "../objects/Color";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../../objects/Work";
+import { Color } from "../../objects/Color";
 
 function OurWork() {
     const { height } = useWindowDimensions();
@@ -14,16 +14,25 @@ function OurWork() {
 
     const maxRound = 30;
 
-    const round = lockScroll ? Math.min(maxRound, (newScrollPosition + height / 8) / -12) : maxRound;
-    const handleClipPath = () => {
-        return `inset(0 round ${round}px)`
+    const handleRound = () => {
+        const rect = document.getElementById("our-work")?.getBoundingClientRect();
+
+        if (!lockScroll) {
+            return maxRound;
+        }
+
+        if (!rect || (newScrollPosition - rect.top) > 0) {
+            return 0;
+        }
+        
+        return Math.min(maxRound, (newScrollPosition + height / 8) / -12);
     };
 
     const handleScale = () => {
         const rect = document.getElementById("our-work")?.getBoundingClientRect();
 
         if (!lockScroll) {
-            return `scale(0.9)`;
+            return "scale(0.9)";
         }
 
         if (!rect || (newScrollPosition - rect.top) > 0) {
@@ -55,17 +64,38 @@ function OurWork() {
         false,
 
         // Fonts
-        "Inter",
-        "Inter",
         "Manrope",
+        "Inter",
+        "Inter",
         
         // Work Details
         [
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_LOGO,
-                ["ponder-full-cloud.png"],
+                ["ponder/ponder-full-cloud.png"],
                 CallToActionType.CONTINUE,
-                "Introducing Ponder, your new Lucid Dreaming Journal.",
+                "Introducing Ponder, your new _Lucid Dreaming Journal._",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
+                ["ponder/ponder-full-cloud.png"],
+                CallToActionType.CONTINUE,
+                "Ponder helps you dream deeper with _advanced dream analysis._",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
+                ["ponder/ponder-full-cloud.png"],
+                CallToActionType.CONTINUE,
+                "With in-depth guides, _learn to Lucid Dream_ and make _the most of every night's sleep._",
+            ),
+            new WorkDetail(
+                WorkDetailType.CALL_TO_ACTION,
+                ["ponder/ponder-full-cloud.png"],
+                CallToActionType.DOWNLOAD_URL_WITH_NEXT,
+                "Ponder: Lucid Dream Journal",
+                "Available now on the _iOS App Store._",
+                undefined,
+                "https://apps.apple.com/us/",
             ),
         ]
     )
@@ -90,9 +120,9 @@ function OurWork() {
         true,
 
         // Fonts
-        "Inter",
-        "Inter",
-        "Manrope",
+        "SFProDisplay",
+        "SFProDisplay",
+        "SFProDisplay",
 
         // Work Details
         [
@@ -135,11 +165,25 @@ function OurWork() {
         };      
     }, [lockScroll]);
 
-    const border = `2px solid ${works[workIndex].lightAccentColor}`;
+    useEffect(() => {
+        const rect = document.getElementById("our-work")?.getBoundingClientRect();
+        const position = window.scrollY;
+
+        if (rect && rect.top <= 0) {
+            const scrollTo = position + rect.top;
+
+            if ((workIndex + 1) >= works.length || (detailIndex + 1) >= works[workIndex].details.length) {
+                console.log("scrolling to", scrollTo);
+                window.scrollTo({ left: 0, top: scrollTo, behavior: "smooth" });
+            }
+        }
+    }, [workIndex, detailIndex]);
+
+    const border = `2px solid ${works[workIndex].lightAccentColor.toRgbString()}`;
 
     return (
         <>
-            <div className={ `vstack expanding ${lockScroll ? "animated-background-color-only" : "animated"}` } id="our-work" style={{ clipPath: handleClipPath(), transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${round}px` }}>
+            <div className={ `vstack expanding ${lockScroll ? "animated-background-color-only" : "animated"}` } id="our-work" style={{ clipPath: `inset(0 round ${handleRound()}px)`, transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${handleRound()}px` }}>
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll} />

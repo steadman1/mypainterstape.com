@@ -1,5 +1,5 @@
-import Divider from "./Divider";
-import { Work, WorkType } from "../objects/Work";
+import Divider from "../Divider";
+import { Work, WorkType } from "../../objects/Work";
 
 function OurWorkBar({ work, color }: { work: Work, color: string }) {
   let workTypeText = "";
