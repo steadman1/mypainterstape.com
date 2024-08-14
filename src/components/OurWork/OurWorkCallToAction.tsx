@@ -20,7 +20,7 @@ function OurWorkCallToAction({ works, workIndex, setWorkIndex, detailIndex, setD
     }
   
     return (
-        <div id="our-work-call-to-action">
+        <div id="our-work-call-to-action" style={{ width: "100vw", background: `linear-gradient(to top, ${works[workIndex].backgroundColor.transparentize(1).toRgbaString()} 60%, ${works[workIndex].backgroundColor.transparentize(0).toRgbaString()} 100%)`}}>
             { ctaComponent }
         </div>
     );

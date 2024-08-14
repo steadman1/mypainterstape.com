@@ -47,7 +47,7 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
 
     return (
         <div key={ detailIndex } className="changing-stack work-detail">
-            <div className="vstack" style={{ width: `${imageWidth * 2.5}px`, margin: "0 10px 10px 0" }}>
+            <div style={{ width: "fit-content", margin: "0 10px 10px 0" }}>
                 <img
                         className="image animated"
                         src={workDetail.images[imageScrollIndex]}

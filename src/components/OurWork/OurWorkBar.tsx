@@ -19,7 +19,7 @@ function OurWorkBar({ work, color }: { work: Work, color: string }) {
   }
 
   return (
-    <div className="vstack expanding" id="our-work-bar">
+    <div className="vstack expanding" id="our-work-bar" style={{ background: `linear-gradient(to bottom, ${work.backgroundColor.transparentize(1).toRgbaString()} 60%, ${work.backgroundColor.transparentize(0).toRgbaString()} 100%)`}}>
       <div className="hstack space-between-row">
         <h2 className="our-work-text" style={{ color: color }}>*</h2>
         <h3 className="our-work-text one" style={{ color: color }}>Our Work</h3>

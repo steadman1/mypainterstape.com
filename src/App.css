@@ -301,8 +301,16 @@ button:focus {
 #our-work-entrance {
   display: flex;
   width: calc(100vw - 20px);
+  height: 100vh;
   justify-content: center;
   align-items: center;
+  overflow: auto;
+  padding-top: 133px;
+  padding-bottom: 138px;
+}
+
+#our-work-entrance::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
 .animated {
@@ -423,11 +431,6 @@ button:focus {
 .space-between-row:last-child {
   padding-top: 24px;
   padding-bottom: 16px;
-}
-
-#our-work-entrance {
-  height: 100vh;
-  overflow: hidden;
 }
 
 .our-work-text {
