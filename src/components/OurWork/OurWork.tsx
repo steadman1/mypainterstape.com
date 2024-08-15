@@ -86,6 +86,7 @@ function OurWork() {
                 ],
                 CallToActionType.CONTINUE,
                 "Dream Analysis",
+                undefined,
                 "With Ponder, dream deeper with advanced _dream analysis tools_ and personalized _dream insights._ Get the most out of every dream and better understand your subsconscious with Ponder.",
             ),
             new WorkDetail(
@@ -93,6 +94,7 @@ function OurWork() {
                 ["ponder/ponder-full-cloud.png"],
                 CallToActionType.CONTINUE,
                 "Dream Guides & Articles",
+                undefined,
                 "With Ponder's in-depth guides and articles, _learn to Lucid Dream_ and make _the most of every night's sleep._ Don't let your dreams fleet.",
             ),
             new WorkDetail(
@@ -100,6 +102,7 @@ function OurWork() {
                 ["ponder/ponder-app-icon.png"],
                 CallToActionType.DOWNLOAD_URL_WITH_NEXT,
                 "Ponder: Lucid Dream Journal",
+                "Dream Deeper—Night after Night.",
                 "Available now on the _iOS App Store._",
                 undefined,
                 "https://apps.apple.com/us/",
@@ -166,11 +169,12 @@ function OurWork() {
     };
 
     useEffect(() => {
+        handleScroll();
         window.addEventListener('scroll', handleScroll);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
-        };      
+        };
     }, [lockScroll]);
 
     useEffect(() => {
@@ -194,7 +198,7 @@ function OurWork() {
             <div className={ `vstack expanding ${!lockScroll ? "animated" : ""}` } id="our-work" style={{ clipPath: `inset(0 round ${handleRound()}px)`, transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${handleRound()}px` }}>
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
-                <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll} />
+                <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
             </div>
         </>
     );

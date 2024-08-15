@@ -205,6 +205,14 @@ button:focus {
   outline: revert;
 }
 
+h4 {
+  font-weight: normal;
+}
+
+h5 {
+  font-weight: normal;
+}
+
 .expanding {
   display: flex;
   width: 100vw;
@@ -329,7 +337,7 @@ h5.scaling-text {
 }
 
 .specialCharacters {
-  font-weight: bold;
+  font-weight: 600;
   font-style: italic;
 }
 

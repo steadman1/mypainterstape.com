@@ -3,14 +3,14 @@ import CTAContinue from "../CTA/CTAContinue";
 import CTADownloadURLWithNext from "../CTA/CTADownloadURLWithNext";
 import { Work } from "../../objects/Work";
 
-function OurWorkCallToAction({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
+function OurWorkCallToAction({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, lockScroll, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
     let ctaComponent;
 
     const ctaType = works[workIndex].details[detailIndex].ctaType;
 
     switch (ctaType) {
         case CallToActionType.CONTINUE: {
-            ctaComponent = <CTAContinue works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll}/>
+            ctaComponent = <CTAContinue works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll}/>
             break;
         }   
         case CallToActionType.DOWNLOAD_URL_WITH_NEXT: {

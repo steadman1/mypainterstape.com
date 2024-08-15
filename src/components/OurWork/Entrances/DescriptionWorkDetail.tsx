@@ -10,9 +10,9 @@ function DescriptionWorkDetail({ work, detailIndex }: { work: Work, detailIndex:
                 {replaceSpecialCharacters(workDetail.title)}
             </h3>
             {
-                workDetail.description && 
-                <h3 className="animated" style={{ marginTop: "10px", width: "auto", color: work.primaryTextColor.toRgbString(), fontFamily: work.bodyFont, fontWeight: "medium" }}>
-                    {replaceSpecialCharacters(workDetail.description)}
+                workDetail.subtitle && 
+                <h3 className="animated" style={{ marginTop: "10px", width: "auto", color: work.primaryTextColor.toRgbString(), fontFamily: work.subtitleFont, fontWeight: "medium" }}>
+                    {replaceSpecialCharacters(workDetail.subtitle)}
                 </h3>
             }
         </div>

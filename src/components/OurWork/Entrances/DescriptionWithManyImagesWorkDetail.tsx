@@ -125,9 +125,9 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
                 <h3 className="max-detail-text scaling-text animated" style={{ color: work.primaryTextColor.toRgbString(), fontFamily: work.titleFont, fontWeight: "bold", opacity: imageLoaded ? 1 : 0 }}>
                     {replaceSpecialCharacters(workDetail.title)}
                 </h3>
-                <h5 className="max-detail-text scaling-text animated" style={{ marginTop: "10px", color: work.primaryTextColor.toRgbString(), fontFamily: work.titleFont, opacity: imageLoaded ? 1 : 0 }}>
+                <h4 className="max-detail-text scaling-text animated" style={{ marginTop: "10px", color: work.primaryTextColor.toRgbString(), fontFamily: work.bodyFont, opacity: imageLoaded ? 1 : 0 }}>
                     {replaceSpecialCharacters(workDetail.description ?? "")}
-                </h5>
+                </h4>
             </div>
         </div>
     );

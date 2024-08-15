@@ -28,6 +28,7 @@ class WorkDetail {
     ctaType: CallToActionType;
 
     title: string;
+    subtitle?: string;
     description?: string;
 
     video?: string;
@@ -40,12 +41,14 @@ class WorkDetail {
         images: string[],
         ctaTye: CallToActionType,
         title: string,
+        subtitle?: string,
         description?: string,
         video?: string,
         URL?: string,
     ) {
         this.type = type;
         this.title = title;
+        this.subtitle = subtitle;
         this.ctaType = ctaTye;
         this.description = description;
         this.images = images;
