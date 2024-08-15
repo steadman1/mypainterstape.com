@@ -17,7 +17,7 @@ function CallToActionWorkDetail({ work, detailIndex }: { work: Work, detailIndex
         case WorkType.IOSAPP: {
             return (
                 <>
-                    <div className="vstack work-detail no-scroll">
+                    <div key={ `${work.name}-${detailIndex}`  } className="vstack work-detail no-scroll">
                         <div className="hstack">
                             <div className="zstack">
                                 <img className="app-icon animated" src={"../../../../public/" + workDetail.images[0]} alt={workDetail.title} onLoad={() => handleImageLoaded(0)} style={{ opacity: imageLoaded ? 1 : 0 }} />

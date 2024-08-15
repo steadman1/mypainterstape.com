@@ -90,7 +90,7 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
     }
 
     return (
-        <div key={ detailIndex } id="work-detail" className={ workDetailClasses }>
+        <div key={ `${work.name}-${detailIndex}`  } id="work-detail" className={ workDetailClasses }>
             <div className= "hstack" style={{ width: "100vw", margin: "0 0 10px 0" }}>
                 <div className= "hstack" id="image-scroller">
                 {

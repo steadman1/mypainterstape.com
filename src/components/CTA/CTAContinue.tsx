@@ -7,6 +7,11 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
     const [secondaryHover , setSecondaryHover] = useState(false);
 
     const handleForward = () => {
+        if (!lockScroll) {
+            setLockScroll(true);
+            return;
+        }
+
         if ((workIndex + 1) >= works.length) {
             setLockScroll(false);
             return;
@@ -57,14 +62,12 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
     return (
     <div className="vstack">
         {
-            lockScroll ? (
-                <button className="call-to-action-primary animated" onClick={() => handleClick(true)} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
-                    <div className="hstack bottom-alignment">
-                        <div style={{ marginRight: "5px", marginBottom: "3px" }}>{ isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }</div>
-                        <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
-                    </div>
-                </button>
-            ) : null
+            <button className="call-to-action-primary animated" onClick={() => handleClick(true)} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
+                <div className="hstack bottom-alignment">
+                    <div style={{ marginRight: "5px", marginBottom: "3px" }}>{ isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }</div>
+                    <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
+                </div>
+            </button>
         }
         { 
             workIndex > 0 || detailIndex > 0 ? (

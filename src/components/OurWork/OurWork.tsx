@@ -1,6 +1,7 @@
 import OurWorkBar from "./OurWorkBar";
 import OurWorkEntrance from "./OurWorkEntrance";
 import OurWorkCallToAction from "./OurWorkCallToAction";
+import OurWorkNavigation from "./OurWorkNavigation";
 import { useState, useEffect } from 'react';
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../../objects/Work";
@@ -43,113 +44,7 @@ function OurWork() {
         return `scale(${Math.min(1, scale)})`;
     };
 
-    const ponderWork = new Work(
-        "Ponder",
-        WorkType.IOSAPP,
-        
-        // Ground Colors
-        new Color("#69709D"),
-        new Color("#434660"),
-        new Color("#22223B"),
-
-        // Accent Colors
-        new Color("#B47DF2"),
-        new Color("#504177"),
-
-        // Text Colors
-        new Color("#FFFFFF"),
-        new Color("#A9A9A9"),
-
-        // UI Stroke
-        false,
-
-        // Fonts
-        "Manrope",
-        "Inter",
-        "Inter",
-        
-        // Work Details
-        [
-            new WorkDetail(
-                WorkDetailType.DESCRIPTION_WITH_LOGO,
-                ["ponder/ponder-full-cloud.png"],
-                CallToActionType.CONTINUE,
-                "Introducing Ponder, your new _Lucid Dreaming Journal._",
-            ),
-            new WorkDetail(
-                WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
-                [
-                    "ponder/Hold_The_Future_(Sony_Radio_Parody).png",
-                    "ponder/Dont_Let_Dreams_Fleet.png",
-                    "ponder/Dreams_Talk_(WSJ_Parody).png",
-                    "ponder/Dreams_Take_Flight_(Corn_Flakes_Parody).png"
-                ],
-                CallToActionType.CONTINUE,
-                "Dream Analysis",
-                undefined,
-                "With Ponder, dream deeper with advanced _dream analysis tools_ and personalized _dream insights._ Get the most out of every dream and better understand your subsconscious with Ponder.",
-            ),
-            new WorkDetail(
-                WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
-                ["ponder/ponder-full-cloud.png"],
-                CallToActionType.CONTINUE,
-                "Dream Guides & Articles",
-                undefined,
-                "With Ponder's in-depth guides and articles, _learn to Lucid Dream_ and make _the most of every night's sleep._ Don't let your dreams fleet.",
-            ),
-            new WorkDetail(
-                WorkDetailType.CALL_TO_ACTION,
-                ["ponder/ponder-app-icon.png"],
-                CallToActionType.DOWNLOAD_URL_WITH_NEXT,
-                "Ponder: Lucid Dream Journal",
-                "Dream Deeper—Night after Night.",
-                "Available now on the _iOS App Store._",
-                undefined,
-                "https://apps.apple.com/us/",
-            ),
-        ]
-    )
-    const lotusWork = new Work(
-        "Lotus",
-        WorkType.IOSAPP,
-        
-        // Ground Colors
-        new Color("#FFFFFF"),
-        new Color("#000000"),
-        new Color("#FFFFFF"),
-
-        // Accent Colors
-        new Color("#000000"),
-        new Color("#FFFFFF"),
-
-        // Text Colors
-        new Color("#000000"),
-        new Color("#FFFFFF"),
-
-        // UI Stroke
-        true,
-
-        // Fonts
-        "Newake Demo",
-        "times-new-roman-condensed",
-        "times-new-roman-condensed",
-
-        // Work Details
-        [
-            new WorkDetail(
-                WorkDetailType.DESCRIPTION,
-                [],
-                CallToActionType.CONTINUE,
-                "Introducing Lotus, your new Spotify Companion.",
-                "Coming soon to the iOS App Store."
-            )
-        ]
-    )
-
-    const works = [
-        ponderWork,
-        lotusWork
-    ]
+    const works = Work.works;
 
     const [workIndex, setWorkIndex] = useState(0);
     const [detailIndex, setDetailIndex] = useState(0);
@@ -196,9 +91,11 @@ function OurWork() {
     return (
         <>
             <div className={ `vstack expanding ${!lockScroll ? "animated" : ""}` } id="our-work" style={{ clipPath: `inset(0 round ${handleRound()}px)`, transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${handleRound()}px` }}>
+                <OurWorkNavigation works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
+
             </div>
         </>
     );

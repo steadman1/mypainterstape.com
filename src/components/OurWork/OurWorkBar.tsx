@@ -4,18 +4,23 @@ import { Work, WorkType } from "../../objects/Work";
 function OurWorkBar({ work, color }: { work: Work, color: string }) {
   let workTypeText = "";
   switch (work.workType) {
-      case WorkType.IOSAPP: {
-          workTypeText = "iOS App";
-          break;
-      }
-      case WorkType.WEBAPP: {
-          workTypeText = "Web App";
-          break;
-      }
-      case WorkType.DESIGN: {
-          workTypeText = "Design";
-          break;
-      }
+    case WorkType.INTRO: {
+      workTypeText = "from PT Studios";
+      break;
+    }
+    case WorkType.IOSAPP: {
+      workTypeText = "iOS App";
+      break;
+      
+    }
+    case WorkType.WEBAPP: {
+      workTypeText = "Web App";
+      break;
+    }
+    case WorkType.DESIGN: {
+      workTypeText = "Design";
+      break;
+    }
   }
 
   return (
