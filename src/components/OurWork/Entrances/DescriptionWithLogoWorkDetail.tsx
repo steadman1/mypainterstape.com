@@ -9,7 +9,7 @@ function DescriptionWithLogoWorkDetail({ work, detailIndex }: { work: Work, deta
     return (
         <div key={ `${work.name}-${detailIndex}`  } className="changing-stack work-detail no-scroll">
             <div>
-                <img className="logo animated" src={"../../../../public/" + workDetail.images[0]} alt={workDetail.title} onLoad={() => setLogoLoaded(true)} style={{ opacity: logoLoaded ? 1 : 0 }} />
+                <img className="logo animated" src={"../../../../" + workDetail.images[0]} alt={workDetail.title} onLoad={() => setLogoLoaded(true)} style={{ opacity: logoLoaded ? 1 : 0 }} />
             </div>
             <div className="vstack changing-alignment">
                 <h3 className="animated" style={{ width: "auto", color: work.primaryTextColor.toRgbString(), fontFamily: work.titleFont, fontWeight: "medium" }}>

@@ -1,14 +1,14 @@
 import OurWorkBar from "./OurWorkBar";
 import OurWorkEntrance from "./OurWorkEntrance";
 import OurWorkCallToAction from "./OurWorkCallToAction";
-import OurWorkNavigation from "./OurWorkNavigation";
+import { OurWorkNavigation, NavigationDirection } from "./OurWorkNavigation";
 import { useState, useEffect } from 'react';
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../../objects/Work";
 import { Color } from "../../objects/Color";
 
 function OurWork() {
-    const { height } = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
     const [lockScroll, setLockScroll] = useState(true);
     const [scrollPosition, setScrollPosition] = useState(0);
     const newScrollPosition = scrollPosition - height / 1.4;
@@ -88,10 +88,12 @@ function OurWork() {
 
     const border = `2px solid ${works[workIndex].lightAccentColor.toRgbString()}`;
 
+    const direction = width > 500 ? NavigationDirection.VERTICAL : NavigationDirection.HORIZONTAL
+
     return (
         <>
             <div className={ `vstack expanding ${!lockScroll ? "animated" : ""}` } id="our-work" style={{ clipPath: `inset(0 round ${handleRound()}px)`, transform: handleScale(), backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${handleRound()}px` }}>
-                <OurWorkNavigation works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
+                <OurWorkNavigation direction={direction} works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />

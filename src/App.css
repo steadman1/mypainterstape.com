@@ -388,11 +388,13 @@ h5.scaling-text {
 #our-work-entrance::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
 }
+#our-work-navigation::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
 
 #our-work-navigation {
   position: fixed;
   left: 0;
-  height: calc(100vh - 271px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -458,7 +460,7 @@ h5.scaling-text {
   &:hover {
     cursor: pointer;
     transform: scale(1.05);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -521,6 +523,11 @@ h5.scaling-text {
   font-size: 1.5rem;
   font-weight: bold;
   font-family: "integral";
+}
+.call-to-action-text.small {
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: "times-new-roman-condensed";
 }
 
 .max-detail-text {
@@ -619,10 +626,6 @@ h3 {
   flex: 0;
   text-wrap: nowrap;
   margin: 0;
-}
-
-.text-circle-path {
-
 }
 
 .center-text {

@@ -171,8 +171,8 @@ class Work {
 
         // Fonts
         "Manrope",
-        "Inter",
-        "Inter",
+        "Manrope",
+        "Manrope",
         
         // Work Details
         [
@@ -208,7 +208,7 @@ class Work {
                 ["ponder/ponder-app-icon.png"],
                 CallToActionType.DOWNLOAD_URL_WITH_NEXT,
                 "Ponder: Lucid Dream Journal",
-                "Dream Deeper—Night after Night.",
+                "Dream Deeper with Ponder.",
                 "Available now on the _iOS App Store._",
                 undefined,
                 "https://apps.apple.com/us/",

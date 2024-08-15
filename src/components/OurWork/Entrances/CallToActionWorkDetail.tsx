@@ -20,8 +20,8 @@ function CallToActionWorkDetail({ work, detailIndex }: { work: Work, detailIndex
                     <div key={ `${work.name}-${detailIndex}`  } className="vstack work-detail no-scroll">
                         <div className="hstack">
                             <div className="zstack">
-                                <img className="app-icon animated" src={"../../../../public/" + workDetail.images[0]} alt={workDetail.title} onLoad={() => handleImageLoaded(0)} style={{ opacity: imageLoaded ? 1 : 0 }} />
-                                <img className="app-store-icon animated" src={"../../../../public/app-store-logo-icon.png"} alt="Apple App Store Logo" onLoad={() => handleImageLoaded(1)} style={{ opacity: imageLoaded ? 1 : 0 }} />
+                                <img className="app-icon animated" src={"../../../../" + workDetail.images[0]} alt={workDetail.title} onLoad={() => handleImageLoaded(0)} style={{ opacity: imageLoaded ? 1 : 0 }} />
+                                <img className="app-store-icon animated" src={"../../../../app-store-logo-icon.png"} alt="Apple App Store Logo" onLoad={() => handleImageLoaded(1)} style={{ opacity: imageLoaded ? 1 : 0 }} />
                             </div>
                             <div className="vstack leading">
                                 <h2 className="max-detail-text scaling-text animated" style={{ margin: "0px", color: work.primaryTextColor.toRgbString(), fontFamily: work.titleFont, opacity: imageLoaded ? 1 : 0 }}>
