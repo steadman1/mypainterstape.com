@@ -189,6 +189,11 @@
   font-display: swap;
 }
 
+/* html, body {
+  height: 100vh;
+  overflow: hidden;
+} */
+
 #root {
   margin: 0 auto 0 auto;
   background-color: #ffffff;
@@ -265,10 +270,19 @@ h5 {
   align-items: center;
 }
 
+.hstack::-webkit-scrollbar {
+  display: none;
+}
+
 .hstack.space-between {
   box-sizing: border-box;
   width: 100%;
   justify-content: space-evenly;
+}
+
+.hstack.leading {
+  justify-content: flex-start;
+  align-items: flex-start
 }
 
 .hstack.space-between > * {
@@ -368,7 +382,16 @@ h5.scaling-text {
   font-style: italic;
 }
 
+#main-scroll-view {
+  /* height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: proximity;
+  scroll-snap-type: y proximity; */
+}
+
 #our-work {
+  scroll-snap-align: center;
   height: 100vh;
   justify-content: center;
   align-items: center;
@@ -382,7 +405,7 @@ h5.scaling-text {
   align-items: flex-start;
   overflow: auto;
   padding-top: 133px;
-  padding-bottom: 138px
+  padding-bottom: 138px;
 }
 
 #our-work-entrance::-webkit-scrollbar {
@@ -623,7 +646,9 @@ h3 {
 
 .text-width  {
   display: flex;
-  flex: 0;
+  flex-grow: 0; /* Don't allow the flex item to grow */
+  flex-shrink: 0; /* Don't allow the flex item to shrink */
+  flex-basis: auto;
   text-wrap: nowrap;
   margin: 0;
 }

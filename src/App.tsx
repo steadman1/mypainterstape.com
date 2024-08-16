@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <div className="vstack">
+      <div className="vstack" id="main-scroll-view">
         <MainEntrance />
         <OurWork />
         <div style={{ height: "30vh" }}>

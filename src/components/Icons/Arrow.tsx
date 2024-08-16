@@ -43,7 +43,7 @@ function Arrow({ color, direction }: { color: string, direction: Direction }) {
     return (
         <>
         <div>
-            <svg key={ color } className="icon" style={{ transform: `rotate(${angle}deg)`, fill: color, color: color,  stroke: color, strokeLinecap: "square", strokeWidth: "12px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.6 54.03" width="17px" height="17px">
+            <svg key={ color } className="icon" style={{ width: "17px", height: "17px", transform: `rotate(${angle}deg)`, fill: color, color: color,  stroke: color, strokeLinecap: "square", strokeWidth: "12px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.6 54.03">
                 <path style={{ color: color, fill: color, stroke: color }} className="cls-1" d="m44.11,27.73l-17.81,17.81m0,0L8.49,27.73m17.81,12.11V6"/>
             </svg>
         </div>
