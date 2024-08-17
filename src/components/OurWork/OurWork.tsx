@@ -2,15 +2,22 @@ import OurWorkBar from "./OurWorkBar";
 import OurWorkEntrance from "./OurWorkEntrance";
 import OurWorkCallToAction from "./OurWorkCallToAction";
 import { OurWorkNavigation, NavigationDirection } from "./OurWorkNavigation";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { Work, WorkType, WorkDetail, WorkDetailType, CallToActionType } from "../../objects/Work";
 import { Color } from "../../objects/Color";
+import { isMobile } from 'react-device-detect';
+
+enum ScrollDirection {
+    UP = 1,
+    DOWN = -1,
+    NONE = 0
+}
 
 function OurWork() {
     const { width, height } = useWindowDimensions();
     const [lockScroll, setLockScroll] = useState(true);
-    const [scrollPosition, setScrollPosition] = useState(0);
+    const [scrollPosition, setScrollPosition] = useState(window.scrollY);
     const newScrollPosition = scrollPosition - height / 1.4;
 
     const maxRound = 30;
@@ -49,12 +56,59 @@ function OurWork() {
     const [workIndex, setWorkIndex] = useState(0);
     const [detailIndex, setDetailIndex] = useState(0);
 
+    const getlockScroll = () => {
+        return lockScroll;
+    };
+
+    const scrollSnap = (force: boolean) => {
+        const snapThreshold = isMobile ? 0.4 : 0.2;
+        
+        const rect = document.getElementById("our-work")?.getBoundingClientRect();
+        if (getlockScroll() || force) {
+            if (rect?.top && rect?.bottom && rect?.height && Math.abs(rect.top) < snapThreshold * height) {
+                const topBottomPadding = Math.floor((height - rect.height) / 2);
+                window.scrollTo({ top: (window.scrollY + rect.top - (isMobile ? 0 : topBottomPadding)), behavior: "smooth" });
+            }
+        }
+    };
+
     useEffect(() => {
-        const events = ["scroll", "touchstart", "touchend", "touchmove", "wheel"];
-        events.forEach(event => {
-            window.addEventListener(event, () => setScrollPosition(window.scrollY));
+        const events = ["scroll", "touchmove", "wheel"];
+
+        if (lockScroll) {
+            scrollSnap(true);
+        }
+        
+        events.forEach(eventString => {
+            let isScrolling: any = null;
+            window.addEventListener(eventString, function () {
+                setScrollPosition(window.scrollY);
+
+                if (getlockScroll()) {
+                    window.clearTimeout(isScrolling);
+
+                    isScrolling = setTimeout(() => {
+                        scrollSnap(false);
+                    }, (isMobile ? 132 : 66));
+                }
+            }, false);
+
+            return () => {
+                window.removeEventListener(eventString, function () {
+                    setScrollPosition(window.scrollY);
+
+                    if (getlockScroll()) {
+                        window.clearTimeout(isScrolling);
+
+                        isScrolling = setTimeout(() => {
+                            scrollSnap(false);
+                        }, 66);
+                    }
+                }, false);
+            }
         });
-    }, [lockScroll]);
+    }, [lockScroll, height]);
+
 
     const border = `2px solid ${works[workIndex].lightAccentColor.toRgbString()}`;
 

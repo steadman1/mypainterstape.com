@@ -38,7 +38,7 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
     };
     
     const buttons = (
-        <div className="hstack space-between" style={{ width: `${Math.min(width, 300)}px` }}>
+        <div key={ `${work.name}-${detailIndex}`  } className="hstack space-between" style={{ width: `${Math.min(width, 300)}px` }}>
             <button className="call-to-action-primary animated" onClick={() => handlePrev()} style={{ backgroundColor: work.darkAccentColor.toRgbString(), border: work.usesStroke ? border : "none", padding: "10px" }}>
                 <Arrow color={work.lightAccentColor.toRgbString()} direction={Direction.WEST} />
             </button>

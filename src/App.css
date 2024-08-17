@@ -190,7 +190,7 @@
 }
 
 /* html, body {
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 } */
 
@@ -225,7 +225,7 @@ h5 {
 }
 
 .entrance-screen {
-  height: 100vh;
+  height: 100dvh;
   justify-content: center;
   align-items: center;
   background-color: #ffffff; /* Change this to your preferred background color */
@@ -318,7 +318,7 @@ changing-alignment {
 }
 
 h3.scaling-text {
-  font-size: 2.6vh;
+  font-size: 2.6ddvh;
 }
 
 h5.scaling-text {
@@ -383,7 +383,7 @@ h5.scaling-text {
 }
 
 #main-scroll-view {
-  /* height: 100vh;
+  /* height: 100dvh;
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-snap-type: proximity;
@@ -392,7 +392,7 @@ h5.scaling-text {
 
 #our-work {
   scroll-snap-align: center;
-  height: 100vh;
+  height: 100dvh;
   justify-content: center;
   align-items: center;
 }
@@ -400,7 +400,7 @@ h5.scaling-text {
 #our-work-entrance {
   display: flex;
   width: calc(100vw - 20px);
-  height: 100vh;
+  height: 100dvh;
   justify-content: center;
   align-items: flex-start;
   overflow: auto;
@@ -435,7 +435,7 @@ h5.scaling-text {
 }
 
 .work-detail.no-scroll {
-  height: calc(100vh - 271px);
+  height: calc(100dvh - 271px);
 }
 
 .animated {
