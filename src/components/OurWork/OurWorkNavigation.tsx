@@ -63,8 +63,8 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
                           hover ? (
                             <Arrow color={ primaryColor } direction={Direction.EAST} />
                           ) : (
-                            <h5 className="text-width call-to-action-text small" style={{ color: secondaryColor }}>
-                              {detailIndex + 1}/{details.length}
+                            <h5 className="text-width call-to-action-text small stroked" style={{ color: secondaryColor }}>
+                              {detailIndex + 1}&thinsp;/&thinsp;{details.length}
                             </h5>
                           )
               }

@@ -137,8 +137,8 @@
 
 @font-face {
   font-family: 'SFProDisplay';
-  src: url('SFProDisplay-BoldItalic.woff2') format('woff2'),
-      url('SFProDisplay-BoldItalic.woff') format('woff');
+  src: url('fonts/SFProDisplay-BoldItalic.woff2') format('woff2'),
+      url('fonts/SFProDisplay-BoldItalic.woff') format('woff');
   font-weight: bold;
   font-style: italic;
   font-display: swap;
@@ -146,8 +146,8 @@
 
 @font-face {
   font-family: 'SFProDisplay';
-  src: url('SFProDisplay-Medium.woff2') format('woff2'),
-      url('SFProDisplay-Medium.woff') format('woff');
+  src: url('fonts/SFProDisplay-Medium.woff2') format('woff2'),
+      url('fonts/SFProDisplay-Medium.woff') format('woff');
   font-weight: medium;
   font-style: normal;
   font-display: swap;
@@ -155,8 +155,8 @@
 
 @font-face {
   font-family: 'SFProDisplay';
-  src: url('SFProDisplay-Bold.woff2') format('woff2'),
-      url('SFProDisplay-Bold.woff') format('woff');
+  src: url('fonts/SFProDisplay-Bold.woff2') format('woff2'),
+      url('fonts/SFProDisplay-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -164,28 +164,26 @@
 
 @font-face {
   font-family: 'Manrope';
-  src: url('Manrope-ExtraLight.woff2') format('woff2'),
-      url('Manrope-ExtraLight.woff') format('woff');
-  font-weight: 1 1000;
+  src: url('fonts/Manrope.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('Inter-Regular.woff2') format('woff2'),
-      url('Inter-Regular.woff') format('woff');
-  font-weight: 1 1000;
+  font-family: 'Manrope';
+  src: url('fonts/Manrope.ttf') format('truetype');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Newake Demo';
-  src: url('NewakeDemo.woff2') format('woff2'),
-      url('NewakeDemo.woff') format('woff'),
-      url('Newake-Font-Demo.otf') format('opentype');
-  font-weight: normal;
+  src: url('fonts/NewakeDemo.woff2') format('woff2'),
+      url('fonts/NewakeDemo.woff') format('woff'),
+      url('fonts/Newake-Font-Demo.otf') format('opentype');
+  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
@@ -371,7 +369,7 @@ h5.scaling-text {
 }
 
 .stroked {
-  -webkit-text-stroke: 0.8px #333;
+  -webkit-text-stroke: 0.8px;
 }
 
 .title {
@@ -566,9 +564,9 @@ h5.scaling-text {
   font-family: "integral";
 }
 .call-to-action-text.small {
-  font-size: 1.2rem;
-  font-weight: bold;
-  font-family: "times-new-roman-condensed";
+  font-size: 1rem;
+  font-weight: 1000;
+  font-family: "SFProDisplay";
 }
 
 .max-detail-text {

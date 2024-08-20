@@ -27,11 +27,6 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
 
   // Load the model and log when it is fully loaded
   const model = useLoader(GLTFLoader, url, (loader) => {
-    loader.manager.onProgress = (_: string, itemsLoaded: number, itemsTotal: number) => {
-      const progress = (itemsLoaded / itemsTotal) * 100;
-      setLoadingProgress(progress.toFixed(2));
-    };
-
     loader.manager.onLoad = () => {
       const modelLoaded = new Event("modelLoaded");
       canvasRef.current.dispatchEvent(modelLoaded);
@@ -243,8 +238,8 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
       object={model.scene}
       ref={modelRef}
       onClick={(e) => handleRaycastIntersection(e)}
-      onPointerOver={(e) => handleRaycastIntersection(e)}
-      onPointerOut={(e) => handleRaycastIntersection(e)}
+      // onPointerOver={(e) => handleRaycastIntersection(e)}
+      // onPointerOut={(e) => handleRaycastIntersection(e)}
     />
   );
 };

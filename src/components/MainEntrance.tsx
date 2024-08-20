@@ -20,6 +20,9 @@ function MainEntrance() {
                     { title }
                     <h3 className="subtitle stroked">software & design studio</h3>
                 </div>
+                <div style={{ position: "absolute", bottom: "10px"}}>
+                <h5 style={{ "fontFamily": "times-new-roman-condensed" }} >hint: click the roll of painter's tape 👀</h5>
+            </div>
             </div>
         </>
         
