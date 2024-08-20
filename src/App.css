@@ -383,6 +383,23 @@ h5.scaling-text {
   font-style: italic;
 }
 
+#asterisk-loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.visible {
+  opacity: 1;
+}
+.not-visible {
+  opacity: 0;
+}
+
 #main-scroll-view {
   /* height: 100dvh;
   overflow-y: scroll;

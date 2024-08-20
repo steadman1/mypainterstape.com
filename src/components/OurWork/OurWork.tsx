@@ -61,7 +61,7 @@ function OurWork() {
     };
 
     const scrollSnap = (force: boolean) => {
-        const snapThreshold = isMobile ? 0.45 : 0.3;
+        const snapThreshold = isMobile ? 0.15 : 0.2;
         
         const rect = document.getElementById("our-work")?.getBoundingClientRect();
         if (getlockScroll() || force) {

@@ -1,14 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame, useLoader, extend, useThree } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
-import { modelScale } from 'three/webgpu';
+import { isMobile } from 'react-device-detect';
+import { cos, modelScale, userData } from 'three/webgpu';
 
 // Extend Three.js with OrbitControls
 extend({ OrbitControls: ThreeOrbitControls });
 
-const Model = ({ url, canvasRef }) => {
+const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }) => {
   const modelRef = useRef();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
@@ -16,16 +17,21 @@ const Model = ({ url, canvasRef }) => {
   const [isSetup, setIsSetup] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [direction, setDirection] = useState(-1);
-  const [positionalVelocity, setPositionalVelocity] = useState(0.2);
-  const [rotationalXVelocity, setRotationalXVelocity] = useState(0.2);
-  const [rotationalYVelocity, setRotationalYVelocity] = useState(0.2);
-  const [rotationalZVelocity, setRotationalZVelocity] = useState(0.2);
-  const positionalVelocityDampingFactor = 0.92;
-  const rotationalVelocityDampingFactor = 0.92;
-  const scrollDampingFactor = 0.97;
+  const [positionalVelocity, setPositionalVelocity] = useState(0.25);
+  const [rotationalXVelocity, setRotationalXVelocity] = useState(0);
+  const [rotationalYVelocity, setRotationalYVelocity] = useState(0);
+  const [rotationalZVelocity, setRotationalZVelocity] = useState(0);
+  const positionalVelocityDampingFactor = 0.91;
+  const rotationalVelocityDampingFactor = 0.97;
+  const scrollDampingFactor = 0.92;
 
   // Load the model and log when it is fully loaded
   const model = useLoader(GLTFLoader, url, (loader) => {
+    loader.manager.onProgress = (_: string, itemsLoaded: number, itemsTotal: number) => {
+      const progress = (itemsLoaded / itemsTotal) * 100;
+      setLoadingProgress(progress.toFixed(2));
+    };
+
     loader.manager.onLoad = () => {
       const modelLoaded = new Event("modelLoaded");
       canvasRef.current.dispatchEvent(modelLoaded);
@@ -48,30 +54,46 @@ const Model = ({ url, canvasRef }) => {
     });
   };
 
+  const adjustModelRotation = () => {
+    const initRotations = [
+      { x: 1.35, y: 0.26, z: -2.48 },
+      { x: 0.59, y: 0.27, z: -1.05 },
+      { x: 1.54, y: 1.14, z: -2.21 },
+      { x: 1.33, y: 0.68, z: -0.79 },
+      { x: 2.25, y: 0.13, z: -0.43 },
+      { x: 0.41, y: 0.88, z: 1.99 },
+      { x: 2.13, y: 0.99, z: 2.47 },
+    ]
+
+    const rotation = initRotations[Math.floor(Math.random() * initRotations.length)];
+
+    modelRef.current.rotation.set(rotation.x, rotation.y, rotation.z);
+
+    // const x = Math.PI * Math.random();
+    // const y = Math.PI * Math.random();
+    // const z = Math.PI * Math.random();
+
+    // console.log('Adjusting Model Rotation', { x, y, z });
+
+    // modelRef.current.rotation.set(x, y, z);
+  }; 
+
   const adjustModelScale = () => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     
     // Assuming your model's original size is designed to fit in a unit cube or similar proportion.
     // We calculate the scale factor to make the model 1/3rd of the window's dimensions.
-    const scaleFactorX = windowWidth / 800;
-    const scaleFactorY = windowHeight / 800;
+    const divisor = isMobile ? 550 : 800;
+    const scaleFactorX = windowWidth / divisor;
+    const scaleFactorY = windowHeight / divisor;
 
     // Choose the smaller scale factor to maintain aspect ratio
-    const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.7);
+    const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.8);
     
     // Set the scale for the model
     modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
-  };  
-
-  const adjustModelRotation = () => {
-    const xRotation = Math.PI / 2;
-    const yRotation = Math.PI / 6;
-    const zRotation = -Math.PI / 3;
-
-    // Set the scale for the model
-    modelRef.current.rotation.set(xRotation, yRotation, zRotation);
-  }; 
+  };
 
   const setupCinematicLighting = (scene) => {
     // Key Light - The main light source, usually positioned at an angle
@@ -190,17 +212,29 @@ const Model = ({ url, canvasRef }) => {
     const intersects = raycaster.current.intersectObject(modelRef.current, true);
 
     if (intersects.length > 0) {
-      // console.log('Intersection:', intersects);
+      // handleRaycastIntersection({ intersections: intersects });
     }
 
     if (modelRef.current) {
       modelRef.current.position.y += (positionalVelocity * direction);
-
       modelRef.current.position.y *= scrollDampingFactor;
+
+      modelRef.current.rotation.x += positionalVelocity * 0.5 * direction;
 
       setPositionalVelocity(prevState => {
         return prevState * positionalVelocityDampingFactor;
       });
+
+      const dampenDampeningFactor = 0.1;
+      modelRef.current.rotation.set(
+        modelRef.current.rotation.x + rotationalXVelocity * rotationalVelocityDampingFactor * dampenDampeningFactor, 
+        modelRef.current.rotation.y + rotationalYVelocity * rotationalVelocityDampingFactor * dampenDampeningFactor, 
+        modelRef.current.rotation.z + rotationalZVelocity * rotationalVelocityDampingFactor * dampenDampeningFactor
+      );
+
+      setRotationalXVelocity(prev => prev * rotationalVelocityDampingFactor);
+      setRotationalYVelocity(prev => prev * rotationalVelocityDampingFactor);
+      setRotationalZVelocity(prev => prev * rotationalVelocityDampingFactor);
     }
   });
 
@@ -208,9 +242,9 @@ const Model = ({ url, canvasRef }) => {
     <primitive
       object={model.scene}
       ref={modelRef}
-      onClick={(e) => console.log('Click', e)}
-      // onPointerOver={(e) => console.log('Pointer Over', e)}
-      // onPointerOut={(e) => console.log('Pointer Out', e)}
+      onClick={(e) => handleRaycastIntersection(e)}
+      onPointerOver={(e) => handleRaycastIntersection(e)}
+      onPointerOut={(e) => handleRaycastIntersection(e)}
     />
   );
 };
@@ -227,21 +261,8 @@ const OrbitControls = () => {
 const ThreeScene = () => {
   const canvasRef = useRef();
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const modelLoadedHandler = () => {
-      console.log('Model Loaded Event');
-    };
-
-    canvas.addEventListener('modelLoaded', modelLoadedHandler);
-
-    return () => {
-      canvas.removeEventListener('modelLoaded', modelLoadedHandler);
-    };
-  }, []);
-
   return (
-    <Canvas ref={canvasRef} style={{ height: '100dvh', width: '100dvw' }}>
+    <Canvas ref={canvasRef} style={{ height: '100vh', width: '100vw' }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1.5} />
       <Model url="/pt-roll/painter_stape.gltf" canvasRef={canvasRef} />
