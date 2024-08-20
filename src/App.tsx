@@ -1,17 +1,21 @@
 import './App.css'
 import MainEntrance from './components/MainEntrance'
 import OurWork from './components/OurWork/OurWork'
+import Footer from './components/Footer'
+import ThreeScene from './components/ThreeScene'
 
 function App() {
 
   return (
     <>
       <div className="vstack" id="main-scroll-view">
-        <MainEntrance />
-        <OurWork />
-        <div style={{ height: "30vh" }}>
-          <h1>Footer</h1>
+        <div className="zstack">
+          <MainEntrance />
+          <ThreeScene />
         </div>
+        
+        <OurWork />
+        <Footer />
       </div>
     </>
   )

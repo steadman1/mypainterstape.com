@@ -61,7 +61,7 @@ function OurWork() {
     };
 
     const scrollSnap = (force: boolean) => {
-        const snapThreshold = isMobile ? 0.4 : 0.2;
+        const snapThreshold = isMobile ? 0.45 : 0.3;
         
         const rect = document.getElementById("our-work")?.getBoundingClientRect();
         if (getlockScroll() || force) {
@@ -74,7 +74,7 @@ function OurWork() {
 
     useEffect(() => {
         const events = ["scroll", "touchmove", "wheel"];
-
+        
         if (lockScroll) {
             scrollSnap(true);
         }
