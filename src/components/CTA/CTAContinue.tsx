@@ -2,6 +2,7 @@ import { Arrow, Direction } from "../Icons/Arrow";
 import { Work } from "../../objects/Work";
 import CheckMark from "../Icons/CheckMark";
 import { useState } from "react";
+import HoverUnderlineButton from "../HoverUnderlineButton";
 
 function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, lockScroll, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [secondaryHover , setSecondaryHover] = useState(false);
@@ -70,12 +71,7 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
             </button>
         }
         { 
-            workIndex > 0 || detailIndex > 0 ? (
-            <button className="call-to-action-secondary" onMouseEnter={() => setSecondaryHover(true)} onMouseLeave={() => setSecondaryHover(false)} onClick={() => handleClick(false)} style={{ textDecorationColor: primaryColor.transparentize(secondaryHover ? 1 : 0).toRgbaString() }}>
-                <div className="hstack bottom-alignment">
-                    <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>Back</h3>
-                </div>
-            </button>) : null
+            workIndex > 0 || detailIndex > 0 ? <HoverUnderlineButton text={"Back"} onClick={handleClick} primaryColor={primaryColor} /> : null
         }
     </div>
   );

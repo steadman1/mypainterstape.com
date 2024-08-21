@@ -3,6 +3,7 @@ import MainEntrance from './components/MainEntrance'
 import OurWork from './components/OurWork/OurWork'
 import Footer from './components/Footer'
 import ThreeScene from './components/ThreeScene'
+import MainTopBar from './components/MainTopBar';
 import { useEffect } from 'react'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       {
         <div className="vstack" id="main-scroll-view">
           <div className="zstack">
+            <MainTopBar />
             <MainEntrance />
             <ThreeScene />
           </div>

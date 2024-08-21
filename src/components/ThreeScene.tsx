@@ -52,17 +52,21 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   const adjustModelRotation = () => {
     const initRotations = [
       { x: 1.35, y: 0.26, z: -2.48 },
-      { x: 0.59, y: 0.27, z: -1.05 },
       { x: 1.54, y: 1.14, z: -2.21 },
       { x: 1.33, y: 0.68, z: -0.79 },
       { x: 2.25, y: 0.13, z: -0.43 },
-      { x: 0.41, y: 0.88, z: 1.99 },
       { x: 2.13, y: 0.99, z: 2.47 },
+      { x: 1.41, y: 0.74, z: 1.99 },
+      { x: 0.99, y: 0.54, z: 2.84 },
+      { x:0.49, y: 0.36, z: 1.46 },
+      { x: 0.59, y: 0.83, z: 1.13 },
     ]
 
     const rotation = initRotations[Math.floor(Math.random() * initRotations.length)];
 
     modelRef.current.rotation.set(rotation.x, rotation.y, rotation.z);
+
+    console.log(rotation);
 
     // const x = Math.PI * Math.random();
     // const y = Math.PI * Math.random();
@@ -79,12 +83,12 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     
     // Assuming your model's original size is designed to fit in a unit cube or similar proportion.
     // We calculate the scale factor to make the model 1/3rd of the window's dimensions.
-    const divisor = isMobile ? 550 : 800;
+    const divisor = isMobile ? 450 : 800;
     const scaleFactorX = windowWidth / divisor;
     const scaleFactorY = windowHeight / divisor;
 
     // Choose the smaller scale factor to maintain aspect ratio
-    const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.8);
+    const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.9);
     
     // Set the scale for the model
     modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
@@ -250,14 +254,22 @@ const OrbitControls = () => {
 
   useFrame(() => controls.current.update());
 
-  return <orbitControls ref={controls} args={[camera, gl.domElement]} />;
+  return (
+  <orbitControls 
+    ref={controls} 
+    args={[camera, gl.domElement]}
+    enableZoom={false}
+    enablePan={false}
+    enableRotate={true}
+  />
+  );
 };
 
 const ThreeScene = () => {
   const canvasRef = useRef();
 
   return (
-    <Canvas ref={canvasRef} style={{ height: '100vh', width: '100vw' }}>
+    <Canvas ref={canvasRef} style={{ height: "100vh", width: "100vw" }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1.5} />
       <Model url="/pt-roll/painter_stape.gltf" canvasRef={canvasRef} />

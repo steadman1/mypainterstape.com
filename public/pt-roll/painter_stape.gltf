@@ -333,7 +333,7 @@
 		{
 			"bufferView":16,
 			"componentType":5126,
-			"count":74,
+			"count":84,
 			"max":[
 				1,
 				1,
@@ -349,19 +349,19 @@
 		{
 			"bufferView":17,
 			"componentType":5126,
-			"count":74,
+			"count":84,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":18,
 			"componentType":5126,
-			"count":74,
+			"count":84,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":19,
 			"componentType":5123,
-			"count":204,
+			"count":243,
 			"type":"SCALAR"
 		}
 	],
@@ -464,26 +464,26 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":888,
+			"byteLength":1008,
 			"byteOffset":23936,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":888,
-			"byteOffset":24824,
+			"byteLength":1008,
+			"byteOffset":24944,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":592,
-			"byteOffset":25712,
+			"byteLength":672,
+			"byteOffset":25952,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":408,
-			"byteOffset":26304,
+			"byteLength":486,
+			"byteOffset":26624,
 			"target":34963
 		}
 	],
@@ -495,7 +495,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":26712,
+			"byteLength":27112,
 			"uri":"painter_stape.bin"
 		}
 	]
