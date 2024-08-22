@@ -63,9 +63,9 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
                           hover ? (
                             <Arrow color={ primaryColor } direction={Direction.EAST} />
                           ) : (
-                            <h5 className="text-width call-to-action-text small stroked" style={{ color: secondaryColor }}>
-                              {detailIndex + 1}&thinsp;/&thinsp;{details.length}
-                            </h5>
+                            <h2 className="animated" style={{ color: secondaryColor, margin: "3px 0 0 0" }}>
+                              <span className="asterisk">*</span>
+                            </h2>
                           )
               }
                       </div>) : null

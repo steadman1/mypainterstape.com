@@ -321,7 +321,7 @@ changing-alignment {
 }
 
 h3.scaling-text {
-  font-size: 2.6ddvh;
+  font-size: 2.6dvh;
 }
 
 h5.scaling-text {
@@ -666,16 +666,22 @@ h1 {
   margin: 0;
 }
 
-h1 span {
+h1 span.asterisk {
   font-family: "asterisk";
   font-size: 3.6rem;
   color: #111;
   text-decoration: none;
 }
 
+h2 span.asterisk {
+  font-family: "asterisk";
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
 h3 {
   font-family: "times-new-roman-condensed";
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #111;
   margin: 0;
@@ -693,6 +699,10 @@ h4 span.bold {
   margin-right: 3px;
   font-family: "times-new-roman-condensed";
   -webkit-text-stroke: 0.8px;
+}
+
+h5 span.bold {
+  -webkit-text-stroke: 0.4px;
 }
 
 #main-top-bar {
@@ -721,8 +731,6 @@ h1.top-bar-item.text > span {
   cursor: pointer;
   z-index: 100;
   font-size: 2rem;
-  -webkit-text-stroke: 5px #ffffff;
-  paint-order: stroke fill;
 }
 
 .text-width  {

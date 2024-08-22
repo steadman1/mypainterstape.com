@@ -23,7 +23,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   const [rotationalZVelocity, setRotationalZVelocity] = useState(0);
   const positionalVelocityDampingFactor = 0.91;
   const rotationalVelocityDampingFactor = 0.97;
-  const scrollDampingFactor = 0.92;
+  const scrollDampingFactor = 0.95;
 
   // Load the model and log when it is fully loaded
   const model = useLoader(GLTFLoader, url, (loader) => {
@@ -88,7 +88,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     const scaleFactorY = windowHeight / divisor;
 
     // Choose the smaller scale factor to maintain aspect ratio
-    const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.9);
+    const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.8);
     
     // Set the scale for the model
     modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);

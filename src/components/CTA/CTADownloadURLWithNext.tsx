@@ -2,6 +2,7 @@ import { Work } from "../../objects/Work";
 import { useState } from "react";
 import { Arrow, Direction } from "../Icons/Arrow";
 import CheckMark from "../Icons/CheckMark";
+import HoverTranslateButton from "../HoverTranslateButton";
 
 function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [secondaryHover , setSecondaryHover] = useState(false);
@@ -62,7 +63,7 @@ function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, s
             <button className="call-to-action-primary animated" onClick={() => handleURL()} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
                 <div className="hstack bottom-alignment">
                     <div style={{ marginRight: "5px", marginBottom: "3px" }}><Arrow color={primaryColor.toRgbString()} direction={Direction.NORTHEAST} /></div>
-                    <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>Download</h3>
+                    <HoverTranslateButton text={ "Download"} onClick={() => handleClick(true)} primaryColor={primaryColor}  /> 
                 </div>
             </button>
             <div className="hstack space-between" style={{ padding: "0 10px"}}>

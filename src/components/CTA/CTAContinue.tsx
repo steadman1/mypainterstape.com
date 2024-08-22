@@ -3,6 +3,7 @@ import { Work } from "../../objects/Work";
 import CheckMark from "../Icons/CheckMark";
 import { useState } from "react";
 import HoverUnderlineButton from "../HoverUnderlineButton";
+import HoverTranslateButton from "../HoverTranslateButton";
 
 function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, lockScroll, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [secondaryHover , setSecondaryHover] = useState(false);
@@ -66,7 +67,7 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
             <button className="call-to-action-primary animated" onClick={() => handleClick(true)} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
                 <div className="hstack bottom-alignment">
                     <div style={{ marginRight: "5px", marginBottom: "3px" }}>{ isFinal ? <CheckMark color={primaryColor.toRgbString()} /> : <Arrow color={primaryColor.toRgbString()} direction={Direction.SOUTH} /> }</div>
-                    <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbString() }}>{ isFinal ? "Finish" : "Continue"}</h3>
+                    <HoverTranslateButton text={ isFinal ? "Finish" : "Continue"} onClick={() => handleClick(true)} primaryColor={primaryColor}  /> 
                 </div>
             </button>
         }

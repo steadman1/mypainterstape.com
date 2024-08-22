@@ -4,6 +4,7 @@ import OurWork from './components/OurWork/OurWork'
 import Footer from './components/Footer'
 import ThreeScene from './components/ThreeScene'
 import MainTopBar from './components/MainTopBar';
+import MeetUs from './components/MeetUs'
 import { useEffect } from 'react'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           </div>
           
           <OurWork />
+          <MeetUs />
           <Footer />
         </div>
       }

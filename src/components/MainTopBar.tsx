@@ -14,7 +14,7 @@ function MainTopBar() {
         const handleScroll = () => {
             const top = document.getElementById('main-top-bar')?.clientHeight;
             if (!top) return;
-            if (window.scrollY < window.innerHeight) {
+            if (window.scrollY < (window.innerHeight - top)) {
                 setTop(_ => 0);
             } else {
                 setTop(_ =>  -top);
@@ -31,8 +31,8 @@ function MainTopBar() {
     return (
         <div id="main-top-bar" className="animated-quick" style={{ top: top }}>
             <div className="hstack space-between">
-                <h1 className="top-bar-item text"><span>*</span></h1>
-                <div className="hstack pad-between">
+                <h1 className="top-bar-item text"><span className="asterisk">*</span></h1>
+                <div className="hstack pad-between" style={{ marginBottom: "8px" }}>
                     <HoverTranslateButton 
                         text={"work"} 
                         onClick={handleClick} 

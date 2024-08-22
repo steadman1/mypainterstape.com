@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 
 function MainEntrance() {
     const [smallTitleWidth, setSmallTitleWidth] = useState(270.74);
-    const [bigTitleWidth, setBigTitleWidth] = useState(0);
+    const [bigTitleWidth, setBigTitleWidth] = useState(546);
     const { width } = useWindowDimensions();
-    
-    useEffect(() => {
+
+    const handleSize = () => {
         const title = document.querySelector("#painters-tape-big-title");
         if (title) {
             setBigTitleWidth(title.clientWidth);
@@ -18,7 +18,15 @@ function MainEntrance() {
         if (smallTitle) {
             setSmallTitleWidth(smallTitle.clientWidth);
         }
-    }, [width]);
+    }
+
+    useEffect(() => {
+        
+        window.addEventListener("resize", handleSize);
+
+        return () => window.removeEventListener("resize", handleSize);
+ 
+    }, []);
 
     const style = { justifyContent: "flex-start", alignItems: "flex-end" }
 
@@ -37,13 +45,23 @@ function MainEntrance() {
                                     With an aim to define the edges, we ensure  
                                     <span className="bold">each project is as polished and purposeful as it is beautiful.</span>
                                 </h4>
+                                <h5 className="description" style={{
+                                    width: "fit-content",
+                                    textAlign: "center",
+                                    position: "absolute",
+                                    bottom: 0,
+                                    marginBottom: "20px",
+                                }}>
+                                    <span className='bold'>© Painter*s Tape Studios && Spencer Steadman.
+                                    <br />Made with Love. (2024)</span>
+                                </h5>
                             </div>
                         </>
                     ) : (
-                        <div className="vstack" style={{ padding: "20px", zIndex: 3 }}>
+                        <div className="vstack" style={{ padding: "20px", zIndex: 3, alignItems: "flex-start" }}>
                             <div className="zstack" style={{ position: "relative", maxWidth: "fit-content", maxHeight: "fit-content" }}>
                                 <h1 className="title" id="painters-tape-big-title">painter<span className="asterisk">*</span>s<br />tape</h1>
-                                <h3 className="subtitle stroked" style={{ position: "absolute", bottom: 0, right: 0, margin: 0 }}>a software &<br />design studio</h3>
+                                <h3 className="subtitle stroked" style={{ position: "absolute", bottom: 0, right: 0, margin: 0, fontSize: "2rem" }}>a software &<br />design studio</h3>
                             </div>
                             {
                                 width ? (
@@ -55,8 +73,33 @@ function MainEntrance() {
                                     </h4>
                                 ) : null
                             }
+                            {
+                                width > (bigTitleWidth + 40 + 46) ? null : (
+                                    <h5 className="description" style={{
+                                        width: "fit-content",
+                                    }}>
+                                        <span className='bold'>Made with Love. (2024)<br />© Painter*s Tape Studios && Spencer Steadman.</span>
+                                    </h5>
+                                )
+                            }
                         </div>
                     )
+                }
+                
+                {
+                    width > (bigTitleWidth + 40 + 46) ? (
+                        <h5 className="description" style={{ 
+                            width: "fit-content", 
+                            writingMode: "vertical-rl",
+                            transform: "rotate(180deg)",
+                            position: "absolute",
+                            bottom: 0,
+                            right: 0,
+                            marginBottom: "20px",
+                        }}>
+                            <span className="bold">Made with Love. (2024)<br />© Painter*s Tape Studios && Spencer Steadman.</span>
+                        </h5>
+                    ) : null
                 }
             </div>
         </>
