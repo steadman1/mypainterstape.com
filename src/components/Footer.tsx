@@ -1,7 +1,10 @@
 function Footer() {
   return (
     <>
-        <div style={{ height: "300px" }}></div>
+        {/* <div id="footer" style={{ height: "300px" }}>
+
+
+        </div> */}
     </>
   );
 }

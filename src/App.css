@@ -465,6 +465,23 @@ h5.scaling-text {
   height: calc(100dvh - 271px);
 }
 
+#meet-us-entrance {
+  padding: 0px
+}
+
+.meet-us-employee {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  max-width: 100%;
+  height: 100vh;
+  margin: 0 20px 0 0;
+  flex-shrink: 0;
+}
+
+
 .animated {
   transition: all 0.5s cubic-bezier(0, 0.4, 0.4, 1);
 }
@@ -689,7 +706,6 @@ h3 {
 
 h4 {
   font-family: "times-new-roman-condensed";
-  font-size: 1.2rem;
   font-weight: 500;
   color: #111;
 }
@@ -719,6 +735,7 @@ h5 span.bold {
   align-items: flex-start;
   z-index: 4;
 }
+
 
 
 h1.top-bar-item.text {

@@ -18,7 +18,7 @@ function OurWork() {
     const { width, height } = useWindowDimensions();
     const [lockScroll, setLockScroll] = useState(true);
     const [scrollPosition, setScrollPosition] = useState(window.scrollY);
-    const newScrollPosition = scrollPosition - height / 1.4;
+    const newScrollPosition = scrollPosition - height / 1.2;
 
     const maxRound = 30;
 
@@ -109,7 +109,6 @@ function OurWork() {
         });
     }, [lockScroll, height]);
 
-
     const border = `2px solid ${works[workIndex].lightAccentColor.toRgbString()}`;
 
     const direction = width > 500 ? NavigationDirection.VERTICAL : NavigationDirection.HORIZONTAL
@@ -121,7 +120,6 @@ function OurWork() {
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
-
             </div>
         </>
     );

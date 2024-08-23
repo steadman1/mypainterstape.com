@@ -19,5 +19,37 @@ class Employee {
             "CEO", 
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         ),
+        new Employee(
+            "https://via.placeholder.com/150", 
+            "Jane Smith", 
+            "CFO", 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        ),
+        new Employee(
+            "https://via.placeholder.com/150", 
+            "Jane Smith", 
+            "CFO", 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        ),
+        new Employee(
+            "https://via.placeholder.com/150", 
+            "Jane Smith", 
+            "CFO", 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        ),
+        new Employee(
+            "https://via.placeholder.com/150", 
+            "Jane Smith", 
+            "CFO", 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        ),
+        new Employee(
+            "https://via.placeholder.com/150", 
+            "Jane Smith", 
+            "CFO", 
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        ),
     ];
 }
+
+export { Employee };

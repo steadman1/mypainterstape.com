@@ -39,7 +39,7 @@ function MainEntrance() {
                             <div className="vstack">
                                 <Title />
                                 <h3 className="subtitle stroked">software & design studio</h3>
-                                <h4 className="description" style={{maxWidth: `${smallTitleWidth}px`}}>
+                                <h4 className="description" style={{maxWidth: `${smallTitleWidth}px`, fontSize: "1.2rem"}}>
                                     We’re a studio with a strong focus on 
                                     <span className="bold">careful attention to detail.</span> 
                                     With an aim to define the edges, we ensure  
@@ -65,7 +65,7 @@ function MainEntrance() {
                             </div>
                             {
                                 width ? (
-                                    <h4 className="description" style={{maxWidth: `${bigTitleWidth}px`}}>
+                                    <h4 className="description" style={{maxWidth: `${bigTitleWidth}px`, fontSize: "1.2rem"}}>
                                         We’re a studio that believes every great design starts with a 
                                         <span className="bold">careful attention to detail.</span> With our work, we aim to define 
                                         the edges that bring clarity and focus to our work, ensuring that 

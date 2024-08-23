@@ -139,19 +139,12 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
       const point = intersection.point; // The point of intersection
       const distance = intersection.distance; // Distance from the camera to the intersection
 
+      console.log(intersection.object.rotation);
+
       // Adjust rotational velocities based on the intersection normal
       setRotationalXVelocity(prev => prev + normal.x * 0.5);
       setRotationalYVelocity(prev => prev + normal.y * 0.5);
       setRotationalZVelocity(prev => prev + normal.z * 0.5);
-
-      console.log('Intersection', {
-        normal,
-        point,
-        distance,
-        rotationalXVelocity,
-        rotationalYVelocity,
-        rotationalZVelocity,
-      });
     }
   };
 
@@ -269,7 +262,7 @@ const ThreeScene = () => {
   const canvasRef = useRef();
 
   return (
-    <Canvas ref={canvasRef} style={{ height: "100vh", width: "100vw" }}>
+    <Canvas ref={canvasRef} style={{ height: "100vh", width: "100vw", maxWidth: "100%" }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1.5} />
       <Model url="/pt-roll/painter_stape.gltf" canvasRef={canvasRef} />
