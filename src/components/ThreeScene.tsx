@@ -4,7 +4,6 @@ import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
 import { isMobile } from 'react-device-detect';
-import { cos, modelScale, userData } from 'three/webgpu';
 
 // Extend Three.js with OrbitControls
 extend({ OrbitControls: ThreeOrbitControls });

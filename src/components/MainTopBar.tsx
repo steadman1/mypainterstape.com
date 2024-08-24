@@ -48,7 +48,7 @@ function MainTopBar() {
                         primaryColor={black} />
                     <HoverTranslateButton 
                         text={"us"} 
-                        onClick={() => handleClick("")}
+                        onClick={() => handleClick("meet-us-entrance")}
                         primaryColor={black} />
                     <HoverTranslateButton 
                         text={"contact"} 
