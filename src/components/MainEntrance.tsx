@@ -36,36 +36,35 @@ function MainEntrance() {
                 {
                     width < bigTitleWidth ? (
                         <>
-                            <div className="vstack">
+                            <div className="vstack" style={{ height: "100vh"}}>
                                 <Title />
-                                <h3 className="subtitle stroked">software & design studio</h3>
-                                <h4 className="description" style={{maxWidth: `${smallTitleWidth}px`, fontSize: "1.2rem"}}>
+                                <h3 data-scroll data-scroll-speed="3" data-scroll-position="top"  className="subtitle stroked">software & design studio</h3>
+                                <h4 data-scroll data-scroll-speed="2" data-scroll-position="top" className="description" style={{maxWidth: `${smallTitleWidth}px`, fontSize: "1.2rem"}}>
                                     We’re a studio with a strong focus on 
                                     <span className="bold">careful attention to detail.</span> 
                                     With an aim to define the edges, we ensure  
                                     <span className="bold">each project is as polished and purposeful as it is beautiful.</span>
                                 </h4>
-                                <h5 className="description" style={{
+                                <h5 data-scroll data-scroll-speed="1" data-scroll-position="top" className="description" style={{
                                     width: "fit-content",
                                     textAlign: "center",
                                     position: "absolute",
                                     bottom: 0,
                                     marginBottom: "20px",
                                 }}>
-                                    <span className='bold'>© Painter*s Tape Studios && Spencer Steadman.
-                                    <br />Made with Love. (2024)</span>
+                                    <span className='bold'>© Painter*s Tape Studios && Spencer Steadman.<br />Made with Love. (2024)</span>
                                 </h5>
                             </div>
                         </>
                     ) : (
-                        <div className="vstack" style={{ padding: "20px", zIndex: 3, alignItems: "flex-start" }}>
+                        <div className="vstack" style={{ padding: "100% 20px 20px 20px", zIndex: 3, alignItems: "flex-start" }}>
                             <div className="zstack" style={{ position: "relative", maxWidth: "fit-content", maxHeight: "fit-content" }}>
-                                <h1 className="title" id="painters-tape-big-title">painter<span className="asterisk">*</span>s<br />tape</h1>
-                                <h3 className="subtitle stroked" style={{ position: "absolute", bottom: 0, right: 0, margin: 0, fontSize: "2rem" }}>a software &<br />design studio</h3>
+                                <h1 data-scroll data-scroll-speed="3" data-scroll-position="top" className="title" id="painters-tape-big-title">painter<span className="asterisk">*</span>s<br />tape</h1>
+                                <h3 data-scroll data-scroll-speed="2" data-scroll-position="top" className="subtitle stroked" style={{ position: "absolute", bottom: 0, right: 0, margin: 0, fontSize: "2rem" }}>a software &<br />design studio</h3>
                             </div>
                             {
                                 width ? (
-                                    <h4 className="description" style={{maxWidth: `${bigTitleWidth}px`, fontSize: "1.2rem"}}>
+                                    <h4 data-scroll data-scroll-speed="1" data-scroll-position="top" className="description" style={{maxWidth: `${bigTitleWidth}px`, fontSize: "1.2rem"}}>
                                         We’re a studio that believes every great design starts with a 
                                         <span className="bold">careful attention to detail.</span> With our work, we aim to define 
                                         the edges that bring clarity and focus to our work, ensuring that 
@@ -75,10 +74,10 @@ function MainEntrance() {
                             }
                             {
                                 width > (bigTitleWidth + 40 + 46) ? null : (
-                                    <h5 className="description" style={{
+                                    <h5 data-scroll data-scroll-speed="0.5" data-scroll-position="top" className="description" style={{
                                         width: "fit-content",
                                     }}>
-                                        <span className='bold'>Made with Love. (2024)<br />© Painter*s Tape Studios && Spencer Steadman.</span>
+                                        <span className='bold'>© Painter*s Tape Studios && Spencer Steadman.<br />Made with Love. (2024)</span>
                                     </h5>
                                 )
                             }
@@ -88,7 +87,7 @@ function MainEntrance() {
                 
                 {
                     width > (bigTitleWidth + 40 + 46) ? (
-                        <h5 className="description" style={{ 
+                        <h5 data-scroll data-scroll-speed="8" data-scroll-position="top" className="description" style={{ 
                             width: "fit-content", 
                             writingMode: "vertical-rl",
                             transform: "rotate(180deg)",
@@ -97,7 +96,7 @@ function MainEntrance() {
                             right: 0,
                             marginBottom: "20px",
                         }}>
-                            <span className="bold">Made with Love. (2024)<br />© Painter*s Tape Studios && Spencer Steadman.</span>
+                            <span className="bold">© Painter*s Tape Studios && Spencer Steadman.<br />Made with Love. (2024)</span>
                         </h5>
                     ) : null
                 }

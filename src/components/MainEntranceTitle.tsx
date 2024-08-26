@@ -2,7 +2,7 @@
 
 function MainEntranceSmallTitle() {
     return (
-        <div className="vstack" id="painters-tape-small-title">
+        <div data-scroll data-scroll-speed="4" data-scroll-position="top"  className="vstack" id="painters-tape-small-title">
             <h1 className="title">paint</h1>
 
             <div className="hstack space-between">

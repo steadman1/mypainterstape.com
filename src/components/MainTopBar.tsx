@@ -1,38 +1,48 @@
 import { Color } from "../objects/Color";
 import HoverTranslateButton from "./HoverTranslateButton";
 import { useEffect, useState } from 'react';
+import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
 
 function MainTopBar() {
+    const scrollRef = useLocomotiveScroll();
     const [top, setTop] = useState(0);
     const black = new Color("#000000");
+
+    const scrollToPosition = (id: string) => {
+        if (scrollRef && scrollRef.current) {
+            scrollRef.current.scrollTo(document.querySelector(`#${id}`));
+        }
+    };
 
     const handleClick = (id: string) => {
         const element = document.getElementById(id);
         if (!element) return;
 
-        window.scrollTo({
-            top: document.getElementById(id).offsetTop,
-            behavior: 'smooth'
-        });
+        scrollToPosition(id);
     };
 
     useEffect(() => {
-        const handleScroll = () => {
+        const handleScroll = (args) => {
             const top = document.getElementById('main-top-bar')?.clientHeight;
             if (!top) return;
-            if (window.scrollY < (window.innerHeight - top) || window.scrollY > (window.innerHeight + top * 2)) {
+            if (args.scroll.y < (window.innerHeight - top) || args.scroll.y > (window.innerHeight + top * 2)) {
                 setTop(_ => 0);
             } else {
                 setTop(_ =>  -top);
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        const addScrollListener = () => {
+            if (scrollRef && scrollRef.current) {
+                scrollRef.current.on('scroll', handleScroll);
+            }
+        }
+        window.addEventListener('locomotive-scroll-initialized', addScrollListener);
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+            window.removeEventListener('locomotive-scroll-initialized', addScrollListener);
+        }
+    }, [scrollRef.current, scrollRef]);
 
     return (
         <div id="main-top-bar" className="animated-quick" style={{ top: top }}>

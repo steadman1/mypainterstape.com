@@ -4,12 +4,14 @@ import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as THREE from 'three';
 import { isMobile } from 'react-device-detect';
+import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
 
 // Extend Three.js with OrbitControls
 extend({ OrbitControls: ThreeOrbitControls });
 
 const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }) => {
   const modelRef = useRef();
+  const scrollRef = useLocomotiveScroll();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
 
@@ -22,7 +24,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   const [rotationalZVelocity, setRotationalZVelocity] = useState(0);
   const positionalVelocityDampingFactor = 0.91;
   const rotationalVelocityDampingFactor = 0.97;
-  const scrollDampingFactor = 0.95;
+  const scrollDampingFactor = 0.96;
 
   // Load the model and log when it is fully loaded
   const model = useLoader(GLTFLoader, url, (loader) => {
@@ -148,40 +150,36 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+    if (!scrollRef.current) return;
+
+    const handleScroll = (args) => {
+      const currentScrollY = args.scroll.y; // Use Locomotive Scroll's scroll position
+
       if (currentScrollY === lastScrollY) {
-        setDirection(_ => {
-          return 0;
-        });
-      
-        setLastScrollY(_ => {
-          return currentScrollY;
-        });
+        setDirection(0);
+        setLastScrollY(currentScrollY);
         return;
-      };
+      }
 
       const scrollDirection = currentScrollY > lastScrollY ? -1 : 1;
 
-      setPositionalVelocity(_ => {
-        return Math.abs(currentScrollY - lastScrollY) * 0.005;
-      });
+      setPositionalVelocity(Math.abs(currentScrollY - lastScrollY) * 0.005);
 
-      setDirection(_ => {
-        return scrollDirection;
-      });
+      setDirection(scrollDirection);
 
-      setLastScrollY(_ => {
-        return currentScrollY;
-      });
+      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Listen to Locomotive Scroll's scroll event
+    scrollRef.current.on('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      // Clean up event listener on component unmount
+      if (scrollRef.current) {
+        scrollRef.current.off('scroll', handleScroll);
+      }
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, scrollRef]);
 
   useEffect(() => {
     if (modelRef.current && !isSetup) {
@@ -261,12 +259,14 @@ const ThreeScene = () => {
   const canvasRef = useRef();
 
   return (
-    <Canvas ref={canvasRef} style={{ height: "100vh", width: "100vw", maxWidth: "100%" }}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1.5} />
-      <Model url="/pt-roll/painter_stape.gltf" canvasRef={canvasRef} />
-      {/* <OrbitControls /> */}
-    </Canvas>
+    <div data-scroll data-scroll-speed="0.2" data-scroll-position="top">
+      <Canvas ref={canvasRef} style={{ height: "100dvh", width: "100vw", maxWidth: "100%" }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} />
+        <Model url="/pt-roll/painter_stape.gltf" canvasRef={canvasRef} />
+        {/* <OrbitControls /> */}
+      </Canvas>
+    </div>
   );
 };
 

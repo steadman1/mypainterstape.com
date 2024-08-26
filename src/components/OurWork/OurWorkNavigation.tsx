@@ -25,7 +25,7 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
     setDetailIndex(0);
   }
   const handleExit = () => {
-    setLockScroll(!lockScroll);
+    setLockScroll(_ => !lockScroll);
   }
 
   const primaryColor = work.primaryTextColor.toRgbString();
@@ -34,7 +34,7 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
   const border = `2px solid ${primaryColor}`;
   const getButtonHeight = () => {
     const button = document.getElementById("exit-navigation-button");
-    return button ? button.clientHeight : 0;
+    return button ? button.clientHeight : 50;
   }
 
   const horizontalStyling = {
@@ -81,7 +81,7 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
           <div key="exit" className="our-work-navigation-item animated">
             <button className="call-to-action-primary animated" id="exit-navigation-button" onClick={() => handleExit()} style={{ width: hover ? "fit-content" : getButtonHeight(), paddingLeft: `${hover ? "" : 0}`, paddingRight: `${hover ? "" : 0}`, backgroundColor: hover || lockScroll ? secondaryColor : primaryColor, border: border }}>
               <div className={ `hstack` }>
-                  <div style={{ margin: `${hover ? "0 5px 3px 0" : "0px auto"}` }}><Arrow color={ hover || lockScroll ? primaryColor : secondaryColor } direction={!lockScroll ? Direction.NORTHEAST : Direction.SOUTHWEST} /></div>
+                  <div style={{ margin: `${hover ? "0 5px 3px 0" : "0px auto"}` }}><Arrow color={ hover || lockScroll ? primaryColor : secondaryColor } direction={lockScroll ? Direction.SOUTHWEST : Direction.NORTHEAST} /></div>
                   <h4 className={ `text-width call-to-action-text animated-width ${hover ? "active" : "inactive"}` } style={{ opacity: hover ? 1 : 0, transform: `scale(${ hover ? 1 : 0.8 }`, color: primaryColor }}>{ lockScroll ? "Exit" : "Enter"}</h4>
               </div>
             </button>
