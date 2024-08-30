@@ -284,7 +284,20 @@ h5 {
 
 .hstack.leading {
   justify-content: flex-start;
-  align-items: flex-start
+  align-items: flex-start;
+}
+
+.hstack.top {
+  align-items: flex-start;
+}
+
+.hstack.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.hstack.bottom {
+  align-items: flex-end;
 }
 
 .hstack.space-between > * {
@@ -387,8 +400,38 @@ h5.scaling-text {
 .description {
   max-height: fit-content;
   font-family: "times-new-roman-condensed";
+  font-size: 1.2rem;
   margin-top: 10px;
   margin-bottom: 0px;
+}
+
+h5.description {
+  font-size: 0.8rem;
+}
+
+.meet-us.title {
+  text-align: center;
+}
+.meet-us.description {
+  max-width: 500px;
+  text-align: center;
+}
+
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skill-image {
+  width: 36px; 
+  height: 36px; 
+  margin-right: 5px;
+  object-fit: contain;
+  border-radius: 26%;
+  padding: 4px;
+  border: 1px solid #000;
 }
 
 #asterisk-loading-screen {
@@ -466,21 +509,59 @@ h5.scaling-text {
 }
 
 #meet-us-entrance {
-  padding: 0px
-}
-
-.meet-us-employee {
+  overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   max-width: 100%;
-  height: 100vh;
-  margin: 0 20px 0 0;
-  flex-shrink: 0;
 }
 
+.meet-us-name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: "integral";
+}
+
+.meet-us-title {
+  font-size: 1.5rem;
+  font-style: italic;
+  font-family: "times-new-roman-condensed";
+  margin: 0;
+}
+
+.meet-us-description {
+  font-size: 1.2rem;
+  font-family: "times-new-roman-condensed";
+  margin: 0;
+}
+
+.sticky-card {
+  will-change: transform;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  width: calc(100vw - 80px);
+  height: 60vh;
+  margin: 20vh auto 20vh auto;
+  border-radius: 40px;
+  background-color: #ffffff;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+}
+
+.meet-us-employee {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+* > .meet-us-employee {
+  margin: 0 20px;
+  width: calc(100vw - 20px);
+}
 
 .animated {
   transition: all 0.5s cubic-bezier(0, 0.4, 0.4, 1);
@@ -675,6 +756,23 @@ h2.our-work-text {
   font-family: "Apple Garamond";
 }
 
+span.bold {
+  margin-left: 2px;
+  margin-right: 2px;
+  -webkit-text-stroke: 0.8px;
+}
+
+span.italic {
+  font-style: italic;
+}
+
+span.bold.italic {
+  margin-left: 1.5px;
+  margin-right: 1.5px;
+  font-style: italic;
+  -webkit-text-stroke: 1px;
+}
+
 h1 {
   font-family: "integral";
   font-size: 5rem;
@@ -717,8 +815,16 @@ h4 span.bold {
   -webkit-text-stroke: 0.8px;
 }
 
+h4 span.quote {
+  font-style: italic;
+}
+
 h5 span.bold {
   -webkit-text-stroke: 0.4px;
+}
+
+h5 span.quote {
+  font-style: italic;
 }
 
 #main-top-bar {

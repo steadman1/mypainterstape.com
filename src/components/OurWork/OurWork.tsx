@@ -18,7 +18,7 @@ enum ScrollDirection {
 function OurWork() {
     const scrollRef = useLocomotiveScroll();
     const { width, height } = useWindowDimensions();
-    const [lockScroll, setLockScroll] = useState(false);
+    const [lockScroll, setLockScroll] = useState(true);
     const [round, setRound] = useState(30);
     const [scale, setScale] = useState(0.9);
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -33,32 +33,32 @@ function OurWork() {
 
     const handleRound = () => {
         const newScrollPosition = scrollPosition - height / 1.2;
-        const rect = document.getElementById("our-work")?.getBoundingClientRect();
+        const rect = document.getElementById("our-work");
 
         if (!lockScroll) {
             return maxRound;
         }
 
-        if (!rect || (newScrollPosition - rect.top) > 0) {
+        if (!rect || (newScrollPosition - rect.offsetTop) > 0) {
             return 0;
         }
         
-        return Math.max(Math.min(maxRound, (newScrollPosition + height / 8) / -12), 0);
+        return Math.max(Math.min(maxRound, (newScrollPosition + height / 4) / -12), 0);
     };
 
     const handleScale = () => {
         const newScrollPosition = scrollPosition - height / 1.2;
-        const rect = document.getElementById("our-work")?.getBoundingClientRect();
+        const rect = document.getElementById("our-work");
 
         if (!lockScroll) {
             return 0.9;
         }
 
-        if (!rect || (newScrollPosition - rect.top) > 0) {
+        if (!rect || (newScrollPosition - rect.offsetTop) > 0) {
             return 1;
         }
 
-        const scale = Math.max(0.7, Math.pow(newScrollPosition / rect.top, 3) / 4 + 1);
+        const scale = Math.max(0.7, Math.pow(newScrollPosition / rect.offsetTop, 3) / 4 + 1);
         return Math.min(1, scale);
     };
 
@@ -81,19 +81,10 @@ function OurWork() {
     };
 
     useEffect(() => {
-        if (lockScroll) {
+        if (lockScroll && scrollRef && scrollRef.current) {
             scrollRef.current.scrollTo(document.querySelector("#our-work"));
         }
     }, [lockScroll]);
-
-    useEffect(() => {
-        if (lockScroll) {
-            scrollRef.current.stop();
-        } else { 
-            if (!scrollRef.current && scrollRef) return;
-            scrollRef.current.start();
-        }
-    }, [lockScroll, scrollPosition]);
 
     useEffect(() => {
         setRound(_ => handleRound());
@@ -136,12 +127,12 @@ function OurWork() {
 
     return (
         <>
-            <section data-scroll-section id="our-work" className={ `vstack expanding ${!lockScroll ? "animated" : ""}` } style={{ maxWidth: width * scale, backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${round}px` }}>
+            <div data-scroll-section id="our-work" className={ `vstack expanding ${!lockScroll ? "animated" : ""}` } style={{ maxWidth: width * scale, backgroundColor: works[workIndex].backgroundColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none", borderRadius: `${round}px` }}>
                 <OurWorkNavigation direction={direction} works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
                 <OurWorkBar work={works[workIndex]} color={works[workIndex].primaryTextColor.toRgbString()}/>
                 <OurWorkEntrance work={works[workIndex]} detailIndex={detailIndex} />
                 <OurWorkCallToAction works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} lockScroll={lockScroll} setLockScroll={setLockScroll} />
-            </section>
+            </div>
         </>
     );
 }

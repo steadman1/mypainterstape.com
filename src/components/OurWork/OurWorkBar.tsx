@@ -8,7 +8,7 @@ function OurWorkBar({ work, color }: { work: Work, color: string }) {
   let workTypeText = "";
   switch (work.workType) {
     case WorkType.INTRO: {
-      workTypeText = "from PT Studios";
+      workTypeText = "Sincerely, PT Studios";
       break;
     }
     case WorkType.IOSAPP: {

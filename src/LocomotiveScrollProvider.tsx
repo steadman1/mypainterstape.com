@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
+import { isMobile } from 'react-device-detect';
 
 // Create the context
 const LocomotiveScrollContext = createContext<any>(null);
@@ -16,7 +17,8 @@ export const LocomotiveScrollProvider: React.FC = ({ children }) => {
       scrollRef.current = new LocomotiveScroll({
         el: containerRef.current,
         smooth: true,
-        lerp: 0.2,
+        lerp: isMobile ? 0.25 : 0.1,
+        multiplier: isMobile ? 0.75 : 1,
         smoothMobile: true,
         mobile: {
           breakpoint: 0,

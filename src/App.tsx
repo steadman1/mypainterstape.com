@@ -25,7 +25,7 @@ function App() {
     <>
       <LocomotiveScrollProvider>
         <MainTopBar />
-        <div className="vstack" id="main-scroll-view">
+        <div className="vstack" style={{ overflow: "hidden" }} id="main-scroll-view">
           <section data-scroll-section className="zstack">
             <MainEntrance />
             <ThreeScene />
