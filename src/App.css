@@ -388,6 +388,10 @@ h5.scaling-text {
   -webkit-text-stroke: 1.2px;
 }
 
+h5.stroked {
+  -webkit-text-stroke: 0.75px;
+}
+
 .title {
   margin: 0;
 }
@@ -416,22 +420,94 @@ h5.description {
   max-width: 500px;
   text-align: center;
 }
+.skill-type {
+  margin: 12px 0 3px 0;
+  font-family: "times-new-roman-condensed";
+  font-style: italic;
+  font-size: 0.8rem;
+  -webkit-text-stroke: 0.6px;
+}
+
+.wrap-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0px;
+  max-width: 500px;
+}
 
 .images-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 5px;
+  margin: 0px 10px 0 0;
 }
 
 .skill-image {
   width: 36px; 
   height: 36px; 
-  margin-right: 5px;
   object-fit: contain;
   border-radius: 26%;
   padding: 4px;
-  border: 1px solid #000;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.08));
+}
+
+.skill-image-full {
+  width: 48px; 
+  height: 48px; 
+  object-fit: contain;
+  border-radius: 26%;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.08));
+}
+
+.skill-name {
+  font-family: "integral";
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.skill-related-names {
+  font-family: "times-new-roman-condensed";
+  font-size: 1rem;
+  margin: 5px 0 0 0;
+}
+
+.skill-description {
+  font-family: "times-new-roman-condensed";
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.skill-details {
+  font-family: "times-new-roman-condensed";
+  font-style: italic;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.outline-dot {
+  border: 1px solid #111;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  margin-right: 4px;
+}
+
+.filled-dot {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+}
+
+.modal-content {
+  background: #fff;
+  filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.1));
+  padding: 16px;
+  border-radius: 24px;
+  width: fit-content;
+  min-width: 250px;
+  text-align: center;
 }
 
 #asterisk-loading-screen {
@@ -820,7 +896,7 @@ h4 span.quote {
 }
 
 h5 span.bold {
-  -webkit-text-stroke: 0.4px;
+  -webkit-text-stroke: 0.75px;
 }
 
 h5 span.quote {
@@ -858,8 +934,8 @@ h1.top-bar-item.text > span {
 
 .text-width  {
   display: flex;
-  flex-grow: 0; /* Don't allow the flex item to grow */
-  flex-shrink: 0; /* Don't allow the flex item to shrink */
+  flex-grow: 0;
+  flex-shrink: 0;
   flex-basis: auto;
   text-wrap: nowrap;
   margin: 0;
@@ -874,4 +950,5 @@ h1.top-bar-item.text > span {
   flex: 1;
   height: 2px;
   margin: 10px;
+  z-index: 0;
 }

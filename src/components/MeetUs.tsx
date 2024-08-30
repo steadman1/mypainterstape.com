@@ -1,9 +1,11 @@
-import { Employee } from '../objects/Employee';
+import Employee from '../objects/Employee';
+import { Skill, SkillType } from '../objects/Skill';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import Divider from './Divider';
 import replaceSpecialCharacters from '../replaceSpecialCharacters';
+import SkillList from './SkillList';
 
 function MeetUs() {
     const { width, height } = useWindowDimensions();
@@ -57,14 +59,14 @@ function MeetUs() {
                 </div>
                 {
                     employees.map((employee, index) => (
-                        <div>
+                        <div key={index} style={{ marginBottom: `${index + 1 >= employees.length ? "30px" : 0}` }}>
                             {
                                 index > 0 ? (
                                     <div 
                                         data-scroll
                                         data-scroll-speed="1"
                                         data-scroll-position="bottom"
-                                        style={{ margin: "20px 10px"}}
+                                        style={{ margin: "30px 10px"}}
                                     >
                                         <Divider color={"#000000"} />
                                     </div>
@@ -75,31 +77,17 @@ function MeetUs() {
                                 data-scroll-speed="1"
                                 data-scroll-position="bottom"
                                 className="meet-us-employee"
-                                style={{ zIndex: index + 1 }}
                                 key={index}
                             >
                             {
                                 width >= 600 ? (
                                     <div className="hstack space-between leading center">
-                                        <div className="vstack leading">
+                                        <div id={ `meet-us-details-${index}` } className="vstack leading">
                                             <h4 className="meet-us-title stroked">{employee.title}</h4>
                                             <h3 className="meet-us-name">{employee.name}</h3>
-                                            <div className="images-container">
-                                                {
-                                                    employee.skills.map((skill, index) => (
-                                                        skill.image ? (
-                                                            <img 
-                                                                src={`skills/${skill.image}`} 
-                                                                alt={`${skill.name} logo`} 
-                                                                key={index} 
-                                                                className="skill-image"
-                                                            />
-                                                        ) : null
-                                                    ))
-                                                }
-                                            </div>
+                                            <SkillList employee={employee} index={index} />
                                         </div>
-                                        <div className="hstack top" style={{ maxWidth: "calc(50% - 20px)"}}>
+                                        <div id={ `meet-us-description-${index}` } className="hstack top" style={{ maxWidth: "calc(50% - 20px)"}}>
                                             <img src="quote.svg" alt="quote" style={{ width: "45px", height: "45px", marginRight: "10px"}} />
                                             <h5 className="meet-us-description" style={{ marginTop: "5px"}}>{replaceSpecialCharacters(employee.description)}</h5>
                                         </div>
