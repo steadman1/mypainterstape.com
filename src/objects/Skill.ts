@@ -90,13 +90,16 @@ class Skill {
     // Libraries
     static pandas = new Skill("compressed/pandas-min.png", SkillType.FRAMEWORKS, "Pandas");
     static numpy = new Skill("compressed/numpy-min.png", SkillType.FRAMEWORKS, "NumPy");
+    static and_more = new Skill("compressed/and_more-min.png", SkillType.LIBRARIES, "and More");
 
     // Programming
-    static python = new Skill("compressed/python-min.png", SkillType.PROGRAMMING, "Python", [Skill.pandas, Skill.numpy]);
+    static python = new Skill("compressed/python-min.png", SkillType.PROGRAMMING, "Python", [Skill.pandas, Skill.numpy, Skill.and_more]);
     static javascript = new Skill("compressed/javascript-min.png", SkillType.PROGRAMMING, "JavaScript");
     static typescript = new Skill("compressed/typescript-min.png", SkillType.PROGRAMMING, "TypeScript", [Skill.javascript]);
     static swift_5 = new Skill("compressed/swift_5-min.png", SkillType.PROGRAMMING, "Swift 5", [Skill.swift_ui, Skill.ui_kit, Skill.ui_ux]);
     static java = new Skill("compressed/java-min.png", SkillType.PROGRAMMING, "Java");
+    static c = new Skill("compressed/c-min.png", SkillType.PROGRAMMING, "C");
+    static c_plus_plus = new Skill("compressed/c_plus_plus-min.png", SkillType.PROGRAMMING, "C++", [Skill.c]);
 
     // Adobe
     static photoshop = new Skill("compressed/photoshop-min.png", SkillType.ADOBE, "Photoshop", [Skill.graphic_design]);

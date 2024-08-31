@@ -17,8 +17,8 @@ export const LocomotiveScrollProvider: React.FC = ({ children }) => {
       scrollRef.current = new LocomotiveScroll({
         el: containerRef.current,
         smooth: true,
-        lerp: isMobile ? 0.25 : 0.1,
-        multiplier: isMobile ? 0.75 : 1,
+        lerp: isMobile ? 0.06 : 0.1,
+        multiplier: isMobile ? 0.8 : 1,
         smoothMobile: true,
         mobile: {
           breakpoint: 0,

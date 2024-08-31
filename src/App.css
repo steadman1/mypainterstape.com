@@ -250,15 +250,14 @@ h5 {
   align-items: center;
 }
 
-.vstack.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .vstack.leading {
   justify-content: flex-start;
   align-items: flex-start
+}
+
+.vstack.space-between {
+  height: 100%;
+  justify-content: space-between;
 }
 
 .hstack {
@@ -413,8 +412,26 @@ h5.description {
   font-size: 0.8rem;
 }
 
-.meet-us.title {
-  text-align: center;
+.meet-us-image-wrapper {
+  text-align: initial;
+  position: relative;
+  display: flex;
+  height: calc(40vw);
+  max-height: 400px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.meet-us-image {
+  position: absolute;
+  left: 50%;
+  margin-top: 100px;
+  transform: translateX(-50%);
+  max-width: 800px;
+  width: calc(100vw - 170px);
+  min-width: 500px;
+  object-fit: contain;
 }
 .meet-us.description {
   max-width: 500px;
@@ -431,9 +448,9 @@ h5.description {
 .wrap-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 5px;
   margin: 0px;
-  max-width: 500px;
 }
 
 .images-container {
@@ -502,7 +519,7 @@ h5.description {
 
 .modal-content {
   background: #fff;
-  filter: drop-shadow(0px 4px 25px rgba(0, 0, 0, 0.15));
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
   padding: 16px;
   border-radius: 24px;
   width: fit-content;
@@ -637,6 +654,39 @@ h5.description {
 * > .meet-us-employee {
   margin: 0 20px;
   width: calc(100vw - 20px);
+}
+
+#footer {
+  width: 100vw;
+  max-width: 100%;
+  background-color: #000;
+}
+
+#footer-poster {
+  margin: 10px;
+  height: calc(50vh - 20px);
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+#footer-contact-details {
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  text-align: left;
+  color: #fff;
+}
+
+button > .footer-text {
+  text-decoration: underline 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+
+  &:hover {
+    text-decoration-color: rgba(255, 255, 255, 1);
+  }
 }
 
 .animated {

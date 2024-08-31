@@ -43,20 +43,14 @@ function MeetUs() {
 
     return (
         <>
-            <section data-scroll-section id="meet-us-entrance">
+            <section data-scroll-section id="meet-us-entrance" style={{ marginBottom: "100px"}}>
                 <div 
                     data-scroll
-                    data-scroll-speed="1"
-                    data-scroll-position="bottom" 
-                    style={{ margin: "40px auto"}}
+                    data-scroll-speed="2"
+                    data-scroll-position="center" 
+                    className="meet-us-image-wrapper"
                 >
-                    <h1 className="meet-us title">Meet Us</h1>
-                    <h4 
-                        className="meet-us description" 
-                        style={{ maxWidth: "500px", fontSize: "1.2rem" }}
-                    >
-                        The team behind Painter*s Tape that <span className='bold'>makes it all possible.</span>
-                    </h4>
+                    <img className="meet-us-image" src="/meet_us.png" alt="Meet Us: the team behind Painter*s Tape that makes it all possible." />
                 </div>
                 {
                     employees.map((employee, index) => (
@@ -94,7 +88,7 @@ function MeetUs() {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="vstack leading">
+                                    <div id={ `meet-employee-${index}` } className="vstack leading">
                                         <h4 className="meet-us-title stroked">{employee.title}</h4>
                                         <h3 className="meet-us-name" style={{ maxWidth: "calc(100vw - 20px)" }}>{employee.name}</h3>
                                         <div className="hstack top" style={{ maxWidth: "calc(100vw - 20px)", marginTop: "10px" }}>

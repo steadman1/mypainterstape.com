@@ -162,14 +162,26 @@ const SkillList = ({ employee, index, sideScrolling }) => {
         setModalVisible(false);
     };
 
+    const handleScroll = (e) => {
+        handleCloseModal();
+
+        const container = document.getElementById(`wrap-container-${index}`);
+        if (!container) return;
+
+        if (container.getBoundingClientRect().bottom < window.innerHeight && (container.getBoundingClientRect().top > window.innerHeight)) {
+            const transformFactor = (window.innerHeight - container.getBoundingClientRect().top) / (window.innerHeight);
+
+        }
+    }
+
     useEffect(() => {
         if (scrollRef.current) {
-            scrollRef.current.on('scroll', handleCloseModal);
+            scrollRef.current.on('scroll', handleScroll);
         }
 
         return () => {
             if (scrollRef.current) {
-                scrollRef.current.off('scroll', handleCloseModal);
+                scrollRef.current.off('scroll', handleScroll);
             }
         };
     }, [scrollRef, scrollRef.current]);
@@ -179,7 +191,12 @@ const SkillList = ({ employee, index, sideScrolling }) => {
             <div
                 id={ `wrap-container-${index}` } 
                 className="wrap-container" 
-                style={{ flexWrap: sideScrolling ?  "nowrap" : "wrap" }}
+                style={ sideScrolling ? {
+                    width: "calc(100% - 20px)",
+                } : {
+                    width: "50vw",
+                    maxWidth: "488px",
+                }}
             >
                 {Skill.skillTypes.map((skillType, index) => (
                     <div key={index} style={{ display: employee.filterType(skillType).length > 0 ? "inherit" : "none"}}>
@@ -194,7 +211,7 @@ const SkillList = ({ employee, index, sideScrolling }) => {
                                                 src={`skills/${skill.image}`}
                                                 alt={`${skill.name} logo`}
                                                 key={index}
-                                                className="skill-image"
+                                                className="skill-image animated"
                                                 onMouseEnter={() => handleSkillHover(skill)}
                                                 onMouseLeave={() => handleCloseModal()}
                                                 onClick={() => handleSkillClick(skill)}
@@ -206,16 +223,16 @@ const SkillList = ({ employee, index, sideScrolling }) => {
                         ) : null}
                     </div>
                 ))}
-                <div className="animated-quick" style={{ opacity: isModalVisible ? 1 : 0 }}>
-                    <SkillModal
-                        skill={selectedSkill}
-                        x={modalPosition.x}
-                        y={modalPosition.y}
-                        rotation={rotation}
-                        index={index}
-                        sideScrolling={sideScrolling}
-                    />
-                </div>
+            </div>
+            <div className="animated-quick" style={{ opacity: isModalVisible ? 1 : 0 }}>
+                <SkillModal
+                    skill={selectedSkill}
+                    x={modalPosition.x}
+                    y={modalPosition.y}
+                    rotation={rotation}
+                    index={index}
+                    sideScrolling={sideScrolling}
+                />
             </div>
         </>
     );
