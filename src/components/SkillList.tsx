@@ -1,16 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Employee from '../objects/Employee';
 import { Skill, SkillType } from '../objects/Skill';
+import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
 
-const SkillModal = ({ skill, x, y, rotation, index }) => {
+const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
     if (!skill) return null;
 
     const safeX = () => {
         const width = document.querySelector(`#skill-modal-${index}`)?.clientWidth ?? 0;
-        return x - width / 2 > 0 ? x : width / 2;
+        if ((x - width / 2) > 0 && (x + width / 2 + 20) < window.innerWidth) return x;
+        else if (x < width / 2 + 20) return width / 2;
+        else return window.innerWidth - width / 2 - 20;
     }
 
     const safeY = () => {
+        if (sideScrolling) {
+            return -y + (document.querySelector(`#skill-modal-${index}`)?.clientHeight ?? 0)
+                + (document.querySelector(`#wrap-container-${index}`)?.getBoundingClientRect().bottom ?? 0);
+        }
+
         const extraHeight = ((document.querySelector(`#meet-us-description-${index}`)?.clientHeight ?? 0) - (document.querySelector(`#meet-us-details-${index}`)?.clientHeight ?? 0));
         return -y + (document.querySelector(`#skill-modal-${index}`)?.clientHeight ?? 0) 
             + (document.querySelector(`#meet-us-details-${index}`)?.getBoundingClientRect().bottom ?? 0) 
@@ -47,9 +55,6 @@ const SkillModal = ({ skill, x, y, rotation, index }) => {
 
     return (
         <div
-            data-scroll
-            data-scroll-sticky
-            data-scroll-target="#meet-us-entrance"
             id={ `skill-modal-${index}` }
             key={index}
             className="modal-content vstack leading"
@@ -97,12 +102,13 @@ const SkillModal = ({ skill, x, y, rotation, index }) => {
     );
 };
 
-const SkillList = ({ employee, index }) => {
+const SkillList = ({ employee, index, sideScrolling }) => {
     const [selectedSkill, setSelectedSkill] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [rotation, setRotation] = useState(0);
+    const scrollRef = useLocomotiveScroll();
     const requestRef = useRef(null);
 
     const handleMouseMove = (event) => {
@@ -156,9 +162,25 @@ const SkillList = ({ employee, index }) => {
         setModalVisible(false);
     };
 
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.on('scroll', handleCloseModal);
+        }
+
+        return () => {
+            if (scrollRef.current) {
+                scrollRef.current.off('scroll', handleCloseModal);
+            }
+        };
+    }, [scrollRef, scrollRef.current]);
+
     return (
         <>
-            <div id={ `wrap-container-${index}` } className="wrap-container">
+            <div
+                id={ `wrap-container-${index}` } 
+                className="wrap-container" 
+                style={{ flexWrap: sideScrolling ?  "nowrap" : "wrap" }}
+            >
                 {Skill.skillTypes.map((skillType, index) => (
                     <div key={index} style={{ display: employee.filterType(skillType).length > 0 ? "inherit" : "none"}}>
                         {employee.filterType(skillType).length > 0 ? (
@@ -191,6 +213,7 @@ const SkillList = ({ employee, index }) => {
                         y={modalPosition.y}
                         rotation={rotation}
                         index={index}
+                        sideScrolling={sideScrolling}
                     />
                 </div>
             </div>
@@ -198,4 +221,4 @@ const SkillList = ({ employee, index }) => {
     );
 };
 
-export default SkillList;
+export { SkillList, SkillModal };

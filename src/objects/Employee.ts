@@ -26,8 +26,8 @@ class Employee {
             "Founder & Lead Developer", 
             "As a _*computer science*_ student _*at Virginia Tech*_ and a self-taught, independent _*software engineer*_, I'm deeply passionate about computing and software development that fosters creativity and productivity. Throughout these years, I've cultivated a love for learning and expressing my creativity through various mediums, including _*programming, graphic design, and front-end UI/UX design.*_ With experience across the full tech stack, I’m incredibly excited to continue developing groundbreaking technology and crafting beautiful designs with Painter*s Tape Studios. _*Let's go Hokies!*_",
             [
-                Skill.react.clone().complete(3, new Date(2022, 0, 1), true),
-                Skill.flutter.clone().complete(4, new Date(2021, 0, 1), false),
+                Skill.react.clone().complete(4, new Date(2022, 0, 1), true),
+                Skill.flutter.clone().complete(3, new Date(2021, 0, 1), false),
 
                 Skill.swift_5.clone().complete(5, new Date(2020, 0, 1), true),
                 Skill.typescript.clone().complete(4, new Date(2021, 0, 1), true),

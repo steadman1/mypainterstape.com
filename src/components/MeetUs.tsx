@@ -5,7 +5,8 @@ import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import Divider from './Divider';
 import replaceSpecialCharacters from '../replaceSpecialCharacters';
-import SkillList from './SkillList';
+import { SkillList } from './SkillList';
+import InfiniteScroller from './InfiniteScrollList';
 
 function MeetUs() {
     const { width, height } = useWindowDimensions();
@@ -85,7 +86,7 @@ function MeetUs() {
                                         <div id={ `meet-us-details-${index}` } className="vstack leading">
                                             <h4 className="meet-us-title stroked">{employee.title}</h4>
                                             <h3 className="meet-us-name">{employee.name}</h3>
-                                            <SkillList employee={employee} index={index} />
+                                            <SkillList employee={employee} index={index} sideScrolling={false} />
                                         </div>
                                         <div id={ `meet-us-description-${index}` } className="hstack top" style={{ maxWidth: "calc(50% - 20px)"}}>
                                             <img src="quote.svg" alt="quote" style={{ width: "45px", height: "45px", marginRight: "10px"}} />
@@ -95,11 +96,12 @@ function MeetUs() {
                                 ) : (
                                     <div className="vstack leading">
                                         <h4 className="meet-us-title stroked">{employee.title}</h4>
-                                        <h3 className="meet-us-name">{employee.name}</h3>
-                                        <div className="hstack top" style={{ maxWidth: "calc(100% - 20px)", marginTop: "10px" }}>
+                                        <h3 className="meet-us-name" style={{ maxWidth: "calc(100vw - 20px)" }}>{employee.name}</h3>
+                                        <div className="hstack top" style={{ maxWidth: "calc(100vw - 20px)", marginTop: "10px" }}>
                                             <img src="quote.svg" alt="quote" style={{ width: "30px", height: "30px", marginRight: "10px"}} />
                                             <h5 className="meet-us-description" style={{ marginTop: "5px"}}>{replaceSpecialCharacters(employee.description)}</h5>
                                         </div>
+                                        <SkillList employee={employee} index={index} sideScrolling={true} />
                                     </div>
                                 )
 

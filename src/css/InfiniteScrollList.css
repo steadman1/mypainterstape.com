@@ -1,0 +1,35 @@
+.scroller-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.scroller-content {
+    display: flex;
+    align-items: center;
+    will-change: transform;
+}
+
+.skill-item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    width: 100px;
+    text-align: center;
+}
+
+.skill-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.skill-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
