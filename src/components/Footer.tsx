@@ -1,47 +1,93 @@
 import { isMobile } from "react-device-detect";
-import HoverTranslateButton from "./HoverTranslateButton";
+import { useLocomotiveScroll } from "../LocomotiveScrollProvider";
+import { useEffect, useCallback } from "react";
+import { Arrow, Direction } from "./Icons/Arrow";
+import Divider from "./Divider";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
-function Footer() {
+const Footer = ({ height }) => {
+  const { width } = useWindowDimensions();
+  const scrollRef = useLocomotiveScroll();
   const handleClick = (src) => {
     window.open(src, "_blank");
   }
 
-  const height = isMobile ? { height: "100vh" } : { height: "50vh" };
+  useEffect(() => {
+    const updateOnLoad = () => {
+      if (!scrollRef.current) return;
+      setTimeout(() => {
+        console.log('Updating scroll');
+        scrollRef.current.update();
+      }, 50);
+    }
+    
+    window.addEventListener('locomotive-scroll-initialized', updateOnLoad);
+
+    return () => {
+      window.removeEventListener('locomotive-scroll-initialized', updateOnLoad);
+    }
+  }, [scrollRef.current, scrollRef]);
 
   return (
     <>
-        <section data-scroll-section>
-          <div id="footer" style={ height }>
-            <div className="hstack leading">
-              <img 
-                id="footer-poster" 
-                src="/poster.jpg" 
-                alt="Painter*s Tape Poster"
-                style={ isMobile ? { height: "calc(50vh - 20px)" } : { height: "calc(50vh - 20px)" }}
-              />
-              <div id="footer-contact-details" className="vstack space-between leading" style={ height }>
-                <h1 className="footer-text" style={{ marginRight: "10px" }}>Connect With Us</h1>
-                
-                <div className="vstack leading">
-                  <button
-                    onClick={() => handleClick("https://www.instagram.com/")}
-                  >
-                    <h3 className="footer-text animated">
-                        Instagram
-                      </h3>
-                  </button>
-                  <button
-                    onClick={() => handleClick("https://www.linkedin.com/")}
-                  >
-                    <h3 className="footer-text animated">
-                        LinkedIn
-                      </h3>
-                  </button>
+      <div 
+          data-scroll-sticky
+          data-scroll-target="#footer-scroll-section"
+          data-scroll-position=""
+          id="footer"
+          style={ height }
+        >
+          <div id="footer-contact-details" className="vstack space-between leading" style={{ padding: "0 10px", ...height }}>
+            {
+              width < 600 ? (
+                <div>
+                  <div className="vstack leading">
+                  <div className="hstack leading">
+                    <h1 className="footer-text" style={{ fontSize: "3.6rem" }}>Connect</h1>
+                  </div>
+                  <div className="hstack space-between leading" style={{ width: "calc(100vw - 20px)" }}>
+                    <h1 className="footer-text" style={{ fontSize: "3.6rem" }}>With</h1>
+                    <h1 className="footer-text" style={{ fontSize: "3.6rem" }}>Our</h1>
+                  </div>
+                  <div className="hstack space-between" style={{ width: "calc(100vw - 20px)" }}>
+                    <div className="hstack show-skills" onClick={() => handleClick("mailto:mypainterstape@icloud.com")} style={{ borderColor: "#fff" }}>
+                      <Arrow color={"#ffffff"} direction={Direction.NORTHEAST} />
+                      <h4 className="meet-us-description" style={{ fontFamily: "integral", marginTop: "0px", color: "#fff" }}>Contact</h4>
+                    </div>
+                    <h1 className="footer-text" style={{ fontSize: "3.6rem" }}>Team</h1>
+                  </div>
+                  
                 </div>
-              </div>
+                </div>
+              ) : (
+                <div className="vstack leading">
+                  <div className="hstack space-between">
+                    <h1 className="footer-text">Connect</h1>
+                    <div className="hstack show-skills" onClick={() => handleClick("mailto:mypainterstape@icloud.com")} style={{ borderColor: "#fff" }}>
+                      <Arrow color={"#ffffff"} direction={Direction.NORTHEAST} />
+                      <h4 className="meet-us-description" style={{ fontFamily: "integral", marginTop: "0px", color: "#fff" }}>Contact</h4>
+                    </div>
+                  </div>
+                  <div className="hstack space-between" style={{ width: "calc(100vw - 20px)" }}>
+                    <h1 className="footer-text">With</h1>
+                    <h1 className="footer-text">Us</h1>
+                  </div>
+                </div>
+              )
+            }
+            <div className="hstack space-between" style={{ width: "calc(100vw - 20px)", marginBottom: "5px" }}>
+              <button onClick={() => handleClick("https://www.instagram.com/mypainterstape/")}>
+                <h3 className="footer-text animated">Instagram</h3>
+              </button>
+              <h4 className="footer-text" style={{ margin: 0 }}>
+                <span className='italic'>Made with Love. (2024)</span>
+              </h4>
+              <button onClick={() => handleClick("https://www.linkedin.com/company/ptstudios/")}>
+                <h3 className="footer-text animated">LinkedIn</h3>
+              </button>
             </div>
           </div>
-        </section>
+        </div>
     </>
   );
 }

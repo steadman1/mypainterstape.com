@@ -34,6 +34,7 @@ export const LocomotiveScrollProvider: React.FC = ({ children }) => {
       window.dispatchEvent(event);
 
       console.log('Locomotive Scroll initialized');
+      // scrollRef.current.update()
     }
 
     return () => {

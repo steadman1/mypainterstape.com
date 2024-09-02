@@ -18,7 +18,7 @@ enum ScrollDirection {
 function OurWork() {
     const scrollRef = useLocomotiveScroll();
     const { width, height } = useWindowDimensions();
-    const [lockScroll, setLockScroll] = useState(true);
+    const [lockScroll, setLockScroll] = useState(false);
     const [round, setRound] = useState(30);
     const [scale, setScale] = useState(0.9);
     const [scrollPosition, setScrollPosition] = useState(0);

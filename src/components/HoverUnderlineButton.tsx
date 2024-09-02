@@ -14,7 +14,7 @@ const HoverUnderlineButton = ({ text, onClick, primaryColor }: { text: string, o
         textDecorationColor: primaryColor.transparentize(hover ? 1 : 0).toRgbaString(),
       }}
     >
-      <div className="hstack bottom-alignment">
+      <div className="hstack">
         <h3 className="text-width call-to-action-text" style={{ color: primaryColor.toRgbaString() }}>
           {text}
         </h3>

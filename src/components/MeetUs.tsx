@@ -43,41 +43,42 @@ function MeetUs() {
 
     return (
         <>
-            <section data-scroll-section id="meet-us-entrance" style={{ marginBottom: "100px"}}>
+            <section data-scroll-section id="meet-us-entrance">
                 <div 
                     data-scroll
-                    data-scroll-speed="2"
-                    data-scroll-position="center" 
+                    data-scroll-speed="3"
+                    data-scroll-position="center"
                     className="meet-us-image-wrapper"
+                    style={{ margin: "30px 0" }}
                 >
                     <img className="meet-us-image" src="/meet_us.png" alt="Meet Us: the team behind Painter*s Tape that makes it all possible." />
                 </div>
                 {
                     employees.map((employee, index) => (
-                        <div key={index} style={{ marginBottom: `${index + 1 >= employees.length ? "30px" : 0}` }}>
+                        <div key={index} style={{ backgroundColor: "#fff" }}>
                             {
                                 index > 0 ? (
                                     <div 
                                         data-scroll
                                         data-scroll-speed="1"
-                                        data-scroll-position="bottom"
-                                        style={{ margin: "30px 10px"}}
+                                        data-scroll-position="center"
+                                        style={{ backgroundColor: "#fff", margin: "30px 10px"}}
                                     >
-                                        <Divider color={"#000000"} />
+                                        {/* <Divider color={"#000000"} /> */}
                                     </div>
                                 ) : null
                             }
                             <div
                                 data-scroll
                                 data-scroll-speed="1"
-                                data-scroll-position="bottom"
+                                data-scroll-position="center"
                                 className="meet-us-employee"
                                 key={index}
                             >
                             {
                                 width >= 600 ? (
-                                    <div className="hstack space-between leading center">
-                                        <div id={ `meet-us-details-${index}` } className="vstack leading">
+                                    <div className="hstack space-between leading top">
+                                        <div id={ `meet-us-details-${index}` } className="vstack leading" style={{ overflow: "hidden" }}>
                                             <h4 className="meet-us-title stroked">{employee.title}</h4>
                                             <h3 className="meet-us-name">{employee.name}</h3>
                                             <SkillList employee={employee} index={index} sideScrolling={false} />
@@ -104,6 +105,7 @@ function MeetUs() {
                         </div>
                     ))
                 }
+                <div style={{ height: "130px", width: "100%", backgroundColor: "#fff" }}/>
             </section>
         </>
     );

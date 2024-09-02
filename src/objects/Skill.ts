@@ -53,7 +53,14 @@ class Skill {
     }
 
     public getRelatedNames(): string {
-        return this.related.map((skill: Skill) => skill.name).join(", ");
+        let relatedNames = "";
+        for (let i = 0; i < this.related.length; i++) {
+            relatedNames += this.related[i].name;
+            if ((i + 2) < this.related.length) relatedNames += ", ";
+            else if ((i + 2) === this.related.length && this.related.length == 2) relatedNames += " & ";
+            else if ((i + 2) === this.related.length) relatedNames += ", & ";
+        }
+        return relatedNames;
     }
 
     static skillTypes: SkillType[] = [
@@ -71,13 +78,17 @@ class Skill {
     static ui_ux = new Skill("compressed/ui_ux-min.png", SkillType.OTHER, "UI/UX");
     static animation = new Skill("compressed/animation-min.png", SkillType.OTHER, "Animation");
     static graphic_design = new Skill("compressed/graphic_design-min.png", SkillType.OTHER, "Graphic Design");
+    static data_analysis = new Skill("compressed/data_analysis-min.png", SkillType.OTHER, "Data Analysis");
+    static data_visualization = new Skill("compressed/data_visualization-min.png", SkillType.OTHER, "Data Visualization");
+    static and_more = new Skill("compressed/and_more-min.png", SkillType.LIBRARIES, "More");
 
     // Corporate
-    static excel = new Skill("compressed/excel-min.png", SkillType.CORPORATE, "Excel");
+    static excel = new Skill("compressed/excel-min.png", SkillType.CORPORATE, "Excel", [Skill.data_analysis, Skill.data_visualization]);
     static job_boss_2 = new Skill("compressed/job_boss_2-min.png", SkillType.CORPORATE, "JobBoss2");
+    static tableau = new Skill("compressed/tableau-min.png", SkillType.CORPORATE, "Tableau", [Skill.data_visualization]);
 
     // Web
-    static html = new Skill("compressed/html-min-min.png", SkillType.WEB, "HTML");
+    static html = new Skill("compressed/html-min.png", SkillType.WEB, "HTML");
     static css = new Skill("compressed/css-min.png", SkillType.WEB, "CSS");
 
     // Frameworks
@@ -90,7 +101,6 @@ class Skill {
     // Libraries
     static pandas = new Skill("compressed/pandas-min.png", SkillType.FRAMEWORKS, "Pandas");
     static numpy = new Skill("compressed/numpy-min.png", SkillType.FRAMEWORKS, "NumPy");
-    static and_more = new Skill("compressed/and_more-min.png", SkillType.LIBRARIES, "and More");
 
     // Programming
     static python = new Skill("compressed/python-min.png", SkillType.PROGRAMMING, "Python", [Skill.pandas, Skill.numpy, Skill.and_more]);
@@ -100,6 +110,7 @@ class Skill {
     static java = new Skill("compressed/java-min.png", SkillType.PROGRAMMING, "Java");
     static c = new Skill("compressed/c-min.png", SkillType.PROGRAMMING, "C");
     static c_plus_plus = new Skill("compressed/c_plus_plus-min.png", SkillType.PROGRAMMING, "C++", [Skill.c]);
+    static r = new Skill("compressed/r-min.png", SkillType.PROGRAMMING, "R");
 
     // Adobe
     static photoshop = new Skill("compressed/photoshop-min.png", SkillType.ADOBE, "Photoshop", [Skill.graphic_design]);

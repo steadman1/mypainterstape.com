@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Employee from '../objects/Employee';
 import { Skill, SkillType } from '../objects/Skill';
 import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
+import { Arrow, Direction } from './Icons/Arrow';
 
 const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
     if (!skill) return null;
@@ -22,7 +23,7 @@ const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
         const extraHeight = ((document.querySelector(`#meet-us-description-${index}`)?.clientHeight ?? 0) - (document.querySelector(`#meet-us-details-${index}`)?.clientHeight ?? 0));
         return -y + (document.querySelector(`#skill-modal-${index}`)?.clientHeight ?? 0) 
             + (document.querySelector(`#meet-us-details-${index}`)?.getBoundingClientRect().bottom ?? 0) 
-            + (extraHeight > 0 ? extraHeight / 2 : 0);
+            + (extraHeight > 0 ? extraHeight : 0);
     }
 
     const getSkillText = (level) => {
@@ -102,14 +103,22 @@ const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
     );
 };
 
+enum ListHoverOrigin {
+    LIST,
+    MODAL,
+}
+
 const SkillList = ({ employee, index, sideScrolling }) => {
     const [selectedSkill, setSelectedSkill] = useState(null);
+    const [isListVisible, setListVisible] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [rotation, setRotation] = useState(0);
     const scrollRef = useLocomotiveScroll();
     const requestRef = useRef(null);
+
+    const globalIndex = index;
 
     const handleMouseMove = (event) => {
         setMousePosition({ x: event.clientX, y: event.clientY });
@@ -120,11 +129,10 @@ const SkillList = ({ employee, index, sideScrolling }) => {
             const dx = mousePosition.x - prev.x;
             const dy = mousePosition.y - prev.y;
 
-            // Calculate rotation based on movement
             const distance = Math.sqrt(dx * dx + dy * dy);
-            const maxRotation = 10; // Max rotation in degrees
-            const rotationFactor = 0.06; // Adjust rotation sensitivity
-            const positionFactor = 0.06; // Adjust position sensitivity
+            const maxRotation = 10;
+            const rotationFactor = 0.06;
+            const positionFactor = 0.06;
 
             const newRotation = Math.max(-maxRotation, Math.min(maxRotation, distance * rotationFactor * (dx > 0 ? 1 : -1)));
 
@@ -162,75 +170,86 @@ const SkillList = ({ employee, index, sideScrolling }) => {
         setModalVisible(false);
     };
 
-    const handleScroll = (e) => {
-        handleCloseModal();
+    const handleMouseEnter = (origin) => {
+        if (origin === ListHoverOrigin.LIST) {
+            setListVisible(true);
+            
+            setTimeout(() => {
+                scrollRef.current.update();
+            }, 50);
+        }
+    };
 
-        const container = document.getElementById(`wrap-container-${index}`);
-        if (!container) return;
-
-        if (container.getBoundingClientRect().bottom < window.innerHeight && (container.getBoundingClientRect().top > window.innerHeight)) {
-            const transformFactor = (window.innerHeight - container.getBoundingClientRect().top) / (window.innerHeight);
-
+    const handleDiscover = (index) => {
+        const discoveredRef = document.getElementById(`discovered-${index}`);
+        if (discoveredRef) {
+            discoveredRef.classList.add("discovered");
         }
     }
-
-    useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.on('scroll', handleScroll);
-        }
-
-        return () => {
-            if (scrollRef.current) {
-                scrollRef.current.off('scroll', handleScroll);
-            }
-        };
-    }, [scrollRef, scrollRef.current]);
 
     return (
         <>
             <div
-                id={ `wrap-container-${index}` } 
+                id={`wrap-container-${globalIndex}`} 
                 className="wrap-container" 
+                onClick={() => handleMouseEnter(ListHoverOrigin.LIST)}
                 style={ sideScrolling ? {
                     width: "calc(100% - 20px)",
                 } : {
                     width: "50vw",
                     maxWidth: "488px",
                 }}
-            >
-                {Skill.skillTypes.map((skillType, index) => (
-                    <div key={index} style={{ display: employee.filterType(skillType).length > 0 ? "inherit" : "none"}}>
-                        {employee.filterType(skillType).length > 0 ? (
-                            <div className="vstack leading" key={index}>
-                                <h5 className="skill-type">{skillType}</h5>
-                                <div className="images-container">
-                                    {employee.filterType(skillType).map((skill: Skill, index: number) =>
-                                        skill.image ? (
-                                            <img
-                                                loading="lazy"
-                                                src={`skills/${skill.image}`}
-                                                alt={`${skill.name} logo`}
-                                                key={index}
-                                                className="skill-image animated"
-                                                onMouseEnter={() => handleSkillHover(skill)}
-                                                onMouseLeave={() => handleCloseModal()}
-                                                onClick={() => handleSkillClick(skill)}
-                                            />
-                                        ) : null
-                                    )}
-                                </div>
+            >  
+                {  
+                    isListVisible ? (
+                        Skill.skillTypes.map((skillType, index) => (
+                            <div
+                                key={index} 
+                                id={`discovered-${globalIndex}${index}`}
+                                style={{ display: employee.filterType(skillType).length > 0 ? "inherit" : "none"}}
+                                onLoad={() => handleDiscover(`${globalIndex}${index}`)}
+                            >
+                                {employee.filterType(skillType).length > 0 ? (
+                                    <div className="vstack leading" key={index}>
+                                        <h5 className="skill-type">{skillType}</h5>
+                                        <div className="images-container">
+                                            {employee.filterType(skillType).map((skill: Skill, index: number) =>
+                                                skill.image ? (
+                                                    <img
+                                                        loading="lazy"
+                                                        src={`skills/${skill.image}`}
+                                                        alt={`${skill.name} logo`}
+                                                        key={index}
+                                                        className="skill-image animated"
+                                                        onMouseEnter={() => handleSkillHover(skill)}
+                                                        onMouseLeave={() => handleCloseModal()}
+                                                        onClick={() => handleSkillClick(skill)}
+                                                    />
+                                                ) : null
+                                            )}
+                                        </div>
+                                    </div>
+                                ) : null}
                             </div>
-                        ) : null}
-                    </div>
-                ))}
+                        ))
+                    ) : (
+                        <div className="hstack show-skills">
+                            <Arrow color={"#000000"} direction={Direction.SOUTH} />
+                            <h4 className="meet-us-description" style={{ fontFamily: "integral", marginTop: "0px" }}>Show Skills</h4>
+                        </div>
+                    )
+                }
             </div>
-            <div className="animated-quick" style={{ opacity: isModalVisible ? 1 : 0 }}>
+            <div 
+                className="animated-quick" 
+                style={{ opacity: isModalVisible ? 1 : 0 }}
+            >
                 <SkillModal
                     skill={selectedSkill}
                     x={modalPosition.x}
                     y={modalPosition.y}
                     rotation={rotation}
-                    index={index}
+                    index={globalIndex}
                     sideScrolling={sideScrolling}
                 />
             </div>

@@ -62,7 +62,7 @@ function MainTopBar() {
                         primaryColor={black} />
                     <HoverTranslateButton 
                         text={"contact"} 
-                        onClick={() => handleClick("")} 
+                        onClick={() => handleClick("footer")} 
                         primaryColor={black} />
                 </div>
             </div>

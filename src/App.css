@@ -319,7 +319,7 @@ h5 {
 .changing-stack {
   width: 500px;
   display: flex;
-  flex-direction: column; /* Initially, it mimics a vstack */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -336,7 +336,7 @@ h3.scaling-text {
 }
 
 h5.scaling-text {
-  font-size: 1.8vh;
+  font-size: 1.8dvh;
 }
 
 
@@ -416,18 +416,13 @@ h5.description {
   text-align: initial;
   position: relative;
   display: flex;
-  height: calc(40vw);
-  max-height: 400px;
   justify-content: center;
   align-items: center;
-  margin: 0;
+  marginTop: 10px;
+  width: 100%;
 }
 
 .meet-us-image {
-  position: absolute;
-  left: 50%;
-  margin-top: 100px;
-  transform: translateX(-50%);
   max-width: 800px;
   width: calc(100vw - 170px);
   min-width: 500px;
@@ -437,6 +432,16 @@ h5.description {
   max-width: 500px;
   text-align: center;
 }
+
+.show-skills {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 2px solid #111;
+  border-radius: 100vw;
+  gap: 5px;
+  cursor: pointer;
+}
+
 .skill-type {
   margin: 12px 0 3px 0;
   font-family: "times-new-roman-condensed";
@@ -636,8 +641,8 @@ h5.description {
   position: sticky;
   top: 0px;
   width: calc(100vw - 80px);
-  height: 60vh;
-  margin: 20vh auto 20vh auto;
+  height: 60dvh;
+  margin: 20dvh auto 20dvh auto;
   border-radius: 40px;
   background-color: #ffffff;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
@@ -656,21 +661,47 @@ h5.description {
   width: calc(100vw - 20px);
 }
 
+#tape-falling-frame {
+  filter: saturate(1.4);
+  z-index: 2;
+  width: auto;
+  object-fit: contain;
+  background-clip: content-box;
+  pointer-events: none;
+}
+
+
 #footer {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
   width: 100vw;
   max-width: 100%;
   background-color: #000;
+  overflow: hidden;
+}
+
+#footer-scroll-section {
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  #footer::-webkit-full-page-media, #footer:future, :root .safari_only {
+    bottom: -65px;
+    background-color: blue;
+  }
 }
 
 #footer-poster {
   margin: 10px;
-  height: calc(50vh - 20px);
+  height: calc(50dvh - 20px);
   border-radius: 8px;
   object-fit: contain;
 }
 
 #footer-contact-details {
-  margin-bottom: 10px;
+  
 }
 
 .footer-text {
@@ -687,6 +718,21 @@ button > .footer-text {
   &:hover {
     text-decoration-color: rgba(255, 255, 255, 1);
   }
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-100%);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.discovered {
+  animation: fadeIn 0.5s cubic-bezier(0, 0.4, 0.4, 1) forwards;
 }
 
 .animated {

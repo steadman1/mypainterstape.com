@@ -5,12 +5,14 @@ import Footer from './components/Footer'
 import ThreeScene from './components/ThreeScene'
 import MainTopBar from './components/MainTopBar';
 import MeetUs from './components/MeetUs'
+import ImageAnimation from './components/ImageAnimation'
+import { isMobile } from 'react-device-detect'
 import { LocomotiveScrollProvider } from './LocomotiveScrollProvider'
 
 function App() {
   // useEffect(() => {
   //   const modelLoadedHandler = () => {
-  //     console.log('Model Loaded Event');
+  //     ('Model Loaded Event');
   //   };
 
   //   window.addEventListener('modelLoaded', modelLoadedHandler);
@@ -20,6 +22,20 @@ function App() {
   //     window.addEventListener('modelLoading', modelLoadedHandler);
   //   };
   // }, []);
+
+  const getFrames = () => {
+    const finalFrame = 220;
+    let frames = [];
+    for (let i = 1; i < (finalFrame + 1); i++) {
+        frames.push(`${"0".repeat(4 - i.toString().length)}${i}.png`);
+    }
+    return frames;
+  };
+
+  const getHeight = () => {
+    const topBarHeight = 55;
+    return isMobile ? { height: `calc(100dvh - ${topBarHeight}px)` } : { height: `60dvh` };
+  }
 
   return (
     <>
@@ -33,8 +49,11 @@ function App() {
           
           <OurWork />
           <MeetUs />
-          <Footer />
         </div>
+        <section data-scroll-section className="zstack" style={{ overflow: "hidden", ...getHeight() }}>
+          <Footer height={getHeight()} />
+          <ImageAnimation height={getHeight()} frames={getFrames()} />
+        </section>
       </LocomotiveScrollProvider>
     </>
   )
