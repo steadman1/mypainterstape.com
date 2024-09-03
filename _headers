@@ -6,14 +6,6 @@
   Content-Type: application/javascript
   Cache-Control: max-age=31536000
 
-/*.ts
-  Content-Type: application/javascript
-  Cache-Control: max-age=31536000
-
-/*.tsx
-  Content-Type: application/javascript
-  Cache-Control: max-age=31536000
-
 /*.css
   Content-Type: text/css
   Cache-Control: max-age=31536000
