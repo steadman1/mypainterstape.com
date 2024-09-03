@@ -4,9 +4,10 @@ import { isMobile } from 'react-device-detect';
 const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React.CSSProperties, frames: string[], msBetweenFrame?: number }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [highResLoaded, setHighResLoaded] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const animationInterval = useRef<number | undefined>(undefined);
-  const imageRef = useRef(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
 
   const scale = () => {
     const windowWidth = window.innerWidth;
@@ -59,7 +60,7 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
         ([entry]) => {
           if (entry.isIntersecting) {
             startAnimation();
-          }  else {
+          } else {
             resetAnimation();
           }
         },
@@ -80,16 +81,51 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
   const offset = {
     x: 4,
     y: -30,
-  }
+  };
+
+  const lowResSrc = `/tape-falling-frames-placeholder/${frames[currentFrame]}`;
+  const highResSrc = `/tape-falling-frames${ isMobile ? "-min" : "" }/${frames[currentFrame]}`;
 
   return (
-    <img
-      id="tape-falling-frame"
-      src={`/tape-falling-frames${ isMobile ? "-min" : "" }/${frames[currentFrame]}`}
-      alt={`frame-${currentFrame}`}
-      style={{ transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale()})`, transformOrigin: 'bottom', ...height }}
-      ref={imageRef}
-    />
+    <div style={{ position: 'relative', ...height }}>
+      {/* Low-resolution image */}
+      <img
+        className="tape-falling-frame"
+        src={lowResSrc}
+        alt={`low-res-frame-${currentFrame}`}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale()})`,
+          transformOrigin: 'bottom',
+          opacity: highResLoaded ? 0 : 1,
+          zIndex: highResLoaded ? 4 : 3,
+          ...height,
+        }}
+        ref={imageRef}
+      />
+      {/* High-resolution image */}
+      <img
+        loading='lazy'
+        className="tape-falling-frame"
+        src={highResSrc}
+        alt={`frame-${currentFrame}`}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          transform: `translate(-50%, ${offset.y}px) scale(${scale()})`,
+          transformOrigin: 'bottom',
+          opacity: highResLoaded ? 1 : 0,
+          transition: 'opacity 0.5s ease-in-out',
+          zIndex: 4,
+          ...height
+        }}
+        
+        onLoad={() => setHighResLoaded(true)}
+      />
+    </div>
   );
 };
 

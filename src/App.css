@@ -661,9 +661,8 @@ h5.description {
   width: calc(100vw - 20px);
 }
 
-#tape-falling-frame {
+.tape-falling-frame {
   filter: saturate(1.4);
-  z-index: 2;
   width: auto;
   object-fit: contain;
   background-clip: content-box;
