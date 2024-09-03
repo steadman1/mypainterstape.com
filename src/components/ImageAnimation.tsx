@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 
-const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }) => {
+const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React.CSSProperties, frames: string[], msBetweenFrame?: number }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const observerRef = useRef(null);
-  const animationInterval = useRef(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const animationInterval = useRef<number | undefined>(undefined);
   const imageRef = useRef(null);
 
   const scale = () => {
@@ -19,28 +19,23 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }) => {
     return Math.min(Math.max(scaleFactorX, scaleFactorY, 1.2), isMobile ? 2.4 : 3);
   };
 
-  const startAnimation = () => {
+  const startAnimation = useCallback(() => {
     if (!isAnimating) {
       setIsAnimating(true);
     }
-  };
+  }, [isAnimating]);
 
-  const stopAnimation = () => {
+  const stopAnimation = useCallback(() => {
     if (isAnimating) {
       clearInterval(animationInterval.current);
       setIsAnimating(false);
     }
-  };
+  }, [isAnimating]);
 
-  const resetAnimation = () => {
+  const resetAnimation = useCallback(() => {
     setCurrentFrame(0);
     stopAnimation();
-  };
-
-  const restartAnimation = () => {
-    setCurrentFrame(0);
-    startAnimation();
-  };
+  }, [stopAnimation]);
 
   useEffect(() => {
     if (isAnimating) {
@@ -56,7 +51,7 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }) => {
     }
 
     return () => clearInterval(animationInterval.current);
-  }, [isAnimating, frames.length, msBetweenFrame]);
+  }, [isAnimating, frames.length, msBetweenFrame, stopAnimation]);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -68,7 +63,7 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }) => {
             resetAnimation();
           }
         },
-        { threshold: isMobile ? 0 : 0.1 } // Adjust threshold as needed
+        { threshold: isMobile ? 0 : 0.1 }
       );
 
       observerRef.current.observe(imageRef.current);
@@ -80,7 +75,7 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }) => {
         observerRef.current.disconnect();
       }
     };
-  }, [currentFrame, isAnimating]);
+  }, [currentFrame, isAnimating, resetAnimation, startAnimation, stopAnimation]);
 
   const offset = {
     x: 4,
@@ -89,7 +84,6 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }) => {
 
   return (
     <img
-      fetchpriority="high"
       id="tape-falling-frame"
       src={`/tape-falling-frames${ isMobile ? "-min" : "" }/${frames[currentFrame]}`}
       alt={`frame-${currentFrame}`}

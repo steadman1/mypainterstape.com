@@ -1,14 +1,12 @@
-import { isMobile } from "react-device-detect";
-import { useLocomotiveScroll } from "../LocomotiveScrollProvider";
-import { useEffect, useCallback } from "react";
+import { useLocomotiveScroll } from "../hooks/useLocomotiveScroll";
+import { useEffect } from "react";
 import { Arrow, Direction } from "./Icons/Arrow";
-import Divider from "./Divider";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
-const Footer = ({ height }) => {
+const Footer = ({ height }: { height: React.CSSProperties }) => {
   const { width } = useWindowDimensions();
   const scrollRef = useLocomotiveScroll();
-  const handleClick = (src) => {
+  const handleClick = (src: string) => {
     window.open(src, "_blank");
   }
 
@@ -20,13 +18,13 @@ const Footer = ({ height }) => {
         scrollRef.current.update();
       }, 50);
     }
-    
+
     window.addEventListener('locomotive-scroll-initialized', updateOnLoad);
 
     return () => {
       window.removeEventListener('locomotive-scroll-initialized', updateOnLoad);
     }
-  }, [scrollRef.current, scrollRef]);
+  }, [scrollRef]);
 
   return (
     <>

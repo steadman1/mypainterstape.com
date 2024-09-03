@@ -1,7 +1,7 @@
 import { Color } from "../objects/Color";
 import HoverTranslateButton from "./HoverTranslateButton";
 import { useEffect, useState } from 'react';
-import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
+import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 
 function MainTopBar() {
     const scrollRef = useLocomotiveScroll();
@@ -22,13 +22,13 @@ function MainTopBar() {
     };
 
     useEffect(() => {
-        const handleScroll = (args) => {
+        const handleScroll = (args: { scroll: { y: number; }; }) => {
             const top = document.getElementById('main-top-bar')?.clientHeight;
             if (!top) return;
             if (args.scroll.y < (window.innerHeight - top) || args.scroll.y > (window.innerHeight + top * 2)) {
-                setTop(_ => 0);
+                setTop(() => 0);
             } else {
-                setTop(_ =>  -top);
+                setTop(() =>  -top);
             }
         };
 
@@ -42,7 +42,7 @@ function MainTopBar() {
         return () => {
             window.removeEventListener('locomotive-scroll-initialized', addScrollListener);
         }
-    }, [scrollRef.current, scrollRef]);
+    }, [scrollRef]);
 
     return (
         <div id="main-top-bar" className="animated-quick" style={{ top: top }}>

@@ -1,4 +1,4 @@
-import { Work, WorkDetail, WorkType, WorkDetailType } from '../../objects/Work';
+import { Work, WorkDetailType } from '../../objects/Work';
 import DescriptionWorkDetail from './Entrances/DescriptionWorkDetail';
 import DescriptionWithLogoWorkDetail from './Entrances/DescriptionWithLogoWorkDetail';
 import DescriptionWithVideoWorkDetail from './Entrances/DescriptionWithVideoWorkDetail';

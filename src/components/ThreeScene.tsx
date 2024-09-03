@@ -1,16 +1,17 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame, useLoader, extend, useThree } from '@react-three/fiber';
-import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+// import { Canvas, useFrame, useLoader, extend, useThree } from '@react-three/fiber';
+// import { OrbitControls as ThreeOrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { isMobile } from 'react-device-detect';
-import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
+import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 
 // Extend Three.js with OrbitControls
-extend({ OrbitControls: ThreeOrbitControls });
+// extend({ OrbitControls: ThreeOrbitControls });
 
-const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }) => {
-  const modelRef = useRef();
+const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTMLCanvasElement | null> }) => {
+  const modelRef = useRef<THREE.Group>(null);
   const scrollRef = useLocomotiveScroll();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
@@ -29,28 +30,44 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   // Load the model and log when it is fully loaded
   const model = useLoader(GLTFLoader, url, (loader) => {
     loader.manager.onLoad = () => {
-      const modelLoaded = new Event("modelLoaded");
-      canvasRef.current.dispatchEvent(modelLoaded);
+      if (canvasRef.current) {
+        const modelLoaded = new Event("modelLoaded");
+        canvasRef.current.dispatchEvent(modelLoaded);
+      }
     };
   });
 
   // Function to apply smooth shading to all objects in the scene
-  const applySmoothShading = (scene) => {
-    scene.traverse((object) => {
-      if (object.isMesh) {
-        object.material.flatShading = false; // Enable smooth shading
-        object.material.shading = THREE.SmoothShading;
-
-        object.geometry.computeVertexNormals(true);
-
-        object.material.needsUpdate = true;  // Ensure the material updates
-
-        object.castShadow = true;
-      }
-    });
+  const applySmoothShading = (scene: THREE.Object3D<THREE.Object3DEventMap> | null) => {
+    if (scene) {
+      scene.traverse((object) => {
+        if ((object as THREE.Mesh).isMesh) {
+          const mesh = object as THREE.Mesh;
+          if (mesh.material instanceof THREE.MeshStandardMaterial) {
+            mesh.material.flatShading = false; // Enable smooth shading
+          }
+          
+          mesh.geometry.computeVertexNormals();
+          
+          if (Array.isArray(mesh.material)) {
+            mesh.material.forEach((material) => {
+              if (material instanceof THREE.MeshStandardMaterial) {
+                material.needsUpdate = true; // Ensure the material updates
+              }
+            });
+          } else {
+            const material = mesh.material as THREE.MeshStandardMaterial;
+            material.needsUpdate = true; // Ensure the material updates
+          }
+          
+          mesh.castShadow = true;
+        }
+      });
+    }
   };
 
   const adjustModelRotation = () => {
+    if (!modelRef.current) return;
     const initRotations = [
       { x: 1.35, y: 0.26, z: -2.48 },
       { x: 1.54, y: 1.14, z: -2.21 },
@@ -66,8 +83,6 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     const rotation = initRotations[Math.floor(Math.random() * initRotations.length)];
 
     modelRef.current.rotation.set(rotation.x, rotation.y, rotation.z);
-
-    console.log(rotation);
 
     // const x = Math.PI * Math.random();
     // const y = Math.PI * Math.random();
@@ -87,17 +102,21 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     const divisor = isMobile ? 450 : 800;
     const scaleFactorX = windowWidth / divisor;
     const scaleFactorY = windowHeight / divisor;
-
+  
     // Choose the smaller scale factor to maintain aspect ratio
     const scaleFactor = Math.min(scaleFactorX, scaleFactorY, 0.8);
     
-    // Set the scale for the model
-    modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
+    // Set the scale for the model if modelRef.current is defined
+    if (modelRef.current) {
+      modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
+    }
   };
 
-  const setupCinematicLighting = (scene) => {
+  const setupCinematicLighting = (scene: THREE.Object3D<THREE.Object3DEventMap> | null) => {
+    if (!scene) return;
+
     // Key Light - The main light source, usually positioned at an angle
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.1);
     keyLight.position.set(50, 100, 50); // Positioned to the upper front-left of the model
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
@@ -107,23 +126,23 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     scene.add(keyLight);
   
     // Fill Light - Softer light to fill in the shadows created by the key light
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.2);
     fillLight.position.set(-50, 50, 50); // Positioned to the upper front-right of the model
     fillLight.castShadow = false; // Usually doesn't cast shadows
     scene.add(fillLight);
   
     // Rim Light - Creates a highlight on the edges of the model, adding depth and separation from the background
-    const rimLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.3);
     rimLight.position.set(0, 100, -100); // Positioned behind the model
     rimLight.castShadow = false;
     scene.add(rimLight);
   
     // Ambient Light - Soft, overall illumination that affects all objects in the scene
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.3); // Soft ambient light
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.1); // Soft ambient light
     scene.add(ambientLight);
   
     // Optionally, you can add a spotlight for more dramatic effects
-    const spotlight = new THREE.SpotLight(0xffffff, 0.8);
+    const spotlight = new THREE.SpotLight(0xffffff, 0.2);
     spotlight.position.set(100, 200, 100);
     spotlight.castShadow = true;
     spotlight.shadow.mapSize.width = 1024;
@@ -133,14 +152,10 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     scene.add(spotlight);
   };
 
-  const handleRaycastIntersection = (event) => {
+  const handleRaycastIntersection = (event: { intersections: THREE.Intersection[]; }) => {
     const intersection = event.intersections[0]; // Get the first intersection
-    if (intersection) {
+    if (intersection.face) {
       const normal = intersection.face.normal; // The normal of the intersected face
-      const point = intersection.point; // The point of intersection
-      const distance = intersection.distance; // Distance from the camera to the intersection
-
-      console.log(intersection.object.rotation);
 
       // Adjust rotational velocities based on the intersection normal
       setRotationalXVelocity(prev => prev + normal.x * 0.5);
@@ -150,9 +165,9 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   };
 
   useEffect(() => {
-    if (!scrollRef.current) return;
+    if (!scrollRef || !scrollRef.current) return;
 
-    const handleScroll = (args) => {
+    const handleScroll = (args: { scroll: { y: number; }; }) => {
       const currentScrollY = args.scroll.y; // Use Locomotive Scroll's scroll position
 
       if (currentScrollY === lastScrollY) {
@@ -170,13 +185,14 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
       setLastScrollY(currentScrollY);
     };
 
+    const scrollRefCurrent = scrollRef.current;
+
     // Listen to Locomotive Scroll's scroll event
-    scrollRef.current.on('scroll', handleScroll);
+    scrollRefCurrent.on('scroll', handleScroll);
 
     return () => {
-      // Clean up event listener on component unmount
-      if (scrollRef.current) {
-        scrollRef.current.off('scroll', handleScroll);
+      if (scrollRefCurrent) {
+        scrollRefCurrent.off('scroll', handleScroll);
       }
     };
   }, [lastScrollY, scrollRef]);
@@ -189,7 +205,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
       setupCinematicLighting(modelRef.current.parent);
       setIsSetup(true);
     }
-  }, [modelRef.current]);
+  }, [modelRef, isSetup]);
 
   useEffect(() => {
     window.addEventListener('resize', adjustModelScale);
@@ -197,6 +213,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
   }, []);
 
   useFrame((state) => {
+    if (!modelRef.current) return;
     raycaster.current.setFromCamera(mouse.current, state.camera);
     const intersects = raycaster.current.intersectObject(modelRef.current, true);
 
@@ -231,38 +248,38 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: HTMLCanvasElement }
     <primitive
       object={model.scene}
       ref={modelRef}
-      onClick={(e) => handleRaycastIntersection(e)}
+      onClick={(e: { intersections: THREE.Intersection[]; }) => handleRaycastIntersection(e)}
       // onPointerOver={(e) => handleRaycastIntersection(e)}
       // onPointerOut={(e) => handleRaycastIntersection(e)}
     />
   );
 };
 
-const OrbitControls = () => {
-  const { camera, gl } = useThree();
-  const controls = useRef();
+// const OrbitControls = () => {
+//   const { camera, gl } = useThree();
+//   const controls = useRef();
 
-  useFrame(() => controls.current.update());
+//   useFrame(() => controls.current.update());
 
-  return (
-  <orbitControls 
-    ref={controls} 
-    args={[camera, gl.domElement]}
-    enableZoom={false}
-    enablePan={false}
-    enableRotate={true}
-  />
-  );
-};
+//   return (
+//   <orbitControls 
+//     ref={controls} 
+//     args={[camera, gl.domElement]}
+//     enableZoom={false}
+//     enablePan={false}
+//     enableRotate={true}
+//   />
+//   );
+// };
 
 const ThreeScene = () => {
-  const canvasRef = useRef();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   return (
     <div data-scroll data-scroll-speed="0.2" data-scroll-position="top">
       <Canvas ref={canvasRef} style={{ height: "100dvh", width: "100vw", maxWidth: "100%" }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1.5} />
+        <ambientLight intensity={0.2} />
+        <directionalLight position={[10, 10, 5]} intensity={0.5} />
         <Model url="/pt-roll/painter_stape.gltf" canvasRef={canvasRef} />
         {/* <OrbitControls /> */}
       </Canvas>

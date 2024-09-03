@@ -3,7 +3,7 @@ import { Work, WorkType } from "../../objects/Work";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 function OurWorkBar({ work, color }: { work: Work, color: string }) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   let workTypeText = "";
   switch (work.workType) {

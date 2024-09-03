@@ -1,16 +1,14 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import { createContext, useEffect, useRef, ReactElement } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { isMobile } from 'react-device-detect';
 
 // Create the context
-const LocomotiveScrollContext = createContext<any>(null);
+export const LocomotiveScrollContext = createContext<LocomotiveScroll | null>(null);
 
-export const useLocomotiveScroll = () => useContext(LocomotiveScrollContext);
-
-export const LocomotiveScrollProvider: React.FC = ({ children }) => {
+export const LocomotiveScrollProvider = ({ children }: { children: ReactElement[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<any>(null);
+  const scrollRef = useRef<LocomotiveScroll | null>(null);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -20,10 +18,6 @@ export const LocomotiveScrollProvider: React.FC = ({ children }) => {
         lerp: isMobile ? 0.06 : 0.1,
         multiplier: isMobile ? 0.8 : 1,
         smoothMobile: true,
-        mobile: {
-          breakpoint: 0,
-          smooth: true,
-        },
         tablet: {
           breakpoint: 0,
           smooth: true,
@@ -32,9 +26,6 @@ export const LocomotiveScrollProvider: React.FC = ({ children }) => {
 
       const event = new Event('locomotive-scroll-initialized');
       window.dispatchEvent(event);
-
-      console.log('Locomotive Scroll initialized');
-      // scrollRef.current.update()
     }
 
     return () => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Work } from '../../../objects/Work';
 import replaceSpecialCharacters from '../../../replaceSpecialCharacters';
 import { Arrow, Direction } from '../../Icons/Arrow';
@@ -28,14 +28,6 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
     };
 
     const border = `2px solid ${work.lightAccentColor.toRgbString()}`;
-
-    const getImageScrollerWidth = () => {
-        const imageScroller = document.getElementById("image-scroller");
-        
-        if (!imageScroller) return Math.max(width, workDetail.images.length * imageWidth);
-
-        return imageScroller.offsetWidth;
-    };
     
     const buttons = (
         <div key={ `${work.name}-${detailIndex}`  } className="hstack space-between" style={{ width: `${Math.min(width, 300)}px` }}>
@@ -57,37 +49,45 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
         </div>
     );
 
-    const setup = () => {
+    const setup = useCallback(() => {
+        const getImageScrollerWidth = () => {
+            const imageScroller = document.getElementById("image-scroller");
+            
+            if (!imageScroller) return Math.max(width, workDetail.images.length * imageWidth);
+    
+            return imageScroller.offsetWidth;
+        };
+
+        const getWorkDetailClasses = () => {
+            const workDetailElement = document.getElementById("work-detail");
+    
+            if (!workDetailElement) return workDetailClasses;
+            // if (workDetailElement.classList.contains("no-scroll")) return `${workDetailClasses} no-scroll`;
+    
+            const workBarHeight = 150;
+            const workCallToActionHeight = 148;
+    
+            // sum height of all workDetail element children
+            let workDetailChildrenHeight = 0;
+            for (let i = 0; i < workDetailElement.children.length; i++) {
+                workDetailChildrenHeight += workDetailElement.children[i].clientHeight;
+            }
+    
+            if (workDetailChildrenHeight < (height - workCallToActionHeight - workBarHeight)) {
+                return `${workDetailClasses.replaceAll("no-scroll", "")} no-scroll`;
+            }
+    
+            return workDetailClasses.replaceAll("no-scroll", "");
+        }
+
         setImageScrollIndex(Math.floor(work.details[detailIndex].images.length / 2) - 1);
         setImageScrollerWidth(getImageScrollerWidth());
         setWorkDetailClasses(getWorkDetailClasses());
-    }
+    }, [work.details, detailIndex, height, imageWidth, width, workDetail.images.length, workDetailClasses]);
 
     useEffect(() => {
         setup();
-    }, []);
-
-    const getWorkDetailClasses = () => {
-        const workDetailElement = document.getElementById("work-detail");
-
-        if (!workDetailElement) return workDetailClasses;
-        // if (workDetailElement.classList.contains("no-scroll")) return `${workDetailClasses} no-scroll`;
-
-        const workBarHeight = 150;
-        const workCallToActionHeight = 148;
-
-        // sum height of all workDetail element children
-        let workDetailChildrenHeight = 0;
-        for (let i = 0; i < workDetailElement.children.length; i++) {
-            workDetailChildrenHeight += workDetailElement.children[i].clientHeight;
-        }
-
-        if (workDetailChildrenHeight < (height - workCallToActionHeight - workBarHeight)) {
-            return `${workDetailClasses.replaceAll("no-scroll", "")} no-scroll`;
-        }
-
-        return workDetailClasses.replaceAll("no-scroll", "");
-    }
+    }, [setup]);
 
     return (
         <div key={ `${work.name}-${detailIndex}`  } id="work-detail" className={ workDetailClasses }>

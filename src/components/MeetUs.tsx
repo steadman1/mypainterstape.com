@@ -1,45 +1,11 @@
 import Employee from '../objects/Employee';
-import { Skill, SkillType } from '../objects/Skill';
-import React, { useState, useEffect, useCallback } from 'react';
-import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import Divider from './Divider';
 import replaceSpecialCharacters from '../replaceSpecialCharacters';
 import { SkillList } from './SkillList';
-import InfiniteScroller from './InfiniteScrollList';
 
 function MeetUs() {
-    const { width, height } = useWindowDimensions();
-    const [deltaY, setDeltaY] = useState(0);
-    const [scrollPosition, setScrollPosition] = useState(0);
-    const scrollRef = useLocomotiveScroll();
+    const { width } = useWindowDimensions();
     const employees = Employee.employees;
-
-    const handleScroll = useCallback((args) => {
-        const height = document.getElementById("meet-us-entrance")?.offsetTop;
-        if (!height || height > args.scroll.y) {
-            setDeltaY(0);
-            setScrollPosition(0);
-            return;
-        }
-
-        const newScrollPosition = args.scroll.y - height;
-        
-        setDeltaY(newScrollPosition - scrollPosition);
-        setScrollPosition(newScrollPosition);
-    }, [scrollPosition]);
-
-    useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.on('scroll', handleScroll);
-        }
-
-        return () => {
-            if (scrollRef.current) {
-                scrollRef.current.off('scroll', handleScroll);
-            }
-        };
-    }, [scrollRef, handleScroll]);
 
     return (
         <>

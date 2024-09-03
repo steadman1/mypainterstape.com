@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Color } from '../objects/Color';
 
-const HoverUnderlineButton = ({ text, onClick, primaryColor }: { text: string, onClick: Function, primaryColor: Color }) => {
+type HoverUnderlineButtonProps = {
+  text: string;
+  onClick: () => void;
+  primaryColor: Color;
+};
+
+const HoverUnderlineButton = ({ text, onClick, primaryColor }: HoverUnderlineButtonProps) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -9,7 +15,7 @@ const HoverUnderlineButton = ({ text, onClick, primaryColor }: { text: string, o
       className="call-to-action-secondary"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => onClick()}
+      onClick={onClick}
       style={{
         textDecorationColor: primaryColor.transparentize(hover ? 1 : 0).toRgbaString(),
       }}

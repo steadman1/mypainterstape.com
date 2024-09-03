@@ -1,13 +1,10 @@
 import { Arrow, Direction } from "../Icons/Arrow";
 import { Work } from "../../objects/Work";
 import CheckMark from "../Icons/CheckMark";
-import { useState } from "react";
 import HoverUnderlineButton from "../HoverUnderlineButton";
 import HoverTranslateButton from "../HoverTranslateButton";
 
 function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, lockScroll, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const [secondaryHover , setSecondaryHover] = useState(false);
-
     const handleForward = () => {
         if (!lockScroll) {
             setLockScroll(true);
@@ -53,7 +50,7 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
         }
     }
 
-    const url = works[workIndex].details[detailIndex].URL;
+    // const url = works[workIndex].details[detailIndex].URL;
     const primaryColor = works[workIndex].lightAccentColor;
     const secondaryColor = works[workIndex].darkAccentColor;
 

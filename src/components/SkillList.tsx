@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Employee from '../objects/Employee';
-import { Skill, SkillType } from '../objects/Skill';
-import { useLocomotiveScroll } from '../LocomotiveScrollProvider';
+import { Skill } from '../objects/Skill';
+import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 import { Arrow, Direction } from './Icons/Arrow';
 
-const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
+const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }: { skill: Skill, x: number, y: number, rotation: number, index: number, sideScrolling: boolean }) => {
     if (!skill) return null;
 
     const safeX = () => {
@@ -26,7 +26,7 @@ const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
             + (extraHeight > 0 ? extraHeight : 0);
     }
 
-    const getSkillText = (level) => {
+    const getSkillText = (level: number) => {
         switch (level) {
             case 1:
                 return "Minimal";
@@ -43,7 +43,7 @@ const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
         }
     }
 
-    const getColor = (index) => {
+    const getColor = (index: number) => {
         const colors = [
             "#f3722c",
             "#f8961e",
@@ -86,12 +86,12 @@ const SkillModal = ({ skill, x, y, rotation, index, sideScrolling }) => {
                 <div className="vstack">
                     <div className="hstack space-between" style={{ marginTop: "10px", height: "min-content" }}>
                         <h5 className="skill-details">Skill</h5>
-                        <h5 className="skill-details"><span className="bold">{ getSkillText(skill.level) }</span></h5>
+                        <h5 className="skill-details"><span className="bold">{ getSkillText(skill.level!) }</span></h5>
                     </div>
                     <div className="hstack" style={{ margin: 0 }}>
                         {
                             (new Array(5)).fill(null).map((_, index) => (
-                                <div key={index} className={ `${(skill.level - 1) < index ? "outline-dot" : "filled-dot"}` } style={ (skill.level - 1) < index ? {} : { backgroundColor: getColor(index) }} />
+                                <div key={index} className={ `${(skill.level! - 1) < index ? "outline-dot" : "filled-dot"}` } style={ (skill.level! - 1) < index ? {} : { backgroundColor: getColor(index) }} />
                             ))
                         }
                     </div>
@@ -108,23 +108,23 @@ enum ListHoverOrigin {
     MODAL,
 }
 
-const SkillList = ({ employee, index, sideScrolling }) => {
-    const [selectedSkill, setSelectedSkill] = useState(null);
+const SkillList = ({ employee, index, sideScrolling }: { employee: Employee, index: number, sideScrolling: boolean }) => {
+    const [selectedSkill, setSelectedSkill] = useState<Skill>(Skill.and_more);
     const [isListVisible, setListVisible] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [rotation, setRotation] = useState(0);
     const scrollRef = useLocomotiveScroll();
-    const requestRef = useRef(null);
+    const requestRef = useRef<number>(0);
 
     const globalIndex = index;
 
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: { clientX: number; clientY: number; }) => {
         setMousePosition({ x: event.clientX, y: event.clientY });
     };
 
-    const updateModalPosition = () => {
+    const updateModalPosition = useCallback(() => {
         setModalPosition((prev) => {
             const dx = mousePosition.x - prev.x;
             const dy = mousePosition.y - prev.y;
@@ -144,7 +144,7 @@ const SkillList = ({ employee, index, sideScrolling }) => {
             };
         });
         requestRef.current = requestAnimationFrame(updateModalPosition);
-    };
+    }, [mousePosition]);
 
     useEffect(() => {
         window.addEventListener('mousemove', handleMouseMove);
@@ -154,14 +154,14 @@ const SkillList = ({ employee, index, sideScrolling }) => {
             window.removeEventListener('mousemove', handleMouseMove);
             cancelAnimationFrame(requestRef.current);
         };
-    }, [mousePosition]);
+    }, [mousePosition, updateModalPosition]);
 
-    const handleSkillHover = (skill) => {
+    const handleSkillHover = (skill: Skill) => {
         setSelectedSkill(skill);
         setModalVisible(true);
     };
 
-    const handleSkillClick = (skill) => {
+    const handleSkillClick = (skill: Skill) => {
         setSelectedSkill(skill);
         setModalVisible(true);
     };
@@ -170,7 +170,7 @@ const SkillList = ({ employee, index, sideScrolling }) => {
         setModalVisible(false);
     };
 
-    const handleMouseEnter = (origin) => {
+    const handleMouseEnter = (origin: ListHoverOrigin) => {
         if (origin === ListHoverOrigin.LIST) {
             setListVisible(true);
             
@@ -180,7 +180,7 @@ const SkillList = ({ employee, index, sideScrolling }) => {
         }
     };
 
-    const handleDiscover = (index) => {
+    const handleDiscover = (index: string) => {
         const discoveredRef = document.getElementById(`discovered-${index}`);
         if (discoveredRef) {
             discoveredRef.classList.add("discovered");

@@ -1,7 +1,5 @@
 import { Work } from "../../objects/Work";
-import { WorkDetail } from "../../objects/WorkDetail";
-import { Color } from "../../objects/Color";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Arrow, Direction } from "../Icons/Arrow";
 
 enum NavigationDirection {
@@ -9,12 +7,11 @@ enum NavigationDirection {
   VERTICAL = "vstack"
 }
 
-function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIndex, setDetailIndex, lockScroll, setLockScroll }: { direction: NavigationDirection, works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
+function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, setDetailIndex, lockScroll, setLockScroll }: { direction: NavigationDirection, works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [hover, setHover] = useState(false);
   const work = works[workIndex];
-  const details = work.details;
 
-  const handleHover = (entering) => {
+  const handleHover = (entering: boolean) => {
     setHover(entering);
   }
   const handleClick = (index: number) => { 
@@ -25,7 +22,7 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
     setDetailIndex(0);
   }
   const handleExit = () => {
-    setLockScroll(_ => !lockScroll);
+    setLockScroll(() => !lockScroll);
   }
 
   const primaryColor = work.primaryTextColor.toRgbString();
@@ -37,19 +34,19 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, detailIn
     return button ? button.clientHeight : 50;
   }
 
-  const horizontalStyling = {
+  const horizontalStyling: React.CSSProperties = {
     top: 0,
     width: "100vw",
     zIndex: 1,
     overflowX: "auto",
   }
-  const verticalStyling = { 
+  const verticalStyling: React.CSSProperties = { 
     height: "100vh"
   }
 
   return (
     <>
-      <div id="our-work-navigation" style={ direction === NavigationDirection.HORIZONTAL ? horizontalStyling : verticalStyling} onMouseEnter={() => { handleHover(true) } } onMouseLeave={() => { handleHover(false) }}>
+      <div id="our-work-navigation" style={ direction === NavigationDirection.HORIZONTAL ? horizontalStyling : verticalStyling } onMouseEnter={() => { handleHover(true) } } onMouseLeave={() => { handleHover(false) }}>
         <div className={ `${direction} leading` }>
           {
             works.map((work: Work, index: number) => (
