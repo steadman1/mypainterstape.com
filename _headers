@@ -1,0 +1,20 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/*.js
+  Content-Type: application/javascript
+  Cache-Control: max-age=31536000
+
+/*.css
+  Content-Type: text/css
+  Cache-Control: max-age=31536000
+
+/*.json
+  Content-Type: application/json
+
+/static/*
+  Cache-Control: max-age=31536000
+
+/index.html
+  Cache-Control: no-cache
