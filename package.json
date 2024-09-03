@@ -6,7 +6,7 @@
   "scripts": {
     "start": "CHOKIDAR_USEPOLLING=true",
     "dev": "vite",
-    "build": "eslint . --max-warnings=0 || true && tsc --noEmit --skipLibCheck || true && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
