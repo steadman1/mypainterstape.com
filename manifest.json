@@ -1,0 +1,6 @@
+{
+    "name": "painter_s-tape-portfolio",
+    "short_name": "pt-portfolio",
+    "start_url": "/",
+    "display": "standalone"
+}
