@@ -278,7 +278,7 @@ h5 {
 }
 
 .hstack.pad-between > * {
-  margin-right: 5px;
+  margin-left: 10px;
 }
 
 .hstack.leading {
@@ -1010,7 +1010,7 @@ h5 span.quote {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  z-index: 4;
+  z-index: 5;
 }
 
 
@@ -1018,7 +1018,7 @@ h5 span.quote {
 h1.top-bar-item.text {
   z-index: 100;
   font-size: 1.7rem;
-  margin-right: 5px;
+  margin-right: 8px;
 }
 
 h1.top-bar-item.text > span {
