@@ -23,11 +23,15 @@ function App() {
   //   };
   // }, []);
 
+  const skip = 5;
+
   const getFrames = () => {
     const finalFrame = 220;
     const frames = [];
     for (let i = 1; i < (finalFrame + 1); i++) {
-        frames.push(`${"0".repeat(4 - i.toString().length)}${i}.png`);
+        if (i % skip === 0) {
+            frames.push(`${"0".repeat(4 - i.toString().length)}${i}.png`);
+        }
     }
     return frames;
   };
@@ -52,7 +56,7 @@ function App() {
         </div>
         <section data-scroll-section className="zstack" style={{ overflow: "hidden", ...getHeight() }}>
           <Footer height={getHeight()} />
-          <ImageAnimation height={getHeight()} frames={getFrames()} msBetweenFrame={15} />
+          <ImageAnimation height={getHeight()} frames={getFrames()} msBetweenFrame={20 * skip} isStatic={false} />
         </section>
       </LocomotiveScrollProvider>
     </>

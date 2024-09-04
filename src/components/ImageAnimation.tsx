@@ -1,7 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 
-const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React.CSSProperties, frames: string[], msBetweenFrame?: number }) => {
+const ImageAnimation = ({
+  height,
+  frames,
+  msBetweenFrame = 40,
+  isStatic = false, // Add the isStatic flag with default value as false
+}: {
+  height: React.CSSProperties;
+  frames: string[];
+  msBetweenFrame?: number;
+  isStatic?: boolean; // Allow the isStatic prop to be passed
+}) => {
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [highResLoaded, setHighResLoaded] = useState(false);
@@ -12,7 +22,6 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
   const scale = () => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    
     const divisor = isMobile ? 350 : 300;
     const scaleFactorX = windowWidth / divisor;
     const scaleFactorY = windowHeight / divisor;
@@ -21,10 +30,10 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
   };
 
   const startAnimation = useCallback(() => {
-    if (!isAnimating) {
+    if (!isAnimating && !isStatic) {
       setIsAnimating(true);
     }
-  }, [isAnimating]);
+  }, [isAnimating, isStatic]);
 
   const stopAnimation = useCallback(() => {
     if (isAnimating) {
@@ -55,7 +64,7 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
   }, [isAnimating, frames.length, msBetweenFrame, stopAnimation]);
 
   useEffect(() => {
-    if (imageRef.current) {
+    if (!isStatic && imageRef.current) {
       observerRef.current = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
@@ -76,15 +85,19 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
         observerRef.current.disconnect();
       }
     };
-  }, [currentFrame, isAnimating, resetAnimation, startAnimation, stopAnimation]);
+  }, [currentFrame, isAnimating, resetAnimation, startAnimation, stopAnimation, isStatic]);
 
   const offset = {
     x: 4,
     y: -30,
   };
 
-  const lowResSrc = `/tape-falling-frames-placeholder/${frames[currentFrame]}`;
-  const highResSrc = `/tape-falling-frames${ isMobile ? "-min" : "" }/${frames[currentFrame]}`;
+  // Determine the frame to show based on isStatic flag
+  const finalFrameIndex = frames.length - 1;
+  const frameToShow = isStatic ? finalFrameIndex : currentFrame;
+
+  const lowResSrc = `/tape-falling-frames-placeholder/${frames[frameToShow]}`;
+  const highResSrc = `/tape-falling-frames${isMobile ? "-min" : ""}/${frames[frameToShow]}`;
 
   return (
     <div style={{ position: 'relative', ...height }}>
@@ -92,7 +105,7 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
       <img
         className="tape-falling-frame"
         src={lowResSrc}
-        alt={`low-res-frame-${currentFrame}`}
+        alt={`low-res-frame-${frameToShow}`}
         style={{
           position: 'absolute',
           top: 0,
@@ -107,10 +120,10 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
       />
       {/* High-resolution image */}
       <img
-        loading='lazy'
+        loading="lazy"
         className="tape-falling-frame"
         src={highResSrc}
-        alt={`frame-${currentFrame}`}
+        alt={`frame-${frameToShow}`}
         style={{
           position: 'absolute',
           top: 0,
@@ -120,9 +133,8 @@ const ImageAnimation = ({ height, frames, msBetweenFrame = 15 }: { height: React
           opacity: highResLoaded ? 1 : 0,
           transition: 'opacity 0.5s ease-in-out',
           zIndex: 4,
-          ...height
+          ...height,
         }}
-        
         onLoad={() => setHighResLoaded(true)}
       />
     </div>
