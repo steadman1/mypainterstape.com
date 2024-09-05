@@ -109,7 +109,7 @@ class Skill {
     static swift_5 = new Skill("compressed/swift_5-min.png", SkillType.PROGRAMMING, "Swift 5", [Skill.swift_ui, Skill.ui_kit, Skill.ui_ux]);
     static java = new Skill("compressed/java-min.png", SkillType.PROGRAMMING, "Java");
     static c = new Skill("compressed/c-min.png", SkillType.PROGRAMMING, "C");
-    static c_plus_plus = new Skill("compressed/c_plus_plus-min.png", SkillType.PROGRAMMING, "C++", [Skill.c]);
+    static c_plus_plus = new Skill("compressed/c_plus_plus-min.png", SkillType.PROGRAMMING, "C Plus Plus", [Skill.c]);
     static r = new Skill("compressed/r-min.png", SkillType.PROGRAMMING, "R");
 
     // Adobe
