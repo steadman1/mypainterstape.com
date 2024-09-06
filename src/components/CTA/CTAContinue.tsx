@@ -69,7 +69,7 @@ function CTAContinue({ works, workIndex, setWorkIndex, detailIndex, setDetailInd
             </button>
         }
         { 
-            workIndex > 0 || detailIndex > 0 ? <HoverUnderlineButton text={"Back"} onClick={handleClick} primaryColor={primaryColor} /> : null
+            workIndex > 0 || detailIndex > 0 ? <HoverUnderlineButton text={"Back"} onClick={() => handleClick(false)} primaryColor={primaryColor} /> : null
         }
     </div>
   );
