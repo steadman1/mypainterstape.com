@@ -1,10 +1,9 @@
 @font-face {
   font-family: 'integral';
-  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic.woff2') format('woff2'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic.woff') format('woff'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic.ttf') format('truetype');
+  src: url('fonts/IntegralCF-Bold.woff2') format('woff2'),
+      url('fonts/IntegralCF-Bold.woff') format('woff');
   font-weight: bold;
-  font-style: italic;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -14,16 +13,6 @@
       url('fonts/Glyphter.woff') format('woff'),
       url('fonts/Glyphter.ttf') format('truetype');
   font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'integral';
-  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular.woff2') format('woff2'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular.woff') format('woff'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular.ttf') format('truetype');
-  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
@@ -69,16 +58,6 @@
 }
 
 @font-face {
-  font-family: 'integral';
-  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic_1.woff2') format('woff2'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic_1.woff') format('woff'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldItalic_1.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'cabazon';
   src: url('fonts/CabazonW01-Regular_1.woff2') format('woff2'),
       url('fonts/CabazonW01-Regular_1.woff') format('woff'),
@@ -94,16 +73,6 @@
       url('fonts/Glyphter_1.woff') format('woff'),
       url('fonts/Glyphter_1.ttf') format('truetype');
   font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'integral';
-  src: url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular_1.woff2') format('woff2'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular_1.woff') format('woff'),
-      url('fonts/FONTSPRINGDEMO-IntegralCFBoldRegular_1.ttf') format('truetype');
-  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
@@ -661,7 +630,7 @@ h5.description {
   width: calc(100vw - 20px);
 }
 
-.tape-falling-frame {
+.animation {
   filter: saturate(1.4);
   width: auto;
   object-fit: contain;

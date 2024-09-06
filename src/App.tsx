@@ -8,6 +8,7 @@ import MeetUs from './components/MeetUs'
 import ImageAnimation from './components/ImageAnimation'
 import { isMobile } from 'react-device-detect'
 import { LocomotiveScrollProvider } from './LocomotiveScrollProvider'
+import VideoAnimation from './components/VideoAnimation'
 
 function App() {
   // useEffect(() => {
@@ -56,7 +57,7 @@ function App() {
         </div>
         <section data-scroll-section className="zstack" style={{ overflow: "hidden", ...getHeight() }}>
           <Footer height={getHeight()} />
-          <ImageAnimation height={getHeight()} frames={getFrames()} msBetweenFrame={20 * skip} isStatic={false} />
+          <VideoAnimation height={getHeight()} videoSrc={"tape-falling"} stillFrameSrc={"tape-falling-final.png"} />
         </section>
       </LocomotiveScrollProvider>
     </>
