@@ -63,7 +63,7 @@ function CTADownloadURLWithNext({ works, workIndex, setWorkIndex, detailIndex, s
             <button className="call-to-action-primary animated" onClick={() => handleURL()} style={{ backgroundColor: secondaryColor.toRgbString(), border: works[workIndex].usesStroke ? border : "none" }}>
                 <div className="hstack bottom-alignment">
                     <div style={{ marginRight: "5px", marginBottom: "3px" }}><Arrow color={primaryColor.toRgbString()} direction={Direction.NORTHEAST} /></div>
-                    <HoverTranslateButton text={ "Download"} onClick={() => handleClick(true)} primaryColor={primaryColor}  /> 
+                    <HoverTranslateButton text={ "Coming Soon" } onClick={() => handleClick(true)} primaryColor={primaryColor}  /> 
                 </div>
             </button>
             <div className="hstack space-between" style={{ padding: "0 10px"}}>

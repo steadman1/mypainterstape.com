@@ -5,7 +5,7 @@ type HoverUnderlineButtonProps = {
   text: string;
   onClick: () => void;
   primaryColor: Color;
-};
+
 
 const HoverUnderlineButton = ({ text, onClick, primaryColor }: HoverUnderlineButtonProps) => {
   const [hover, setHover] = useState(false);
