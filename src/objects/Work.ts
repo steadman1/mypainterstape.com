@@ -185,10 +185,14 @@ class Work {
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
                 [
-                    "ponder/Hold_The_Future_(Sony_Radio_Parody).png",
-                    "ponder/Dont_Let_Dreams_Fleet.png",
-                    "ponder/Dreams_Talk_(WSJ_Parody).png",
-                    "ponder/Dreams_Take_Flight_(Corn_Flakes_Parody).png"
+                    "ponder/intro_preview.png",
+                    "ponder/image_gen_preview.png",
+                    "ponder/recall_preview.png",
+                    "ponder/analysis_preview.png",
+                    "ponder/goals_preview.png",
+                    "ponder/motifs_preview.png",
+                    "ponder/guides_preview.png",
+                    "ponder/dreams_talk_preview.png"
                 ],
                 CallToActionType.CONTINUE,
                 "Dream Analysis",
