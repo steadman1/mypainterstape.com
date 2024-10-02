@@ -72,6 +72,10 @@ function OurWork() {
     useEffect(() => {
         if (lockScroll && scrollRef && scrollRef.current) {
             scrollRef.current.scrollTo(document.querySelector("#our-work"));
+
+            scrollRef.current.stop();
+        } else if (!lockScroll && scrollRef && scrollRef.current) {
+            scrollRef.current.start();
         }
     }, [lockScroll, scrollRef]);
 

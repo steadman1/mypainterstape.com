@@ -5,24 +5,16 @@ import Footer from './components/Footer'
 import ThreeScene from './components/ThreeScene'
 import MainTopBar from './components/MainTopBar';
 import MeetUs from './components/MeetUs'
-import ImageAnimation from './components/ImageAnimation'
 import { isMobile } from 'react-device-detect'
 import { LocomotiveScrollProvider } from './LocomotiveScrollProvider'
 import VideoAnimation from './components/VideoAnimation'
+import { useEffect } from 'react'
+import FluidCursor from "fluidcursor";
 
 function App() {
-  // useEffect(() => {
-  //   const modelLoadedHandler = () => {
-  //     ('Model Loaded Event');
-  //   };
-
-  //   window.addEventListener('modelLoaded', modelLoadedHandler);
-
-  //   return () => {
-  //     window.removeEventListener('modelLoaded', modelLoadedHandler);
-  //     window.addEventListener('modelLoading', modelLoadedHandler);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const _ = new FluidCursor();
+  }, []);
 
   const skip = 5;
 

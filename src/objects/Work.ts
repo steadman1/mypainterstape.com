@@ -178,34 +178,53 @@ class Work {
         [
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_LOGO,
-                ["ponder/ponder-full-cloud.png"],
+                ["ponder/ponder-full-cloud.png",],
                 CallToActionType.CONTINUE,
-                "Introducing Ponder, your new _Lucid Dreaming Journal._",
+                "Introducing Ponder, your intelligent _Dream Journal._",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                [
+                    "ponder/intro_preview.png",
+                ],
+                CallToActionType.CONTINUE,
+                "Explore Lucid Dreaming",
+                undefined,
+                "Ponder is designed to help you learn and explore the world of lucid dreaming. With an array of advanced features, Ponder is the perfect companion for your lucid dreaming journey.",
             ),
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
                 [
-                    "ponder/intro_preview.png",
-                    "ponder/image_gen_preview.png",
-                    "ponder/recall_preview.png",
-                    "ponder/analysis_preview.png",
-                    "ponder/goals_preview.png",
                     "ponder/motifs_preview.png",
-                    "ponder/guides_preview.png",
-                    "ponder/dreams_talk_preview.png"
+                    "ponder/recall_preview.png",
+                    "ponder/image_gen_preview.png",
                 ],
                 CallToActionType.CONTINUE,
-                "Dream Analysis",
+                "Improve Dream Recall",
                 undefined,
-                "With Ponder, dream deeper with advanced _dream analysis tools_ and personalized _dream insights._ Get the most out of every dream and better understand your subsconscious with Ponder.",
+                "Ponder aims to help you improve your ability to recall dreams every morning. With _motif tracking_ and _image generation,_ Ponder supercharges the dream journal experience with organizational tools and Dall•E 3 image diffusion to help with every step. (1) Based on research studying the effect of dream diaries on improving recall from Schredl, M. (2018). Dream Recall. In: Researching Dreams. Palgrave Macmillan, Cham, dream journals showed up to 3x improvement in dream recall over a 2 week period of consistent use.",
             ),
             new WorkDetail(
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
-                ["ponder/ponder-full-cloud.png"],
+                [
+                    "ponder/analysis_preview.png",
+                    "ponder/guides_preview.png",
+                    "ponder/dreams_talk_preview.png",
+                ],
                 CallToActionType.CONTINUE,
-                "Dream Guides & Articles",
+                "Learn, Analyze, and Understand",
                 undefined,
-                "With Ponder's in-depth guides and articles, _learn to Lucid Dream_ and make _the most of every night's sleep._ Don't let your dreams fleet.",
+                "With Ponder's advanced _dream analysis tools_ and personalized _dream insights,_ get the most out of every dream and better understand your subsconscious. Let us take the guesswork out of dream interpretation and help you understand the deeper meaning behind your dreams.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                [
+                    "ponder/goals_preview.png",
+                ],
+                CallToActionType.CONTINUE,
+                "Set Goals and Achieve",
+                undefined,
+                "Set goals with Ponder's _dream goal tracking_ feature and achieve them with the help of our guided beginner dream experiences. Ponder is designed to help you achieve your dream goals and improve your lucid dreaming journey.",
             ),
             new WorkDetail(
                 WorkDetailType.CALL_TO_ACTION,

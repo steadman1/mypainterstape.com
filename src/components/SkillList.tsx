@@ -233,7 +233,14 @@ const SkillList = ({ employee, index, sideScrolling }: { employee: Employee, ind
                             </div>
                         ))
                     ) : (
-                        <div className="hstack show-skills">
+                        <div 
+                          fluid-target="true"
+                                
+                          ft-morph-cursor="true"
+                          ft-morph-multiplier="1"
+                          ft-morph-divisor="2"
+                          className="hstack show-skills"
+                        >
                             <Arrow color={"#000000"} direction={Direction.SOUTH} />
                             <h4 className="meet-us-description" style={{ fontFamily: "integral", marginTop: "0px" }}>Show Skills</h4>
                         </div>

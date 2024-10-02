@@ -41,30 +41,30 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, setDetai
     overflowX: "auto",
   }
   const verticalStyling: React.CSSProperties = { 
-    height: "100vh"
+    height: "100vh",
   }
 
   return (
     <>
       <div id="our-work-navigation" style={ direction === NavigationDirection.HORIZONTAL ? horizontalStyling : verticalStyling } onMouseEnter={() => { handleHover(true) } } onMouseLeave={() => { handleHover(false) }}>
-        <div className={ `${direction} leading` }>
+        <div className={ `${direction} leading` } style={{ overflowY: "hidden" }}>
           {
             works.map((work: Work, index: number) => (
-              <div key={index} className="our-work-navigation-item animated">
+              <div 
+                fluid-target="true"
+                        
+                ft-morph-cursor="true"
+                ft-morph-multiplier="1"
+                ft-morph-divisor="2"
+                key={index} 
+                className="our-work-navigation-item animated"
+              >
                 <button className="call-to-action-primary animated" onClick={() => handleClick(index)} style={{ width: hover ? "fit-content" : getButtonHeight(), paddingLeft: `${hover ? "" : 0}`, paddingRight: `${hover ? "" : 0}`, backgroundColor: hover || index !== workIndex ? secondaryColor : primaryColor, border: border }}>
                   <div className="hstack bottom-alignment animated-width">
                     {
                       index === workIndex ? (
                       <div style={{ margin: `${hover ? "0 5px 3px 0" : "auto"}` }}>
-                        {
-                          hover ? (
-                            <Arrow color={ primaryColor } direction={Direction.EAST} />
-                          ) : (
-                            <h2 className="animated" style={{ color: secondaryColor, margin: "3px 0 0 0" }}>
-                              <span className="asterisk">*</span>
-                            </h2>
-                          )
-              }
+                        <Arrow color={ hover ? primaryColor : secondaryColor } direction={Direction.EAST} />
                       </div>) : null
                     }
                     <h4 className={ `text-width call-to-action-text animated-width ${hover ? "active" : "inactive"}` } style={{ opacity: hover ? 1 : 0, transform: `scale(${ hover ? 1 : 0.8 }`, color: primaryColor }}>
@@ -75,7 +75,15 @@ function OurWorkNavigation({ direction, works, workIndex, setWorkIndex, setDetai
               </div>
             ))
           }
-          <div key="exit" className="our-work-navigation-item animated">
+          <div 
+            fluid-target="true"
+                    
+            ft-morph-cursor="true"
+            ft-morph-multiplier="1"
+            ft-morph-divisor="2"
+            key="exit" 
+            className="our-work-navigation-item animated"
+          >
             <button className="call-to-action-primary animated" id="exit-navigation-button" onClick={() => handleExit()} style={{ width: hover ? "fit-content" : getButtonHeight(), paddingLeft: `${hover ? "" : 0}`, paddingRight: `${hover ? "" : 0}`, backgroundColor: hover || !lockScroll ? secondaryColor : primaryColor, border: border }}>
               <div className={ `hstack` }>
                   <div style={{ margin: `${hover ? "0 5px 3px 0" : "0px auto"}` }}><Arrow color={ hover || !lockScroll ? primaryColor : secondaryColor } direction={lockScroll ? Direction.SOUTHWEST : Direction.NORTHEAST} /></div>

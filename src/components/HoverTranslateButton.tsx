@@ -17,7 +17,12 @@ const HoverTranslateButton: React.FC<HoverTranslateButtonProps> = ({ text, onCli
       onMouseLeave={() => setHover(false)}
       onClick={onClick}
     >
-      <div className="zstack" style={{ height: "2rem", overflowY: "clip" }}>
+      <div
+        fluid-target="true"
+        
+        className="zstack" 
+        style={{ height: "2rem", overflowY: "clip" }}
+      >
         <h3 className="text-width call-to-action-text animated" style={{ transform: `translateY(${hover ? 0 : -100}%)`, color: primaryColor.toRgbaString() }}>
           {text}
         </h3>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Work } from '../../../objects/Work';
 import replaceSpecialCharacters from '../../../replaceSpecialCharacters';
 import { Arrow, Direction } from '../../Icons/Arrow';
@@ -52,22 +52,17 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
     const setup = useCallback(() => {
         const getImageScrollerWidth = () => {
             const imageScroller = document.getElementById("image-scroller");
-            
             if (!imageScroller) return Math.max(width, workDetail.images.length * imageWidth);
-    
             return imageScroller.offsetWidth;
         };
 
         const getWorkDetailClasses = () => {
             const workDetailElement = document.getElementById("work-detail");
-    
             if (!workDetailElement) return workDetailClasses;
-            // if (workDetailElement.classList.contains("no-scroll")) return `${workDetailClasses} no-scroll`;
-    
+
             const workBarHeight = 150;
             const workCallToActionHeight = 148;
     
-            // sum height of all workDetail element children
             let workDetailChildrenHeight = 0;
             for (let i = 0; i < workDetailElement.children.length; i++) {
                 workDetailChildrenHeight += workDetailElement.children[i].clientHeight;
@@ -78,9 +73,10 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
             }
     
             return workDetailClasses.replaceAll("no-scroll", "");
-        }
+        };
 
-        setImageScrollIndex(Math.floor(work.details[detailIndex].images.length / 2) - 1);
+        const mid = Math.floor(work.details[detailIndex].images.length / 2);
+        setImageScrollIndex(mid - (mid % 2 === 0 ? 1 : 0));
         setImageScrollerWidth(getImageScrollerWidth());
         setWorkDetailClasses(getWorkDetailClasses());
     }, [work.details, detailIndex, height, imageWidth, width, workDetail.images.length, workDetailClasses]);
@@ -111,7 +107,6 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
                             scale(${1 - Math.abs(index - imageScrollIndex) * 0.05})
                             `,
                             zIndex: -Math.abs(index - imageScrollIndex),
-                            borderRadius: "10px",
                         }}
                     />
                     ))
@@ -121,7 +116,10 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
             <div>
                 { workDetail.images.length > 1 ? buttons : null }
             </div>
-            <div className="vstack leading" style={{ marginTop: "10px", }}>
+            <div
+                className="vstack leading"
+                style={{ marginTop: "10px", overflowY: "auto" }}
+            >
                 <h3 className="max-detail-text scaling-text animated" style={{ color: work.primaryTextColor.toRgbString(), fontFamily: work.titleFont, fontWeight: "bold", opacity: imageLoaded ? 1 : 0 }}>
                     {replaceSpecialCharacters(workDetail.title)}
                 </h3>

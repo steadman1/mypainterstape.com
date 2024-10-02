@@ -4,6 +4,7 @@ import DescriptionWithLogoWorkDetail from './Entrances/DescriptionWithLogoWorkDe
 import DescriptionWithVideoWorkDetail from './Entrances/DescriptionWithVideoWorkDetail';
 import DescriptionWithManyImagesWorkDetail from './Entrances/DescriptionWithManyImagesWorkDetail';
 import CallToActionWorkDetail from './Entrances/CallToActionWorkDetail';
+import DescriptionWithImageWorkDetail from './Entrances/DescriptionWithImageWorkDetail';
 
 function OurWorkEntrance({ work, detailIndex }: { work: Work, detailIndex: number }) {
     const detail = work.details[detailIndex];
@@ -16,6 +17,10 @@ function OurWorkEntrance({ work, detailIndex }: { work: Work, detailIndex: numbe
         }
         case WorkDetailType.DESCRIPTION_WITH_LOGO: {
             workDetail = <DescriptionWithLogoWorkDetail work={work} detailIndex={detailIndex} />;
+            break;
+        }
+        case WorkDetailType.DESCRIPTION_WITH_IMAGE: {
+            workDetail = <DescriptionWithImageWorkDetail work={work} detailIndex={detailIndex} />;
             break;
         }
         case WorkDetailType.DESCRIPTION_WITH_VIDEO: {
