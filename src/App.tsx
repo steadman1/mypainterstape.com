@@ -9,12 +9,8 @@ import { isMobile } from 'react-device-detect'
 import { LocomotiveScrollProvider } from './LocomotiveScrollProvider'
 import VideoAnimation from './components/VideoAnimation'
 import { useEffect } from 'react'
-import FluidCursor from "fluidcursor";
 
 function App() {
-  useEffect(() => {
-    const _ = new FluidCursor();
-  }, []);
 
   const skip = 5;
 
