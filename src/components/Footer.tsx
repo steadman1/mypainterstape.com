@@ -48,7 +48,7 @@ const Footer = ({ height }: { height: React.CSSProperties }) => {
                     <h1 className="footer-text" style={{ fontSize: "3.6rem" }}>Our</h1>
                   </div>
                   <div className="hstack space-between" style={{ width: "calc(100vw - 20px)" }}>
-                    <div className="hstack show-skills" onClick={() => handleClick("mailto:hello@mypainterstape.com")} style={{ borderColor: "#fff" }}>
+                    <div className="hstack show-skills pointer" onClick={() => handleClick("mailto:hello@mypainterstape.com")} style={{ borderColor: "#fff" }}>
                       <Arrow color={"#ffffff"} direction={Direction.NORTHEAST} />
                       <h4 className="meet-us-description" style={{ fontFamily: "integral", marginTop: "0px", color: "#fff" }}>Contact</h4>
                     </div>
@@ -61,7 +61,7 @@ const Footer = ({ height }: { height: React.CSSProperties }) => {
                 <div className="vstack leading">
                   <div className="hstack space-between">
                     <h1 className="footer-text">Connect</h1>
-                    <div className="hstack show-skills" onClick={() => handleClick("mailto:hello@mypainterstape.com")} style={{ borderColor: "#fff" }}>
+                    <div className="hstack show-skills pointer" onClick={() => handleClick("mailto:hello@mypainterstape.com")} style={{ borderColor: "#fff" }}>
                       <Arrow color={"#ffffff"} direction={Direction.NORTHEAST} />
                       <h4 className="meet-us-description" style={{ fontFamily: "integral", marginTop: "0px", color: "#fff" }}>Contact</h4>
                     </div>

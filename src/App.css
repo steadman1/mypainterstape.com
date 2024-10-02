@@ -171,6 +171,11 @@ html, body {
 
 button {
   all: unset;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 button:focus {
@@ -666,10 +671,6 @@ h5.description {
   height: calc(50dvh - 20px);
   border-radius: 8px;
   object-fit: contain;
-}
-
-#footer-contact-details {
-  
 }
 
 .footer-text {
