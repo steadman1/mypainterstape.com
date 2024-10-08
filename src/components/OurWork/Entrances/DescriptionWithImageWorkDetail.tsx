@@ -12,7 +12,7 @@ function DescriptionWithImageWorkDetail({ work, detailIndex }: { work: Work, det
     const imageWidth = Math.min(180, height * 0.25);
 
     return (
-        <div key={ `${work.name}-${detailIndex}`  } className="changing-stack work-detail no-scroll">
+        <div key={ `${work.name}-${detailIndex}`  } className="changing-stack work-detail">
             <div>
                 <img 
                     className="image animated" 
