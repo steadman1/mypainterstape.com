@@ -65,7 +65,7 @@ function MainEntrance() {
                             {
                                 width ? (
                                     <h4 data-scroll data-scroll-speed="1" data-scroll-position="top" className="description" style={{maxWidth: `${bigTitleWidth}px`, fontSize: "1.2rem"}}>
-                                        We’re a studio that believes every great design starts with a 
+                                        We’re a student-led studio that believes every great design starts with a 
                                         <span className="bold">careful attention to detail.</span> With our work, we aim to define 
                                         the edges that bring clarity and focus to our work, ensuring that 
                                         <span className="bold">every project is as polished and purposeful as it is beautiful.</span>
