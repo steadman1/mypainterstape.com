@@ -232,7 +232,7 @@ class Work {
                 CallToActionType.DOWNLOAD_URL_WITH_NEXT,
                 "Ponder: Lucid Dream Journal",
                 "Dream Deeper with Ponder.",
-                "Coming soon to the iOS App Store.",
+                "Available now on the iOS App Store!",
                 undefined,
                 "https://apps.apple.com/us/app/ponder-lucid-dream-journal/id6587549184",
             ),
