@@ -238,6 +238,93 @@ class Work {
             ),
         ]
     )
+
+    static cashbackWork = new Work(
+        "Your Cashback",
+        WorkType.IOSAPP,
+        
+        // Ground Colors
+        new Color("#C9C9C9"),
+        new Color("#F3F3F3"),
+        new Color("#FFFFFF"),
+
+        // Accent Colors
+        new Color("#22C55E"),
+        new Color("#C9F1D8"),
+
+        // Text Colors
+        new Color("#000000"),
+        new Color("#585866"),
+
+        // UI Stroke
+        false,
+
+        // Fonts
+        "SFProDisplay-Bold",
+        "SFProDisplay-Medium",
+        "SFProDisplay-Medium",
+        
+        // Work Details
+        [
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_LOGO,
+                ["cashback/app_icon_rounded.png",],
+                CallToActionType.CONTINUE,
+                "Your Cashback—Your Credit Card Rewards. One Place. No Jargon.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                [
+                    "cashback/0.png",
+                ],
+                CallToActionType.CONTINUE,
+                "Maximize Your Cashback & Points",
+                undefined,
+                "Your Cashback is designed to help you optimize your credit card cashback and points, so you can make the most out of your spending.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                [
+                    "cashback/1.png",
+                ],
+                CallToActionType.CONTINUE,
+                "Quick Superlative Overviews",
+                undefined,
+                "See superlatives for each card for quick comparisons, so you can make the best decision for your spending—all in a fraction of a second.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                [
+                    "cashback/2.png",
+                ],
+                CallToActionType.CONTINUE,
+                "No Jargon—Just Your Rewards",
+                undefined,
+                "See all of your rewards and benefits in one place. No confusing jargon, just the information you need to make the best decision for your spending.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                [
+                    "cashback/3.png",
+                ],
+                CallToActionType.CONTINUE,
+                "Search all Cards & Rewards",
+                undefined,
+                "Search all of our offered cards and rewards in one place. No more searching through multiple apps or websites. Let us help you find the card that's right for you.",
+            ),
+            new WorkDetail(
+                WorkDetailType.CALL_TO_ACTION,
+                ["cashback/app_icon_rounded.png"],
+                CallToActionType.DOWNLOAD_URL_WITH_NEXT,
+                "Your Cashback—Maximize Rewards",
+                "Find Your Best Card—Any Store",
+                "Available soon to the iOS App Store!",
+                undefined,
+                "",
+            ),
+        ]
+    )
+    
     static lotusWork = new Work(
         "Lotus",
         WorkType.IOSAPP,
