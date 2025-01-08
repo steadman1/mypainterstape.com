@@ -318,9 +318,9 @@ class Work {
                 CallToActionType.DOWNLOAD_URL_WITH_NEXT,
                 "Your Cashback—Maximize Rewards",
                 "Find Your Best Card—Any Store",
-                "Available soon to the iOS App Store!",
+                "Available now on the iOS App Store!",
                 undefined,
-                "",
+                "https://apps.apple.com/us/app/your-cashback-maximize-rewards/id6740216340",
             ),
         ]
     )
