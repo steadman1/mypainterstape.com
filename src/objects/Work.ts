@@ -365,6 +365,7 @@ class Work {
     static works = [
         Work.intro,
         Work.ponderWork,
+        Work.cashbackWork,
         Work.lotusWork,
     ];
 }
