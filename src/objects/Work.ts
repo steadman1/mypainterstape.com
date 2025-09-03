@@ -19,6 +19,7 @@ enum WorkType {
 enum CallToActionType {
     CONTINUE,
     DOWNLOAD_URL_WITH_NEXT,
+    VISIT_SHOP_URL_WITH_NEXT,
 }
 
 class WorkDetail {
@@ -144,11 +145,57 @@ class Work {
                 ["asterisk.png"],
                 CallToActionType.CONTINUE,
                 "Explore our work.",
-                "Made with Love.",
+                "Made with 💙",
                 "-pt & spencer steadman"
             ),
         ]
     )
+
+    static shopPTWork = new Work(
+        "Shop PT",
+        WorkType.WEBAPP,
+        
+        // Ground Colors
+        new Color("#C9C9C9"),
+        new Color("#F3F3F3"),
+        new Color("#FFFFFF"),
+
+        // Accent Colors
+        new Color("#22C55E"),
+        new Color("#C9F1D8"),
+
+        // Text Colors
+        new Color("#000000"),
+        new Color("#585866"),
+
+        // UI Stroke
+        false,
+
+        // Fonts
+        "Manrope",
+        "Manrope",
+        "Manrope",
+        
+        // Work Details
+        [
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
+                [
+                    "shop_pt/burrus.jpg",
+                    "shop_pt/1984_poster.jpg",
+                    "shop_pt/boulder_fields_CO.jpg",
+                    "shop_pt/go_outside_poster.jpg",
+                ],
+                CallToActionType.VISIT_SHOP_URL_WITH_NEXT,
+                "Now LIVE: Shop Painter*s Tape!",
+                undefined,
+                "Visit shop.painterstape.com to explore our in-house poster designs and more—coming soon: apparel & stickers! Printed on 210 GSM paper, we guarentee (to the best of our ability) our posters will be the perfect statement piece for any room.",
+                undefined,
+                "https://shop.mypainterstape.com",
+            ),
+        ]
+    )
+
     static ponderWork = new Work(
         "Ponder",
         WorkType.IOSAPP,
@@ -260,9 +307,9 @@ class Work {
         false,
 
         // Fonts
-        "SFProDisplay-Bold",
-        "SFProDisplay-Medium",
-        "SFProDisplay-Medium",
+        "Manrope",
+        "Manrope",
+        "Manrope",
         
         // Work Details
         [
@@ -364,6 +411,7 @@ class Work {
 
     static works = [
         Work.intro,
+        Work.shopPTWork,
         Work.ponderWork,
         Work.cashbackWork,
         Work.lotusWork,

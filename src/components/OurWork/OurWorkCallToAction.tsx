@@ -1,6 +1,7 @@
 import { CallToActionType } from "../../objects/Work";
 import CTAContinue from "../CTA/CTAContinue";
-import CTADownloadURLWithNext from "../CTA/CTADownloadURLWithNext";
+import CTADownloadURLWithNext from "../CTA/CTATextURLWithNext";
+import CTAVisitURLWithNext from "../CTA/CTATextURLWithNext";
 import { Work } from "../../objects/Work";
 
 function OurWorkCallToAction({ works, workIndex, setWorkIndex, detailIndex, setDetailIndex, lockScroll, setLockScroll }: { works: Work[], workIndex: number, setWorkIndex: React.Dispatch<React.SetStateAction<number>>, detailIndex: number, setDetailIndex: React.Dispatch<React.SetStateAction<number>>, lockScroll: boolean, setLockScroll: React.Dispatch<React.SetStateAction<boolean>> }) {
@@ -14,7 +15,11 @@ function OurWorkCallToAction({ works, workIndex, setWorkIndex, detailIndex, setD
             break;
         }   
         case CallToActionType.DOWNLOAD_URL_WITH_NEXT: {
-            ctaComponent = <CTADownloadURLWithNext works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll}/>
+            ctaComponent = <CTADownloadURLWithNext text={"Download"} works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll}/>
+            break;
+        }
+        case CallToActionType.VISIT_SHOP_URL_WITH_NEXT: {
+            ctaComponent = <CTAVisitURLWithNext text={"Visit Shop"} works={works} workIndex={workIndex} setWorkIndex={setWorkIndex} detailIndex={detailIndex} setDetailIndex={setDetailIndex} setLockScroll={setLockScroll}/>
             break;
         }
     }

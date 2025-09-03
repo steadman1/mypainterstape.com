@@ -46,7 +46,7 @@ function MeetUs() {
                                     <div className="hstack space-between leading top">
                                         <div id={ `meet-us-details-${index}` } className="vstack leading" style={{ overflow: "hidden" }}>
                                             <h4 className="meet-us-title stroked">{employee.title}</h4>
-                                            <h3 className="meet-us-name">{employee.name}</h3>
+                                            <h3 className="meet-us-name underlined">{employee.name}</h3>
                                             <SkillList employee={employee} index={index} sideScrolling={false} />
                                         </div>
                                         <div id={ `meet-us-description-${index}` } className="hstack top" style={{ maxWidth: "calc(50% - 20px)"}}>

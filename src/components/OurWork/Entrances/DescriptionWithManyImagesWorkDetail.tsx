@@ -83,7 +83,7 @@ function DescriptionWithManyImagesWorkDetail({ work, detailIndex }: { work: Work
 
     useEffect(() => {
         setup();
-    }, [setup]);
+    }, []);
 
     return (
         <div key={ `${work.name}-${detailIndex}`  } id="work-detail" className={ workDetailClasses }>

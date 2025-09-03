@@ -23,9 +23,10 @@ function MainTopBar() {
 
     useEffect(() => {
         const handleScroll = (args: { scroll: { y: number; }; }) => {
-            const top = document.getElementById('main-top-bar')?.clientHeight;
+            const top = document.getElementById('main-top-bar')?.clientHeight * 1.5;
+            const scrollOffset = 100;
             if (!top) return;
-            if (args.scroll.y < (window.innerHeight - top) || args.scroll.y > (window.innerHeight + top * 2)) {
+            if (args.scroll.y - scrollOffset < (window.innerHeight - top) || args.scroll.y - scrollOffset > (window.innerHeight + top * 2)) {
                 setTop(() => 0);
             } else {
                 setTop(() =>  -top);
@@ -47,8 +48,7 @@ function MainTopBar() {
     return (
         <div id="main-top-bar" className="animated-quick" style={{ top: top }}>
             <div className="hstack space-between">
-                <h1 className="top-bar-item text" 
-                    onClick={() => handleClick("main-entrance")}>
+                <h1 className="top-bar-item text" onClick={() => handleClick("main-entrance")}>
                     <span className="asterisk">*</span>
                 </h1>
                 <div className="hstack pad-between" style={{ marginBottom: "8px" }}>

@@ -190,6 +190,19 @@ h5 {
   font-weight: normal;
 }
 
+.announcement-card {
+  display: flex;
+  align-items:flex-start;
+  justify-content: space-between;
+  max-width: 700px;
+  width: calc(100vw - 40px);
+  margin: auto;
+  background-color: #fff;
+  border: #ddd solid 2px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
 .expanding {
   display: flex;
   width: 100dvw;
@@ -413,7 +426,7 @@ h5.description {
   border: 2px solid #111;
   border-radius: 100vw;
   gap: 5px;
-  ;
+  cursor: pointer;
 }
 
 .skill-type {
@@ -446,6 +459,7 @@ h5.description {
   border-radius: 26%;
   padding: 4px;
   filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.08));
+  cursor: pointer;
 }
 
 .skill-image-full {
@@ -748,8 +762,17 @@ button > .footer-text {
   &:hover {
     ;
     transform: scale(1.05);
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
   }
+}
+
+.call-to-action-shop {
+  margin-top: 3px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .call-to-action-secondary {

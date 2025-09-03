@@ -1,5 +1,6 @@
 import './App.css'
 import MainEntrance from './components/MainEntrance'
+import AnnouncementCard from './components/AnnouncementCard'
 import OurWork from './components/OurWork/OurWork'
 import Footer from './components/Footer'
 import ThreeScene from './components/ThreeScene'
@@ -8,7 +9,6 @@ import MeetUs from './components/MeetUs'
 import { isMobile } from 'react-device-detect'
 import { LocomotiveScrollProvider } from './LocomotiveScrollProvider'
 import VideoAnimation from './components/VideoAnimation'
-import { useEffect } from 'react'
 
 function App() {
 
@@ -39,7 +39,9 @@ function App() {
             <MainEntrance />
             <ThreeScene />
           </section>
-          
+          <section data-scroll-section className="zstack">
+            <AnnouncementCard />
+          </section>
           <OurWork />
           <MeetUs />
         </div>
