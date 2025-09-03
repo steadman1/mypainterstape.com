@@ -182,10 +182,10 @@ class Work {
                 WorkDetailType.DESCRIPTION_WITH_MANY_IMAGES,
                 [
                     "shop_pt/burrus.jpg",
-                    "shop_pt/racquet_club.jpg",
                     "shop_pt/1984_poster.jpg",
-                    "shop_pt/boulder_fields_CO.jpg",
                     "shop_pt/cosmic_messenger.jpg",
+                    "shop_pt/boulder_fields_CO.jpg",
+                    "shop_pt/racquet_club.jpg",
                     "shop_pt/faith.jpg",
                     "shop_pt/go_outside_poster.jpg",
                 ],
