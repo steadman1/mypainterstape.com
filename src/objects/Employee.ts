@@ -51,7 +51,7 @@ class Employee {
         new Employee(
             "https://via.placeholder.com/150", 
             "Wil Steadman", 
-            "Developer & Designer", 
+            "Designer", 
             "I'm a _*software engineer*_ and _*IT manager at EMSCO Inc.*_ where I build _*manufacturing software*_ and turn computers on and off. When I'm not fixing printers, _*I design posters*_ and dabble in _*linocut printmaking.*_ With Painter*s Tape, I've got the freedom to combine my two creative outlets in one. _*Roll Tribe!*_",
             [
                 Skill.react.clone().complete(5, new Date(2020, 0, 1), true),
