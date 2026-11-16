@@ -6,6 +6,7 @@ enum WorkDetailType {
     DESCRIPTION_WITH_IMAGE,
     DESCRIPTION_WITH_MANY_IMAGES,
     DESCRIPTION_WITH_VIDEO,
+    DESCRIPTION_WITH_CODE,
     CALL_TO_ACTION,
 }
 
@@ -14,12 +15,14 @@ enum WorkType {
     IOSAPP,
     WEBAPP,
     DESIGN,
+    LIBRARY,
 }
 
 enum CallToActionType {
     CONTINUE,
     DOWNLOAD_URL_WITH_NEXT,
     VISIT_SHOP_URL_WITH_NEXT,
+    VIEW_SOURCE_URL_WITH_NEXT,
 }
 
 class WorkDetail {
@@ -37,6 +40,8 @@ class WorkDetail {
 
     URL?: string;
 
+    code?: string;
+
     // constructor with named arguments
     constructor(
         type: WorkDetailType,
@@ -47,6 +52,7 @@ class WorkDetail {
         description?: string,
         video?: string,
         URL?: string,
+        code?: string,
     ) {
         this.type = type;
         this.title = title;
@@ -56,6 +62,7 @@ class WorkDetail {
         this.images = images;
         this.video = video;
         this.URL = URL;
+        this.code = code;
     }
 }
 
@@ -135,8 +142,8 @@ class Work {
 
         // Fonts
         "integral",
-        "times-new-roman-condensed",
-        "times-new-roman-condensed",
+        "SFProDisplay",
+        "SFProDisplay",
         
         // Work Details
         [
@@ -145,8 +152,8 @@ class Work {
                 ["asterisk.png"],
                 CallToActionType.CONTINUE,
                 "Explore our work.",
-                "Made with 💙",
-                "-pt & spencer steadman"
+                "Made with 💙 by Spencer & Wil.",
+                ""
             ),
         ]
     )
@@ -412,11 +419,99 @@ class Work {
         ]
     )
 
+    static spenceKitWork = new Work(
+        "SpenceKit.swift",
+        WorkType.LIBRARY,
+
+        // Ground Colors
+        new Color("#E0E0E0"),
+        new Color("#FFFFFF"),
+        new Color("#F3F3F3"),
+
+        // Accent Colors
+        new Color("#22C55E"),
+        new Color("#000000"),
+
+        // Text Colors
+        new Color("#000000"),
+        new Color("#585866"),
+
+        // UI Stroke
+        false,
+
+        // Fonts
+        "Manrope",
+        "Manrope",
+        "Manrope",
+
+        // Work Details
+        [
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_LOGO,
+                ["spencekit/spencekit-icon.png"],
+                CallToActionType.CONTINUE,
+                "Introducing SpenceKit, a _rapid prototyping_ UI kit for SwiftUI.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_IMAGE,
+                ["spencekit/spencekit-cover.png"],
+                CallToActionType.CONTINUE,
+                "Consistent by Default",
+                undefined,
+                "SpenceKit is a SwiftUI framework of prebuilt components designed to make _consistent, good-looking interfaces_ simple to build, even without a design background. Ideas go from sketch to screen in minutes.",
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION_WITH_CODE,
+                [],
+                CallToActionType.CONTINUE,
+                "A Card in a Few Lines",
+                undefined,
+                "Every component, from _cards and chips_ to _tab bars and progress selectors,_ shares one SpenceKitStyle, so a single argument restyles the whole view.",
+                undefined,
+                undefined,
+`Card(.CTA) {
+    Text("Testing Card")
+        .font(.SpenceKit.SerifPrimaryTitleFont)
+    Text("Placeholder text for the card body.")
+        .font(.SpenceKit.SansBodyFont)
+} footer: {
+    ExpandingButton(.CTA) {
+        print("Button clicked")
+    } label: {
+        HStack {
+            SFIcon("checkmark", size: .head)
+            Text("Done")
+        }
+    }
+}`,
+            ),
+            new WorkDetail(
+                WorkDetailType.DESCRIPTION,
+                [],
+                CallToActionType.CONTINUE,
+                "Modular. Customizable. Lightweight.",
+                undefined,
+                "Built with accessibility in mind and adaptable across devices, SpenceKit drops into any SwiftUI project through Swift Package Manager without adding overhead. Requires iOS 16 or later.",
+            ),
+            new WorkDetail(
+                WorkDetailType.CALL_TO_ACTION,
+                ["spencekit/spencekit-icon.png"],
+                CallToActionType.VIEW_SOURCE_URL_WITH_NEXT,
+                "SpenceKit.swift",
+                "Rapid Prototyping UI Kit for SwiftUI.",
+                "Open source on GitHub. Add it with Swift Package Manager.",
+                undefined,
+                "https://github.com/steadman1/SpenceKit.swift",
+            ),
+        ]
+    )
+
     static works = [
         Work.intro,
         Work.shopPTWork,
-        Work.ponderWork,
         Work.cashbackWork,
+        Work.ponderWork,
+        Work.spenceKitWork,
         Work.lotusWork,
     ];
 }

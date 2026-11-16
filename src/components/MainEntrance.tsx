@@ -44,7 +44,7 @@ function MainEntrance() {
                                     <span className="bold">careful attention to detail.</span> 
                                     With an aim to define the edges, we ensure  
                                     <span className="bold">each project is as polished and purposeful as it is beautiful.</span>
-                                    p.s. tap the tape roll to make it jump!
+                                    p.s. swipe the tape roll to give it a spin!
                                 </h4>
                                 <h5 data-scroll data-scroll-speed="1" data-scroll-position="top" className="description" style={{
                                     width: "fit-content",
@@ -70,7 +70,7 @@ function MainEntrance() {
                                         <span className="bold">careful attention to detail.</span> With our work, we aim to define 
                                         the edges that bring clarity and focus to our work, ensuring that 
                                         <span className="bold">every project is as polished and purposeful as it is beautiful.</span>
-                                        p.s. click the tape roll to make it jump!
+                                        p.s. grab the tape roll and give it a spin!
                                     </h4>
                                 ) : null
                             }

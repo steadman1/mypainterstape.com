@@ -1,10 +1,10 @@
-import { createContext, useEffect, useRef, ReactElement } from 'react';
+import { createContext, useEffect, useRef, ReactElement, MutableRefObject } from 'react';
 import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { isMobile } from 'react-device-detect';
 
 // Create the context
-export const LocomotiveScrollContext = createContext<LocomotiveScroll | null>(null);
+export const LocomotiveScrollContext = createContext<MutableRefObject<LocomotiveScroll | null> | null>(null);
 
 export const LocomotiveScrollProvider = ({ children }: { children: ReactElement[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);

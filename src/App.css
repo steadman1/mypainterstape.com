@@ -304,7 +304,8 @@ h5 {
 }
 
 .changing-stack {
-  width: 500px;
+  width: auto;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -429,95 +430,241 @@ h5.description {
   cursor: pointer;
 }
 
-.skill-type {
-  margin: 12px 0 3px 0;
-  font-family: "times-new-roman-condensed";
-  font-style: italic;
-  font-size: 0.8rem;
-  -webkit-text-stroke: 0.6px;
+/* Skills, in the black-and-white style of the portfolio site: one paragraph of comma-separated
+   skills, each type led by a small grey label. Hovering a skill wipes a black fill down behind
+   it, and a black card follows the cursor. */
+.skills {
+  --skills-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  width: min(100%, 560px);
+  margin: 18px 0 0 -6px; /* line the first skill's text up with the copy above */
+  color: #000;
+  font-family: "SFProDisplay", system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  line-height: 2.1;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
 }
 
-.wrap-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 5px;
-  margin: 0px;
+.skills.is-stacked {
+  width: 100%;
 }
 
-.images-container {
-  display: flex;
-  gap: 5px;
-  margin: 0px 10px 0 0;
+/* A label and the skill after it wrap together. */
+.skills-lead {
+  white-space: nowrap;
+}
+
+.skills-type {
+  margin: 0 2px 0 6px;
+  color: #8a8a8a;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A little more room after each type than between skills. It trails the group rather than
+   leading the next label, so a label that starts a line stays flush with the left edge. */
+.skills-group:not(:last-child)::after {
+  content: "";
+  display: inline-block;
+  width: 12px;
+}
+
+/* Read by screen readers ("Programming: Swift, …") but not shown. */
+.skills-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.skill-image {
-  width: 36px; 
-  height: 36px; 
-  object-fit: contain;
-  border-radius: 26%;
-  padding: 4px;
-  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.08));
+.skills-comma {
+  margin-left: -4px;
+}
+
+.skill-item {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: #000;
   cursor: pointer;
+  transition: color 0.35s var(--skills-ease);
 }
 
-.skill-image-full {
-  width: 48px; 
-  height: 48px; 
-  object-fit: contain;
-  border-radius: 26%;
-  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.08));
+/* Black fill that wipes down from the top on hover, and carries on out the bottom when the
+   pointer leaves. */
+.skill-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: #000;
+  scale: 1 0;
+  transform-origin: center bottom;
+  transition: scale 0.45s var(--skills-ease);
 }
 
-.skill-name {
-  font-family: "integral";
-  font-size: 1.2rem;
-  margin: 0;
+/* Solid one-colour logo in the text colour; on hover it turns its brand colour (--brand) over
+   the black fill, and Figma's shapes take their own colours (--c). */
+.skill-icon {
+  flex-shrink: 0;
+  width: 0.95em;
+  height: 0.95em;
+  color: inherit;
+  transition: color 0.3s var(--skills-ease);
 }
 
-.skill-related-names {
-  font-family: "times-new-roman-condensed";
-  font-size: 1rem;
-  margin: 5px 0 0 0;
+.skill-icon path,
+.skill-card-icon path {
+  fill: currentColor;
+  transition: fill 0.3s var(--skills-ease);
 }
 
-.skill-description {
-  font-family: "times-new-roman-condensed";
-  font-size: 0.8rem;
-  margin: 0;
+.skill-item.is-active .skill-icon {
+  color: var(--brand);
 }
 
-.skill-details {
-  font-family: "times-new-roman-condensed";
-  font-style: italic;
-  font-size: 0.8rem;
-  margin: 0;
+.skill-item.is-active .skill-icon path {
+  fill: var(--c, currentColor);
 }
 
-.outline-dot {
-  border: 1px solid #111;
-  border-radius: 50%;
-  width: 6px;
-  height: 6px;
-  margin-right: 4px;
+.skill-item.is-active {
+  color: #fff;
 }
 
-.filled-dot {
-  border-radius: 50%;
-  width: 8px;
-  height: 8px;
-  margin-right: 4px;
+.skill-item.is-active::before {
+  scale: 1 1;
+  transform-origin: center top;
 }
 
-.modal-content {
-  background: #fff;
-  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+/* Only with a real cursor, so a tap on a phone doesn't leave it filled. */
+@media (hover: hover) {
+  .skill-item:hover {
+    color: #fff;
+  }
+
+  .skill-item:hover::before {
+    scale: 1 1;
+    transform-origin: center top;
+  }
+
+  .skill-item:hover .skill-icon {
+    color: var(--brand);
+  }
+
+  .skill-item:hover .skill-icon path {
+    fill: var(--c, currentColor);
+  }
+}
+
+.skill-item:focus-visible {
+  outline: 2px solid #1a57e3;
+  outline-offset: 2px;
+}
+
+.skill-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900; /* under the custom cursor */
+  box-sizing: border-box;
+  width: 248px;
+  max-width: calc(100vw - 24px);
   padding: 16px;
-  border-radius: 24px;
-  width: fit-content;
-  min-width: 250px;
-  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-family: "SFProDisplay", system-ui, -apple-system, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.skill-card.is-visible {
+  opacity: 1;
+}
+
+.skill-card p {
+  margin: 0;
+}
+
+.skill-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* The card is black too, so its logo is always in colour. */
+.skill-card-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--brand);
+}
+
+.skill-card-icon path {
+  fill: var(--c, currentColor);
+}
+
+.skill-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.skill-card-related {
+  margin-top: 2px !important;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+}
+
+.skill-card-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.skill-card-experience {
+  text-align: right;
+}
+
+.skill-card-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.72rem;
+}
+
+.skill-card-value {
+  margin-top: 2px !important;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.skill-card-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.skill-card-dots span {
+  box-sizing: border-box;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.skill-card-dots span.is-filled {
+  border: none;
 }
 
 #asterisk-loading-screen {
@@ -545,53 +692,652 @@ h5.description {
   scroll-snap-type: y proximity; */
 }
 
-#our-work {
-  scroll-snap-align: center;
-  height: 100dvh;
-  justify-content: center;
-  align-items: center;
-}
+/* ---------- Our Work ---------- */
 
-#our-work-entrance {
-  display: flex;
+/* The section is a tall scroll track; the stage inside it is pinned by OurWork.tsx while the
+   track scrolls past, and the slide shown follows the scroll position. Each work's colours
+   and fonts arrive as --ow-* variables on the card. */
+#our-work {
+  position: relative;
   width: 100vw;
   max-width: 100%;
-  height: 100dvh;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: auto;
-  padding-top: 133px;
-  padding-bottom: 138px;
+  background-color: #fff;
 }
 
-#our-work-entrance::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
-}
-#our-work-navigation::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+.our-work-stage {
+  position: relative;
+  width: 100%;
+  will-change: transform;
 }
 
-#our-work-navigation {
-  position: fixed;
-  left: 0;
+.our-work-card {
+  --ow-gutter: clamp(16px, 4vw, 56px);
+  --ow-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  background-color: var(--ow-bg);
+  color: var(--ow-text);
+  border: 2px solid transparent;
+  font-family: "SFProDisplay", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  transition:
+    background-color 0.7s var(--ow-ease),
+    color 0.7s var(--ow-ease),
+    border-color 0.7s var(--ow-ease);
+}
+
+.our-work-card button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* Arrow and check icons inside the card's controls: smaller, and following the text colour. */
+.our-work-card .ow-header .icon,
+.our-work-card .ow-footer .icon,
+.our-work-card .ow-stack-controls .icon {
+  width: 13px !important;
+  height: 13px !important;
+  stroke-width: 14px !important;
+}
+
+/* Header: label, a tab per work, Skip. */
+.ow-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  padding: 20px var(--ow-gutter) 0;
+}
+
+.ow-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-family: "integral";
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ow-brand-mark {
+  font-family: "asterisk";
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.ow-tabs {
+  display: flex;
+  gap: 2px;
+  min-width: 0;
+  margin: -4px;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ow-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.ow-tab {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: opacity 0.25s, background-color 0.45s var(--ow-ease), color 0.45s var(--ow-ease);
+}
+
+.ow-tab.is-active {
+  opacity: 1;
+  background-color: var(--ow-text);
+  color: var(--ow-bg);
+}
+
+.ow-skip {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 2px;
+  font-size: 0.875rem;
+  opacity: 0.7;
+  transition: opacity 0.25s;
+}
+
+/* Slide area */
+#our-work-entrance {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(12px, 3dvh, 36px) var(--ow-gutter);
 }
 
-.our-work-navigation-item {
-  z-index: 1000;
-  width: min-content;
+.ow-transition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-height: 100%;
+  animation: owSlideIn 0.65s var(--ow-ease) both;
 }
 
-.work-detail {
-  animation-name: bottomFadeIn;
-  animation-duration: 0.5s;
-  
+.ow-transition.backward {
+  animation-name: owSlideInBack;
 }
 
-.work-detail.no-scroll {
-  height: calc(100dvh - 271px);
+.ow-fit {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  transform-origin: 50% 50%;
+}
+
+/* Copy follows the slide in, one line after another. */
+.ow-slide-copy > * {
+  animation: owRise 0.65s var(--ow-ease) both;
+}
+
+.ow-slide-copy > :nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.ow-slide-copy > :nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+@keyframes owSlideIn {
+  from { opacity: 0; transform: translateY(28px); }
+}
+
+@keyframes owSlideInBack {
+  from { opacity: 0; transform: translateY(-28px); }
+}
+
+@keyframes owRise {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+/* Slide layout: media beside the copy on wide screens, above it on narrow ones. Intros and
+   closing slides are centred with a larger title. */
+.ow-slide {
+  display: grid;
+  align-items: center;
+  gap: clamp(20px, 5vw, 80px);
+  width: 100%;
+  max-width: 1120px;
+}
+
+.ow-slide.is-centered {
+  justify-items: center;
+  gap: clamp(16px, 3dvh, 28px);
+  text-align: center;
+}
+
+.ow-slide-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+}
+
+.ow-slide-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  max-width: 30rem;
+}
+
+.ow-slide.is-centered .ow-slide-copy {
+  align-items: center;
+  max-width: 40rem;
+}
+
+.ow-slide-title {
+  margin: 0;
+  color: inherit;
+  font-family: var(--ow-title-font), serif;
+  font-size: clamp(1.6rem, 1rem + 1.8vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.ow-slide.is-centered .ow-slide-title {
+  max-width: 18ch;
+  font-size: clamp(1.9rem, 1rem + 3vw, 3.75rem);
+}
+
+.ow-slide-subtitle {
+  margin: 0;
+  font-family: var(--ow-subtitle-font), serif;
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.35rem);
+  line-height: 1.35;
+  opacity: 0.85;
+}
+
+.ow-slide-body {
+  margin: 0;
+  font-family: var(--ow-body-font), sans-serif;
+  font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.0625rem);
+  line-height: 1.6;
+  opacity: 0.72;
+  text-wrap: pretty;
+}
+
+/* Media */
+.ow-image {
+  display: block;
+  height: clamp(220px, 56dvh, 620px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  user-select: none;
+  transition: opacity 0.5s;
+}
+
+.ow-logo {
+  display: block;
+  height: clamp(64px, 11dvh, 112px);
+  width: auto;
+  max-width: 70vw;
+  border-radius: 22%;
+  opacity: 0;
+  user-select: none;
+  transition: opacity 0.5s;
+}
+
+.ow-image.is-loaded,
+.ow-logo.is-loaded,
+.ow-app-icon.is-loaded {
+  opacity: 1;
+}
+
+.ow-app-icon {
+  position: relative;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.ow-app-icon > img:first-child {
+  display: block;
+  width: clamp(80px, 13dvh, 128px);
+  height: auto;
+  border-radius: 22.5%;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.45);
+}
+
+.ow-app-store-badge {
+  position: absolute;
+  right: -12%;
+  bottom: -12%;
+  width: 38%;
+  filter: drop-shadow(0 4px 14px rgba(66, 138, 205, 0.55));
+}
+
+.ow-code {
+  margin: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  padding: clamp(16px, 2.2vw, 28px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 0 28px 60px -32px rgba(0, 0, 0, 0.3);
+  color: #111;
+  font: 400 clamp(0.66rem, 0.58rem + 0.35vw, 0.9rem) / 1.65 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  text-align: left;
+  white-space: pre;
+  scrollbar-width: none;
+}
+
+.ow-code .code-string { color: #15803d; }
+.ow-code .code-member { color: #6b6b78; }
+.ow-code .code-type { font-weight: 700; }
+
+/* 2.5D image stack; ImageStackWorkDetail.tsx sets each image's depth, blur and fade. */
+.ow-stack-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.ow-stack {
+  --stack-height: clamp(200px, 50dvh, 540px);
+  position: relative;
+  width: 100%;
+  height: calc(var(--stack-height) * 1.2);
+  perspective: 1200px;
+  perspective-origin: 50% 15%;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.ow-stack.is-loaded {
+  opacity: 1;
+}
+
+.ow-stack-image {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: var(--stack-height);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.45);
+  transform-origin: 50% 60%;
+  visibility: hidden;
+  user-select: none;
+  will-change: transform, filter, opacity;
+}
+
+.ow-stack-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ow-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px currentColor;
+  opacity: 0.75;
+  transition: opacity 0.25s, background-color 0.3s, color 0.3s;
+}
+
+.ow-icon-button:disabled {
+  cursor: default;
+  opacity: 0.25;
+}
+
+.ow-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.ow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: currentColor;
+  opacity: 0.25;
+  transition: width 0.45s var(--ow-ease), opacity 0.3s;
+}
+
+.ow-dot.is-active {
+  width: 18px;
+  opacity: 1;
+}
+
+/* Footer: Back, progress through the current work, next step. */
+.ow-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: "back progress actions";
+  align-items: center;
+  gap: 16px;
+  padding: 0 var(--ow-gutter) max(20px, env(safe-area-inset-bottom));
+}
+
+.ow-footer-back {
+  grid-area: back;
+  justify-self: start;
+}
+
+.ow-progress {
+  grid-area: progress;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ow-progress-total {
+  opacity: 0.5;
+}
+
+.ow-progress-track {
+  display: flex;
+  gap: 4px;
+  width: clamp(72px, 14vw, 180px);
+}
+
+.ow-progress-segment {
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background-color: currentColor;
+  opacity: 0.18;
+  transition: opacity 0.5s var(--ow-ease);
+}
+
+.ow-progress-segment.is-done {
+  opacity: 1;
+}
+
+.ow-footer-actions {
+  grid-area: actions;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ow-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 2px;
+  font-size: 0.9375rem;
+  opacity: 0.7;
+  transition: opacity 0.25s;
+}
+
+.ow-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: background-color 0.35s var(--ow-ease), color 0.35s var(--ow-ease), box-shadow 0.35s var(--ow-ease);
+}
+
+.ow-button.primary {
+  background-color: var(--ow-text);
+  color: var(--ow-bg);
+}
+
+.ow-button.secondary {
+  box-shadow: inset 0 0 0 1.5px var(--ow-text);
+}
+
+/* The label rolls up and is replaced by a copy of itself on hover. */
+.ow-button-roll {
+  position: relative;
+  display: inline-block;
+  height: 1.25em;
+  overflow: hidden;
+  line-height: 1.25;
+}
+
+.ow-button-roll > span,
+.ow-button-roll::after {
+  display: block;
+  transition: translate 0.5s var(--ow-ease);
+}
+
+.ow-button-roll::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.ow-button-icon {
+  display: inline-flex;
+  transition: translate 0.5s var(--ow-ease);
+}
+
+/* Hover styles only with a real pointer, so a tap on a phone doesn't leave them on. */
+@media (hover: hover) {
+  .ow-tab:hover {
+    opacity: 1;
+  }
+
+  .ow-skip:hover {
+    opacity: 1;
+  }
+
+  .ow-icon-button:hover:not(:disabled) {
+    background-color: var(--ow-text);
+    color: var(--ow-bg);
+    opacity: 1;
+  }
+
+  .ow-back:hover {
+    opacity: 1;
+  }
+
+  .ow-button.primary:hover {
+    background-color: var(--ow-accent);
+  }
+
+  .ow-button.secondary:hover {
+    background-color: var(--ow-text);
+    color: var(--ow-bg);
+  }
+
+  .ow-button:hover .ow-button-roll > span,
+  .ow-button:hover .ow-button-roll::after {
+    translate: 0 -100%;
+  }
+
+  .ow-button:hover .ow-button-icon {
+    translate: 3px 0;
+  }
+}
+
+/* Wide screens: media beside the copy. */
+@media (min-width: 760px) {
+  .ow-slide.has-media:not(.is-centered) {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
+}
+
+/* Narrow screens */
+@media (max-width: 759px) {
+  .ow-header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  .ow-brand {
+    display: none;
+  }
+
+  .ow-tab {
+    padding: 7px 12px;
+    font-size: 0.8125rem;
+  }
+
+  .ow-slide {
+    gap: 18px;
+  }
+
+  .ow-slide-copy {
+    gap: 8px;
+  }
+
+  .ow-slide-title {
+    font-size: clamp(1.35rem, 1rem + 1.8vw, 2rem);
+  }
+
+  .ow-slide.is-centered .ow-slide-title {
+    font-size: clamp(1.6rem, 1rem + 3vw, 2.4rem);
+  }
+
+  .ow-slide-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .ow-image {
+    height: clamp(150px, 34dvh, 360px);
+    border-radius: 14px;
+  }
+
+  .ow-stack {
+    --stack-height: clamp(140px, 30dvh, 320px);
+  }
+
+  .ow-stack-wrap {
+    gap: 10px;
+  }
+
+  .ow-icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .ow-footer {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "progress progress"
+      "back actions";
+    row-gap: 10px;
+  }
+
+  .ow-progress {
+    justify-content: center;
+  }
+
+  .ow-button {
+    height: 44px;
+    padding: 0 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-transition,
+  .ow-transition.backward,
+  .ow-slide-copy > * {
+    animation: none;
+  }
 }
 
 #meet-us-entrance {
@@ -735,20 +1481,6 @@ button > .footer-text {
   max-width: 0%;
 }
 
-#our-work-bar {
-  position: fixed;
-  top: 0;
-}
-
-#our-work-call-to-action {
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 24px;
-}
-
 .call-to-action-primary {
   border-radius: 100px;
   padding: 10px 20px;
@@ -835,10 +1567,10 @@ button > .footer-text {
 }
 
 .image-indicator {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  margin-right: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 100px;
+  margin: 0 3px;
 }
 
 .call-to-action-text {
@@ -854,13 +1586,25 @@ button > .footer-text {
 
 .max-detail-text {
   text-align: start;
-  max-width: 300px;
+  max-width: min(400px, 100%);
   width: auto;
 }
 
 @keyframes bottomFadeIn {
   0% {
-    transform: translate(0, 100%);
+    transform: translate(0, 64px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes topFadeIn {
+  0% {
+    transform: translate(0, -64px);
     opacity: 0;
   }
 
@@ -1020,6 +1764,29 @@ h1.top-bar-item.text > span {
   font-size: 2rem;
 }
 
+/* The ✱ in the top bar: two copies in a clipped box that roll down on hover (MainTopBar). */
+.top-bar-asterisk {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.top-bar-asterisk-roll {
+  overflow: clip;
+}
+
+.top-bar-asterisk-roll > .asterisk {
+  display: block;
+  font-family: "asterisk";
+  font-size: 2rem;
+  line-height: 1.15;
+  color: #111;
+}
+
 .text-width  {
   display: flex;
   flex-grow: 0;
@@ -1039,4 +1806,52 @@ h1.top-bar-item.text > span {
   height: 2px;
   margin: 10px;
   z-index: 0;
+}
+/* ---------------------------------------------------------------- Cursor */
+
+/* Ported from the portfolio site. Images and sizes are set in src/cursor.ts. */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  /* Soft shadow straight down, like the macOS cursor. On the wrapper, not the
+     images, so it stays below the cursor when the cursor tilts. */
+  filter: drop-shadow(0 1.5px 3.5px rgba(0, 0, 0, 0.3));
+  transition: opacity 0.2s;
+  will-change: transform;
+}
+
+.cursor.is-visible {
+  opacity: 1;
+}
+
+.cursor-img {
+  position: absolute;
+  max-width: none;
+  opacity: 0;
+  rotate: calc(var(--angle, 0deg) + var(--tilt, 0deg));
+  scale: 0.7;
+  user-select: none;
+  transition: opacity 0.15s, scale 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The arrow normally, the hand over anything clickable. */
+.cursor:not(.is-hand) .cursor-pointer,
+.cursor.is-hand .cursor-hand {
+  opacity: 1;
+  scale: 1;
+}
+
+/* A little squeeze while the mouse button is down. */
+.cursor.is-pressed:not(.is-hand) .cursor-pointer,
+.cursor.is-pressed.is-hand .cursor-hand {
+  scale: 0.85;
 }
