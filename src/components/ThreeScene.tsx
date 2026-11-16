@@ -34,6 +34,29 @@ const TAP_MAX_MS = 300;
 const TAP_SPIN = 9;
 const TAP_HOP = 0.3;
 
+// Entrance: the roll swoops down from above the frame on a spring, dips slightly past its
+// resting place and eases back up to it. Heights are in viewport heights so it looks the same
+// at every screen size.
+const DROP_START = 1.1;          // starts this far above its resting place (just out of frame)
+const DROP_STIFFNESS = 64;       // spring pull per viewport height (ω² = 64, ω = 8 rad/s)
+const DROP_DAMPING_RATIO = 0.7;  // < 1 springs past the bottom: 0.7 dips about 4% of the start height
+const DROP_SETTLED = 0.001;      // viewport heights (and per second); closer than this, it stops
+// It rolls top over bottom (top toward the viewer) as it comes in: quickest while it falls,
+// then coasting, its spin dying away like real momentum rather than stopping at a set time,
+// ending in (about) its resting angle.
+const DROP_ROLL = Math.PI;       // rad: a half turn in all
+const DROP_ROLL_DAMPING = 1.6;   // per second; lower coasts longer (still ~1 rad/s a second in)
+const DROP_ROLL_STOP = 0.04;     // rad/s; slower than this, the roll ends
+
+// Idle: when nobody is spinning it, the roll sways gently either side of where it settled, as
+// if floating, so its label stays in view. Two slow sways at different rates so it never
+// looks like a loop.
+const IDLE_TURN = 0.16;          // rad either way around the vertical axis
+const IDLE_TURN_RATE = 0.7;      // rad/s through the sway (one every ~9 s)
+const IDLE_TILT = 0.07;          // rad either way around the horizontal axis
+const IDLE_TILT_RATE = 1.1;      // one every ~6 s
+const IDLE_FADE_SPIN = 2;        // rad/s of flick spin above which the idle motion is off
+
 const X_AXIS = new THREE.Vector3(1, 0, 0);
 const Y_AXIS = new THREE.Vector3(0, 1, 0);
 
@@ -103,8 +126,9 @@ const setupCinematicLighting = (scene: THREE.Object3D | null) => {
 
 const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTMLCanvasElement | null> }) => {
   const modelRef = useRef<THREE.Group>(null);
+  const dropRef = useRef<THREE.Group>(null);
   const scrollRef = useLocomotiveScroll();
-  const { gl } = useThree();
+  const { gl, scene } = useThree();
 
   // Scroll reaction
   const lastScrollY = useRef<number | null>(null);
@@ -117,6 +141,10 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
   const drag = useRef<DragState | null>(null);
   const removeDragListeners = useRef<(() => void) | null>(null);
   const isSetup = useRef(false);
+  // Height above the resting place and vertical speed, in viewport heights; null until the
+  // first frame, when the entrance starts.
+  const drop = useRef<{ y: number, velocity: number, moving: boolean, rollSpeed: number } | null>(null);
+  const idleOff = useRef(false);
 
   const model = useLoader(GLTFLoader, url, (loader) => {
     loader.manager.onLoad = () => {
@@ -144,8 +172,8 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
     const rotation = INITIAL_ROTATIONS[Math.floor(Math.random() * INITIAL_ROTATIONS.length)];
     object.rotation.set(rotation.x, rotation.y, rotation.z);
     adjustModelScale();
-    applySmoothShading(object.parent);
-    setupCinematicLighting(object.parent);
+    applySmoothShading(model.scene);
+    setupCinematicLighting(scene);
     isSetup.current = true;
   });
 
@@ -302,10 +330,44 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
     if (drag.current?.mode === 'spin') scrollRef?.current?.start();
   }, [scrollRef]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     const object = modelRef.current;
     if (!object) return;
     const dt = Math.min(delta, 1 / 20);
+
+    // Entrance, on the group around the model so the scroll bob below is unaffected. A damped
+    // spring: it starts still, picks up speed on the way down (the swoop), overshoots a little
+    // below its resting place and settles back without bouncing again.
+    if (!drop.current) {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      idleOff.current = reduced;
+      // A spin decaying at DROP_ROLL_DAMPING turns DROP_ROLL in all if it starts this fast.
+      drop.current = { y: reduced ? 0 : DROP_START, velocity: 0, moving: !reduced, rollSpeed: reduced ? 0 : DROP_ROLL * DROP_ROLL_DAMPING };
+      if (!reduced) object.rotateOnWorldAxis(X_AXIS, -DROP_ROLL);
+    }
+    const entrance = drop.current;
+    if (entrance.rollSpeed > 0 && drag.current?.mode === 'spin') {
+      entrance.rollSpeed = 0; // grabbing the tape stops the roll where it is
+    }
+    if (entrance.rollSpeed > 0) {
+      const decay = Math.exp(-DROP_ROLL_DAMPING * dt);
+      object.rotateOnWorldAxis(X_AXIS, entrance.rollSpeed * (1 - decay) / DROP_ROLL_DAMPING);
+      entrance.rollSpeed = entrance.rollSpeed * decay < DROP_ROLL_STOP ? 0 : entrance.rollSpeed * decay;
+    }
+    if (entrance.moving && dropRef.current) {
+      // Small fixed steps keep the spring stable when a slow first frame hands over a long delta.
+      for (let left = dt; left > 0; left -= 1 / 240) {
+        const step = Math.min(left, 1 / 240);
+        const damping = 2 * DROP_DAMPING_RATIO * Math.sqrt(DROP_STIFFNESS);
+        entrance.velocity += (-DROP_STIFFNESS * entrance.y - damping * entrance.velocity) * step;
+        entrance.y += entrance.velocity * step;
+      }
+      if (Math.abs(entrance.y) < DROP_SETTLED && Math.abs(entrance.velocity) < DROP_SETTLED) {
+        entrance.y = 0;
+        entrance.moving = false;
+      }
+      dropRef.current.position.y = entrance.y * state.viewport.height;
+    }
 
     // Scroll: bob along y and roll a little with the scroll direction.
     const velocity = positionalVelocity.current;
@@ -322,22 +384,32 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
         object.rotateOnWorldAxis(spin.current.clone().normalize(), speed * dt);
         spin.current.multiplyScalar(Math.exp(-SPIN_DAMPING_PER_SECOND * dt));
       }
+
+      // Idle sway, fading in as a flick dies down so the two never fight.
+      if (!idleOff.current) {
+        const idle = Math.max(0, 1 - speed / IDLE_FADE_SPIN);
+        const time = state.clock.elapsedTime;
+        object.rotateOnWorldAxis(Y_AXIS, IDLE_TURN * IDLE_TURN_RATE * Math.cos(time * IDLE_TURN_RATE) * idle * dt);
+        object.rotateOnWorldAxis(X_AXIS, IDLE_TILT * IDLE_TILT_RATE * Math.cos(time * IDLE_TILT_RATE) * idle * dt);
+      }
     }
   });
 
   return (
-    <primitive
-      object={model.scene}
-      ref={modelRef}
-      onPointerDown={handlePointerDown}
-      onPointerOver={() => { if (!drag.current) setCursor('grab'); }}
-      onPointerOut={() => { if (!drag.current) setCursor(''); }}
-    >
-      <mesh position={grabSphere.center}>
-        <sphereGeometry args={[grabSphere.radius, 16, 12]} />
-        <meshBasicMaterial visible={false} />
-      </mesh>
-    </primitive>
+    <group ref={dropRef}>
+      <primitive
+        object={model.scene}
+        ref={modelRef}
+        onPointerDown={handlePointerDown}
+        onPointerOver={() => { if (!drag.current) setCursor('grab'); }}
+        onPointerOut={() => { if (!drag.current) setCursor(''); }}
+      >
+        <mesh position={grabSphere.center}>
+          <sphereGeometry args={[grabSphere.radius, 16, 12]} />
+          <meshBasicMaterial visible={false} />
+        </mesh>
+      </primitive>
+    </group>
   );
 };
 

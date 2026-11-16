@@ -173,24 +173,24 @@
 	],
 	"images":[
 		{
-			"mimeType":"image/png",
+			"mimeType":"image/webp",
 			"name":"side_tape_texture",
-			"uri":"textures/side_tape_texture.png"
+			"uri":"textures/side_tape_texture.webp"
 		},
 		{
-			"mimeType":"image/png",
+			"mimeType":"image/webp",
 			"name":"tape_texture",
-			"uri":"textures/tape_texture.png"
+			"uri":"textures/tape_texture.webp"
 		},
 		{
-			"mimeType":"image/png",
+			"mimeType":"image/webp",
 			"name":"cardboard_roll",
-			"uri":"textures/cardboard_roll.png"
+			"uri":"textures/cardboard_roll.webp"
 		},
 		{
-			"mimeType":"image/png",
+			"mimeType":"image/webp",
 			"name":"pt_roll_sticker",
-			"uri":"textures/pt_roll_sticker.png"
+			"uri":"textures/pt_roll_sticker.webp"
 		}
 	],
 	"accessors":[
