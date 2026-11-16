@@ -15,8 +15,10 @@ export const LocomotiveScrollProvider = ({ children }: { children: ReactElement[
       scrollRef.current = new LocomotiveScroll({
         el: containerRef.current,
         smooth: true,
-        lerp: isMobile ? 0.06 : 0.1,
-        multiplier: isMobile ? 0.8 : 1,
+        // A lower lerp lets the page glide further after a wheel tick or swipe ends (more
+        // momentum); the multiplier sets how far each tick or swipe carries it.
+        lerp: isMobile ? 0.04 : 0.05,
+        multiplier: isMobile ? 1.1 : 1.4,
         smoothMobile: true,
         tablet: {
           breakpoint: 0,

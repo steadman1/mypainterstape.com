@@ -14,8 +14,9 @@ type WorkSlide = {
     weight: number;
 };
 
-// Viewport heights of scrolling per slide unit.
-const SCROLL_PER_SLIDE = 0.8;
+// Viewport heights of scrolling per slide unit. Kept short so the list moves along quickly;
+// image stacks still get extra length (slideWeight) so each image has room to settle.
+const SCROLL_PER_SLIDE = 0.45;
 // Viewport heights over which the card grows to full screen on the way in (and shrinks on the way out).
 const ENTRY_DISTANCE = 0.85;
 const CARD_MIN_SCALE = 0.9;
