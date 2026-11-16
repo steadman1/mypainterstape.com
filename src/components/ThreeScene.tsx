@@ -206,12 +206,9 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
     return () => window.removeEventListener('locomotive-scroll-initialized', updateTouchAction);
   }, [gl]);
 
-  // `data-cursor` gives the canvas the custom hand cursor (src/cursor.ts); the CSS cursor
-  // is the fallback when the custom one isn't running.
+  // The system open hand over the tape, and the closed hand while it's being spun.
   const setCursor = (cursor: 'grab' | 'grabbing' | '') => {
     gl.domElement.style.cursor = cursor;
-    if (cursor) gl.domElement.dataset.cursor = '';
-    else delete gl.domElement.dataset.cursor;
   };
 
   const rotateBy = (dx: number, dy: number) => {
@@ -221,9 +218,12 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
     object.rotateOnWorldAxis(X_AXIS, dy * DRAG_RADIANS_PER_PIXEL);
   };
 
+  // While spinning, nothing on the page gets text-selected as the pointer sweeps across it.
+  // (The 3D library's pointerdown listener is passive, so preventDefault can't do this.)
   const beginSpin = () => {
     scrollRef?.current?.stop();
     setCursor('grabbing');
+    document.body.style.userSelect = 'none';
   };
 
   const endDrag = (event: PointerEvent) => {
@@ -234,6 +234,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
 
     if (state.mode === 'spin') {
       scrollRef?.current?.start();
+      document.body.style.userSelect = '';
       setCursor('grab');
       const heldStill = performance.now() - state.lastTime > RELEASE_STILL_MS;
       if (heldStill || spin.current.length() < MIN_FLICK_SPEED) spin.current.set(0, 0, 0);
@@ -307,10 +308,7 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
 
     // Grabbing stops the current spin, like catching it.
     spin.current.set(0, 0, 0);
-    if (!isTouch) {
-      event.nativeEvent.preventDefault(); // no text selection while dragging
-      beginSpin();
-    }
+    if (!isTouch) beginSpin();
 
     const move = handlePointerMove;
     const end = endDrag;
@@ -327,7 +325,10 @@ const Model = ({ url, canvasRef }: { url: string, canvasRef: React.RefObject<HTM
 
   useEffect(() => () => {
     removeDragListeners.current?.();
-    if (drag.current?.mode === 'spin') scrollRef?.current?.start();
+    if (drag.current?.mode === 'spin') {
+      scrollRef?.current?.start();
+      document.body.style.userSelect = '';
+    }
   }, [scrollRef]);
 
   useFrame((state, delta) => {

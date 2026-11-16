@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
-import { initCursor } from './cursor'
+import { initMagnetic } from './magnetic'
 
-initCursor()
+initMagnetic()
 
 createRoot(document.getElementById('root')!).render(<App />)

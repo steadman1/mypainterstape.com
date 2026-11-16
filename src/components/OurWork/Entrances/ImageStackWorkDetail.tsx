@@ -86,12 +86,11 @@ function ImageStackWorkDetail({ work, detailIndex, imageIndex, subscribeImagePos
                     detail.images.map((image, index) => (
                         <img
                             key={image}
-                            className="ow-stack-image"
+                            className={`ow-stack-image ${index === imageIndex ? "" : "is-behind"}`}
                             src={`/${image}`}
                             alt={`${work.name}: ${detail.title} (${index + 1} of ${count})`}
                             onLoad={index === 0 ? () => setLoaded(true) : undefined}
                             onClick={index === imageIndex ? undefined : () => onSelectImage(index)}
-                            data-cursor={index === imageIndex ? undefined : ""}
                             draggable={false}
                         />
                     ))

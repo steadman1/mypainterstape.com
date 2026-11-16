@@ -574,7 +574,7 @@ h5.description {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 900; /* under the custom cursor */
+  z-index: 900;
   box-sizing: border-box;
   width: 248px;
   max-width: calc(100vw - 24px);
@@ -1053,6 +1053,11 @@ h5.description {
   visibility: hidden;
   user-select: none;
   will-change: transform, filter, opacity;
+}
+
+/* Images waiting behind the front one can be clicked to bring them forward. */
+.ow-stack-image.is-behind {
+  cursor: pointer;
 }
 
 .ow-stack-controls {
@@ -1806,52 +1811,4 @@ h1.top-bar-item.text > span {
   height: 2px;
   margin: 10px;
   z-index: 0;
-}
-/* ---------------------------------------------------------------- Cursor */
-
-/* Ported from the portfolio site. Images and sizes are set in src/cursor.ts. */
-html.has-cursor,
-html.has-cursor * {
-  cursor: none !important;
-}
-
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  /* Soft shadow straight down, like the macOS cursor. On the wrapper, not the
-     images, so it stays below the cursor when the cursor tilts. */
-  filter: drop-shadow(0 1.5px 3.5px rgba(0, 0, 0, 0.3));
-  transition: opacity 0.2s;
-  will-change: transform;
-}
-
-.cursor.is-visible {
-  opacity: 1;
-}
-
-.cursor-img {
-  position: absolute;
-  max-width: none;
-  opacity: 0;
-  rotate: calc(var(--angle, 0deg) + var(--tilt, 0deg));
-  scale: 0.7;
-  user-select: none;
-  transition: opacity 0.15s, scale 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* The arrow normally, the hand over anything clickable. */
-.cursor:not(.is-hand) .cursor-pointer,
-.cursor.is-hand .cursor-hand {
-  opacity: 1;
-  scale: 1;
-}
-
-/* A little squeeze while the mouse button is down. */
-.cursor.is-pressed:not(.is-hand) .cursor-pointer,
-.cursor.is-pressed.is-hand .cursor-hand {
-  scale: 0.85;
 }
